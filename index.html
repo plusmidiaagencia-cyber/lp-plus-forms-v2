@@ -2936,7 +2936,7 @@ function bindLeadForm(formId, formSourceTag){
     if(window.fbq) fbq('track','Lead');
     if(window.dataLayer) window.dataLayer.push({event:'lead_submit', source, form_position: formSourceTag, ...fields});
 
-    const OBRIGADO = 'https://lp-obrigado-omega.vercel.app/';
+    const OBRIGADO = 'https://www.plusmidiamkt.com/obrigado';
     setTimeout(()=>{ try{ window.top.location.href = OBRIGADO; }catch(_){} }, 250);
     setTimeout(()=>{ try{ window.location.href = OBRIGADO; }catch(_){} }, 700);
   });
