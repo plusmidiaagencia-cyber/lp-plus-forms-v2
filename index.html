@@ -718,6 +718,22 @@ section.block{padding:90px 0;position:relative}
   .stat-pill .lbl{font-size:.85rem}
 }
 </style>
+<!-- Meta Pixel — PIXEL PM 01 -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '289183857235038');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=289183857235038&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
 </head>
 <body>
 
@@ -2873,26 +2889,18 @@ function getCookie(name){
 }
 
 function getTrackingMetadata(){
-  const sources = [window.location.href];
-  if(document.referrer && document.referrer !== window.location.href) sources.unshift(document.referrer);
-  const merged = {};
-  let fbclid;
-  for(const src of sources){
-    try{
-      const u = new URL(src);
-      ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(k=>{
-        const v = u.searchParams.get(k);
-        if(v && !merged[k]) merged[k] = v;
-      });
-      if(!fbclid){ const f = u.searchParams.get('fbclid'); if(f) fbclid = f; }
-    }catch(_){}
-  }
+  const u = new URL(window.location.href);
+  const utms = {};
+  ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(k=>{
+    const v = u.searchParams.get(k);
+    if(v) utms[k] = v;
+  });
   return {
-    fbclid,
-    utms: merged,
+    fbclid: u.searchParams.get('fbclid') || undefined,
+    utms,
     fbp: getCookie('_fbp'),
     fbc: getCookie('_fbc'),
-    pageUrl: sources[0],
+    pageUrl: window.location.href,
     userAgent: navigator.userAgent
   };
 }
@@ -2924,21 +2932,17 @@ function bindLeadForm(formId, formSourceTag){
       }
     };
 
-    try {
-      fetch(GPM_WEBHOOK_URL, {
-        method: 'POST',
-        body: JSON.stringify(payload),
-        keepalive: true,
-        mode: 'no-cors'
-      }).catch(()=>{});
-    } catch(_){}
+    fetch(GPM_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      keepalive: true
+    }).catch(()=>{});
 
     if(window.fbq) fbq('track','Lead');
     if(window.dataLayer) window.dataLayer.push({event:'lead_submit', source, form_position: formSourceTag, ...fields});
 
-    const OBRIGADO = 'https://www.plusmidiamkt.com/obrigado';
-    setTimeout(()=>{ try{ window.top.location.href = OBRIGADO; }catch(_){} }, 250);
-    setTimeout(()=>{ try{ window.location.href = OBRIGADO; }catch(_){} }, 700);
+    setTimeout(()=>{ window.location.href = 'https://www.plusmidiamkt.com/obrigado'; }, 300);
   });
 }
 bindLeadForm('leadForm','hero');
