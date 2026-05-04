@@ -2943,15 +2943,25 @@ function bindLeadForm(formId, formSourceTag){
       keepalive: true
     }).catch(()=>{});
 
+    let phoneDigits = (fields.phone || '').replace(/\D/g, '');
+    if (phoneDigits.length === 10 || phoneDigits.length === 11) phoneDigits = '55' + phoneDigits;
     const reportanaPayload = {
-      ...fields,
-      ...meta.utms,
-      fbclid: meta.fbclid,
-      fbp: meta.fbp,
-      fbc: meta.fbc,
-      lp_source: source,
-      form_position: formSourceTag,
-      page_url: meta.pageUrl
+      submission: {
+        fields: {
+          'Seu nome': fields.name || '',
+          'Seu Melhor Email': fields.email || '',
+          'Seu whatsapp': phoneDigits,
+          'Instagram': fields.instagram || '',
+          'Site': fields.site || '',
+          'Faturamento': fields.revenue || '',
+          'Investimento': fields.budget || '',
+          ...meta.utms,
+          fbclid: meta.fbclid,
+          lp_source: source,
+          form_position: formSourceTag
+        },
+        metadata: { fbp: meta.fbp, fbc: meta.fbc, page: { url: meta.pageUrl } }
+      }
     };
     fetch(REPORTANA_WEBHOOK_URL, {
       method: 'POST',
