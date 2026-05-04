@@ -2883,8 +2883,9 @@ document.querySelectorAll('input[type="tel"]').forEach(input=>{
   });
 });
 
-// Form submit -> webhook GPM
+// Form submit -> webhooks (GPM + Reportana)
 const GPM_WEBHOOK_URL = 'https://rkngilknpcibcwalropj.supabase.co/functions/v1/webhook-handler?slug=64fcc8535224c5f25269def4';
+const REPORTANA_WEBHOOK_URL = 'https://app.reportana.com/webhooks/workflows/159429?token=kVCWoC1DFLROJNoG87HBmYa9lhqMSX6d';
 
 function getCookie(name){
   const m = document.cookie.match(new RegExp('(^|;\\s*)'+name+'=([^;]+)'));
@@ -2939,6 +2940,23 @@ function bindLeadForm(formId, formSourceTag){
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
+      keepalive: true
+    }).catch(()=>{});
+
+    const reportanaPayload = {
+      ...fields,
+      ...meta.utms,
+      fbclid: meta.fbclid,
+      fbp: meta.fbp,
+      fbc: meta.fbc,
+      lp_source: source,
+      form_position: formSourceTag,
+      page_url: meta.pageUrl
+    };
+    fetch(REPORTANA_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(reportanaPayload),
       keepalive: true
     }).catch(()=>{});
 
