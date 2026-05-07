@@ -309,37 +309,68 @@ fbq('track','PageView');
 
   /* Responsivo */
   @media (max-width:760px){
-    .wrap{padding:40px 18px 32px;gap:32px}
-    .head img{height:48px}
-    .banners{gap:20px}
+    .wrap{
+      padding:36px 18px max(28px, env(safe-area-inset-bottom));
+      gap:28px;
+    }
+    .head img{height:44px}
+    .banners{gap:18px}
     .banner{
       grid-template-columns:1fr;
+      border-radius:18px;
     }
     .banner .media{
-      min-height:160px;
-      padding:32px 20px 16px;
+      min-height:200px;
+      padding:36px 24px 20px;
     }
     .banner .media::after{
-      background:linear-gradient(180deg, transparent 70%, var(--card-2) 100%);
+      background:linear-gradient(180deg, transparent 65%, var(--card-2) 100%);
     }
     .banner .media img{
-      max-height:90px;
-      max-width:55%;
+      max-height:130px;
+      max-width:60%;
     }
     .banner .body{
-      padding:8px 24px 32px;
+      padding:4px 24px 32px;
       align-items:center;
       text-align:center;
+      gap:14px;
     }
-    .banner h2{font-size:1.55rem}
-    .banner .lead{max-width:none}
-    .cta{width:100%;justify-content:center;padding:15px 24px}
+    .banner h2{
+      font-size:1.7rem;
+      line-height:1.1;
+    }
+    .banner .lead{
+      max-width:none;
+      font-size:15px;
+    }
+    .cta{
+      width:100%;
+      justify-content:center;
+      padding:17px 24px;
+      font-size:13px;
+      min-height:52px;
+    }
+    .foot{margin-top:4px;font-size:11px}
   }
 
-  @media (max-width:380px){
-    .wrap{padding:32px 14px 24px}
+  @media (max-width:420px){
+    .wrap{padding:28px 16px max(24px, env(safe-area-inset-bottom));gap:24px}
+    .head img{height:40px}
+    .banner .media{min-height:180px;padding:30px 20px 14px}
+    .banner .media img{max-height:110px;max-width:58%}
+    .banner .body{padding:4px 20px 28px}
+    .banner h2{font-size:1.5rem}
+    .banner .lead{font-size:14.5px;line-height:1.5}
+  }
+
+  @media (max-width:360px){
+    .wrap{padding:24px 14px max(20px, env(safe-area-inset-bottom))}
+    .banner .media{min-height:160px}
+    .banner .media img{max-height:96px}
     .banner h2{font-size:1.35rem}
-    .banner .body{padding:8px 18px 26px}
+    .banner .body{padding:4px 16px 24px}
+    .cta{font-size:12px;padding:16px 20px}
   }
 </style>
 </head>
