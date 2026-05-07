@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Plus Mídia — Links</title>
+<meta name="description" content="Acesse o Plus App e conheça a Plus Mídia." />
+<meta name="theme-color" content="#0a0a0a" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Plus Mídia — Links" />
+<meta property="og:description" content="Acesse o Plus App e conheça a Plus Mídia." />
+<meta property="og:image" content="plusmidia-wordmark.svg" />
+
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png" />
+<link rel="shortcut icon" href="favicon.ico" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<!-- Meta Pixel — PIXEL PM 01 -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','289183857235038');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=289183857235038&ev=PageView&noscript=1"/></noscript>
+
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --bg-2:#111;
+    --card:#0e2a4d;
+    --card-2:#0a1f3d;
+    --border:#1a3a5e;
+    --text:#ffffff;
+    --text-dark:#ffffff;
+    --muted:#a6a6a6;
+    --muted-dark:#9eb6cf;
+    --dim:#7a7a7a;
+    --brand:#38b6ff;
+    --brand-2:#1e9bdb;
+    --brand-light:#7ad1ff;
+    --brand-glow:rgba(56,182,255,.18);
+    --brand-strong:rgba(56,182,255,.35);
+    --radius:20px;
+    --maxw:1080px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100%}
+  body{
+    font-family:'Roboto',system-ui,-apple-system,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    overflow-x:hidden;
+    line-height:1.6;
+  }
+
+  /* Glow ambient cyan */
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    background:
+      radial-gradient(60% 50% at 50% 0%, var(--brand-glow), transparent 60%),
+      radial-gradient(50% 40% at 50% 100%, rgba(56,182,255,.10), transparent 60%);
+    pointer-events:none;
+    z-index:0;
+    animation:breath 8s ease-in-out infinite;
+  }
+  @keyframes breath{
+    0%,100%{opacity:.7}
+    50%{opacity:1}
+  }
+
+  /* Grain */
+  .grain{
+    position:fixed;inset:0;pointer-events:none;
+    z-index:1;opacity:.035;mix-blend-mode:overlay;
+  }
+
+  .wrap{
+    position:relative;
+    z-index:2;
+    min-height:100vh;
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:56px 22px 40px;
+    max-width:var(--maxw);
+    margin:0 auto;
+    gap:42px;
+  }
+
+  /* Header */
+  .head{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:16px;
+    text-align:center;
+  }
+  .head img{
+    width:auto;
+    height:54px;
+    filter:drop-shadow(0 8px 28px var(--brand-glow));
+  }
+  .head .eyebrow{
+    font-family:'Montserrat',sans-serif;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.36em;
+    color:var(--brand);
+    text-transform:uppercase;
+  }
+  .head h1{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:clamp(1.4rem,4.2vw,1.85rem);
+    line-height:1.25;
+    color:var(--text);
+    max-width:560px;
+  }
+  .head h1 .accent{
+    background:linear-gradient(135deg, var(--brand), #7ad1ff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  /* Banners */
+  .banners{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+  }
+
+  .banner{
+    position:relative;
+    display:grid;
+    grid-template-columns:minmax(220px,38%) 1fr;
+    background:linear-gradient(180deg, var(--card), var(--card-2));
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.6), 0 0 0 1px rgba(56,182,255,.08);
+    isolation:isolate;
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  /* Gradient border cyan estilo /forms */
+  .banner::before{
+    content:"";
+    position:absolute;inset:0;
+    border-radius:var(--radius);
+    padding:1.5px;
+    background:linear-gradient(135deg, var(--brand), transparent 50%, var(--brand-2));
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+            mask-composite:exclude;
+    pointer-events:none;
+    opacity:.55;
+    transition:opacity .35s ease;
+  }
+  .banner:hover{
+    transform:translateY(-4px);
+    box-shadow:0 40px 80px -30px rgba(0,0,0,.7), 0 0 0 1px var(--brand-strong), 0 0 40px -10px var(--brand-glow);
+  }
+  .banner:hover::before{opacity:1}
+
+  .banner .media{
+    position:relative;
+    background:
+      radial-gradient(80% 100% at 0% 50%, rgba(56,182,255,.18) 0%, transparent 60%),
+      linear-gradient(120deg, #0e2a4d, #081a36);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:40px 28px;
+    min-height:240px;
+  }
+  .banner .media::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(90deg, transparent 60%, var(--card-2) 100%);
+    pointer-events:none;
+  }
+  .banner .media img{
+    position:relative;
+    max-width:78%;
+    max-height:160px;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    z-index:1;
+    filter:drop-shadow(0 14px 30px rgba(56,182,255,.45));
+    transition:transform .5s ease;
+  }
+  .banner:hover .media img{transform:scale(1.05)}
+
+  .banner .body{
+    padding:40px 48px 40px 24px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-start;
+    gap:18px;
+  }
+  .banner h2{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:clamp(1.7rem,3.6vw,2.4rem);
+    line-height:1.05;
+    letter-spacing:-.015em;
+    color:var(--text-dark);
+    text-transform:none;
+  }
+  .banner .lead{
+    color:var(--muted-dark);
+    font-size:clamp(14px,1.5vw,16px);
+    line-height:1.55;
+    max-width:520px;
+  }
+  .banner .lead strong{
+    color:var(--brand-light);
+    font-weight:700;
+  }
+
+  .cta{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:15px 28px;
+    background:linear-gradient(135deg, var(--brand), var(--brand-2));
+    color:#001a26;
+    border:none;
+    border-radius:999px;
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:13px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    text-decoration:none;
+    cursor:pointer;
+    transition:transform .25s ease, box-shadow .25s ease, filter .25s ease;
+    box-shadow:0 12px 28px -10px rgba(56,182,255,.55);
+  }
+  /* Pulse ring (padrão Plus Mídia) */
+  .cta::after{
+    content:"";
+    position:absolute;inset:-3px;
+    border-radius:999px;
+    border:2px solid var(--brand);
+    opacity:0;
+    animation:pulse 2.4s ease-out infinite;
+    pointer-events:none;
+  }
+  @keyframes pulse{
+    0%{opacity:.55;transform:scale(1)}
+    70%{opacity:0;transform:scale(1.08)}
+    100%{opacity:0;transform:scale(1.08)}
+  }
+  .cta:hover{
+    transform:translateY(-1px);
+    filter:brightness(1.08);
+    box-shadow:0 16px 36px -10px rgba(56,182,255,.7);
+  }
+  .cta:hover::after{animation-play-state:paused}
+  .cta:active{transform:translateY(0)}
+  .cta svg{width:14px;height:14px}
+
+  /* Footer */
+  .foot{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    color:var(--dim);
+    font-size:12px;
+    text-align:center;
+    margin-top:8px;
+  }
+  .foot a{color:var(--muted);text-decoration:none}
+  .foot a:hover{color:var(--brand)}
+
+  /* Reveal */
+  .reveal{
+    opacity:0;
+    transform:translateY(20px);
+    transition:opacity .8s ease, transform .8s ease;
+  }
+  .reveal.in{opacity:1;transform:none}
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+  }
+
+  /* Responsivo */
+  @media (max-width:760px){
+    .wrap{padding:40px 18px 32px;gap:32px}
+    .head img{height:48px}
+    .banners{gap:20px}
+    .banner{
+      grid-template-columns:1fr;
+    }
+    .banner .media{
+      min-height:160px;
+      padding:32px 20px 16px;
+    }
+    .banner .media::after{
+      background:linear-gradient(180deg, transparent 70%, var(--card-2) 100%);
+    }
+    .banner .media img{
+      max-height:90px;
+      max-width:55%;
+    }
+    .banner .body{
+      padding:8px 24px 32px;
+      align-items:center;
+      text-align:center;
+    }
+    .banner h2{font-size:1.55rem}
+    .banner .lead{max-width:none}
+    .cta{width:100%;justify-content:center;padding:15px 24px}
+  }
+
+  @media (max-width:380px){
+    .wrap{padding:32px 14px 24px}
+    .banner h2{font-size:1.35rem}
+    .banner .body{padding:8px 18px 26px}
+  }
+</style>
+</head>
+<body>
+
+<svg class="grain" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter>
+  <rect width="100%" height="100%" filter="url(#n)"/>
+</svg>
+
+<main class="wrap">
+
+  <header class="head reveal">
+    <img src="plusmidia-wordmark.svg" alt="Plus Mídia" />
+  </header>
+
+  <section class="banners">
+
+    <a class="banner reveal"
+       href="https://app.plusmidiamkt.com/?utm_source=instagram&amp;utm_medium=bio&amp;utm_campaign=plus_app&amp;utm_content=link_in_bio"
+       data-track="ClickPlusApp"
+       rel="noopener"
+       style="text-decoration:none;color:inherit">
+      <div class="media">
+        <img src="plusapp-logo.png" alt="Plus App" />
+      </div>
+      <div class="body">
+        <h2>Plus App</h2>
+        <p class="lead">App próprio + estrategista dedicado = <strong>+20% de recompra em 90 dias</strong>, sem aumentar tráfego.</p>
+        <span class="cta">
+          Quero meu app
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="13 6 19 12 13 18"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+    <a class="banner reveal"
+       href="https://lp.plusmidiamkt.com/?utm_source=instagram&amp;utm_medium=bio&amp;utm_campaign=plus_midia&amp;utm_content=link_in_bio"
+       data-track="ClickPlusMidia"
+       rel="noopener"
+       style="text-decoration:none;color:inherit">
+      <div class="media">
+        <img src="plusmidia-rocket.svg" alt="Assessoria" />
+      </div>
+      <div class="body">
+        <h2>Assessoria</h2>
+        <p class="lead">Nosso único foco: <strong>aumentar as vendas e o lucro líquido</strong> do seu e-commerce.</p>
+        <span class="cta">
+          Contratar assessoria
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="13 6 19 12 13 18"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+  </section>
+
+  <footer class="foot reveal">
+    <span>© Plus Mídia. Todos os direitos reservados.</span>
+    <a href="https://instagram.com/plusmidia" target="_blank" rel="noopener">@plusmidia</a>
+  </footer>
+
+</main>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reveals = document.querySelectorAll('.reveal');
+  if(reduce){
+    reveals.forEach(el=>el.classList.add('in'));
+  } else {
+    reveals.forEach((el,i)=>{
+      setTimeout(()=>el.classList.add('in'), 120 + i*180);
+    });
+  }
+
+  document.querySelectorAll('[data-track]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const ev = el.getAttribute('data-track');
+      try{
+        if(window.fbq) window.fbq('trackCustom', ev, {source:'link_in_bio'});
+        if(window.dataLayer) window.dataLayer.push({event:'bio_click', target: ev});
+      }catch(e){}
+    });
+  });
+</script>
+</body>
+</html>

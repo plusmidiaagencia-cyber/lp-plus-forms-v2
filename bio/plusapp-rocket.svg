@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 160" fill="none">
+  <!-- Outer rocket cone outline (white) -->
+  <path d="M70 12 L122 142 Q70 128 18 142 Z"
+        stroke="#ffffff" stroke-width="9" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
+  <!-- Inner cyan swoosh -->
+  <path d="M35 110 Q70 60 105 115"
+        stroke="#38b6ff" stroke-width="9" stroke-linecap="round" fill="none"/>
+</svg>
