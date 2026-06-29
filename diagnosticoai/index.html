@@ -601,7 +601,7 @@ function startAnalysis(){
   const rot = setInterval(()=>{ mi=(mi+1)%ANALYZE_MESSAGES.length; stepsEl.textContent=ANALYZE_MESSAGES[mi]; }, 2100);
 
   const minWait = new Promise(r=>setTimeout(r, REDUCE_MOTION?800:15000));
-  const apiCall = fetch('/api/diagnose/', {
+  const apiCall = fetch('https://rkngilknpcibcwalropj.supabase.co/functions/v1/diagnose', {
     method:'POST', headers:{'Content-Type':'application/json'},
     body: JSON.stringify({ url: state.url, answers: state.answers })
   }).then(r=>r.json()).catch(()=>null);
