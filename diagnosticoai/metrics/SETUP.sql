@@ -50,3 +50,43 @@ as $$
 $$;
 
 grant execute on function public.lp_funnel_metrics(text, int) to anon, authenticated;
+
+-- ============================================================
+-- Tabela por sessão (cada visitante numa linha). SEM PII —
+-- só respostas do quiz, última etapa e status. security definer.
+-- ============================================================
+create or replace function public.lp_funnel_sessions(
+  p_source text default null, p_days int default 30, p_only_completed boolean default false
+)
+returns table(
+  session_id text, started_at timestamptz, last_step text, last_index int,
+  steps_count int, completed boolean, is_lead boolean, icp boolean,
+  segmento text, volume text, trafego text, faturamento text
+)
+language sql security definer set search_path = public as $$
+  with ev as (
+    select * from public.lp_funnel_events
+    where (p_source is null or source = p_source)
+      and created_at >= now() - make_interval(days => greatest(p_days,1))
+  )
+  select
+    session_id,
+    min(created_at) as started_at,
+    (array_agg(step order by created_at desc))[1] as last_step,
+    max(step_index) as last_index,
+    count(*)::int as steps_count,
+    bool_or(step='result') as completed,
+    bool_or(step='lead')   as is_lead,
+    bool_or(meta->>'icp'='true') as icp,
+    max(meta->>'v') filter (where step='q_segmento')    as segmento,
+    max(meta->>'v') filter (where step='q_volume')      as volume,
+    max(meta->>'v') filter (where step='q_trafego')     as trafego,
+    max(meta->>'v') filter (where step='q_faturamento') as faturamento
+  from ev
+  group by session_id
+  having (not p_only_completed) or bool_or(step='result')
+  order by min(created_at) desc
+  limit 1000;
+$$;
+
+grant execute on function public.lp_funnel_sessions(text, int, boolean) to anon, authenticated;

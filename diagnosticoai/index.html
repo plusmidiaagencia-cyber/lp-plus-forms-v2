@@ -485,7 +485,7 @@ function renderQuestion(){
       // Sem site = fora do diagnóstico → sai do funil pra página de venda de site
       if(q.key==='volume' && o.v==='sem-site'){ if(window.dgTrack) dgTrack('exit_sem_site'); window.location.href='/diagnosticoai/site/'; return; }
       state.answers[q.key] = o.v;
-      if(window.dgTrack) dgTrack('q_'+q.key, 3+state.qi);
+      if(window.dgTrack) dgTrack('q_'+q.key, 3+state.qi, {v:o.v});
       if(state.qi < QUESTIONS.length-1){ state.qi++; renderQuestion(); setProgress(); }
       else { show('s-url'); setProgress(); }
     });

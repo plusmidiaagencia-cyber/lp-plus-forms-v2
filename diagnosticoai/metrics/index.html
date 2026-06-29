@@ -52,6 +52,23 @@ h1,h2,h3{font-family:'Montserrat',sans-serif}
 .refresh{background:none;border:1px solid var(--border-2);color:var(--muted);border-radius:10px;padding:8px 12px;cursor:pointer;font-size:.8rem}
 .setup{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:12px;padding:14px;color:#fcd34d;font-size:.86rem;margin-bottom:18px;display:none}
 .setup b{color:#fff}
+.sess-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:28px 0 12px}
+.sess-head .cnt{color:var(--dim);font-size:.8rem;font-weight:700;margin-left:6px}
+.sess-tools{display:flex;align-items:center;gap:14px}
+.tgl{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:.84rem;cursor:pointer;user-select:none}
+.tgl input{accent-color:var(--brand);width:16px;height:16px}
+.exp{background:var(--card);border:1px solid var(--border-2);color:var(--text);border-radius:10px;padding:8px 12px;font-size:.82rem;font-weight:700;cursor:pointer}
+.exp:hover{border-color:var(--brand)}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px}
+.tbl{width:100%;border-collapse:collapse;font-size:.86rem;min-width:560px}
+.tbl th{text-align:left;color:var(--dim);font-family:'Montserrat';font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:.04em;padding:11px 12px;background:#0d0d0d;border-bottom:1px solid var(--border)}
+.tbl td{padding:11px 12px;border-bottom:1px solid var(--border);color:var(--muted)}
+.tbl td b{color:var(--text);font-weight:600}
+.tbl tr:last-child td{border-bottom:none}
+.bdg{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:999px}
+.bdg.ok{background:rgba(34,197,94,.14);color:#4ade80}
+.bdg.icp{background:rgba(56,182,255,.14);color:var(--brand);margin-left:4px}
+.bdg.stop{background:#1c1c1c;color:var(--dim);border:1px solid var(--border-2)}
 </style>
 </head>
 <body>
@@ -72,6 +89,8 @@ h1,h2,h3{font-family:'Montserrat',sans-serif}
   </div>
 
   <div id="content"><div class="state"><div class="spinner"></div>Carregando métricas…</div></div>
+
+  <div id="sessions"></div>
 
   <div class="note">
     Sessão = um visitante (id anônimo no navegador, sem dados pessoais). “% topo” compara com quem abriu o quiz; “passo” é a conversão em relação à etapa anterior.
@@ -107,7 +126,7 @@ const BRANCH=[
   {k:'site_view',l:'Viu página de site'},
   {k:'interesse_site',l:'Interesse em site → WhatsApp'},
 ];
-let days=30;
+let days=30, onlyCompleted=false, sessionsCache=[];
 
 async function load(){
   const c=document.getElementById('content');
@@ -122,6 +141,7 @@ async function load(){
   }catch(e){ return showSetup(0,String(e)); }
   document.getElementById('setup').style.display='none';
   render(rows);
+  loadSessions();
 }
 
 function showSetup(status,msg){
@@ -181,6 +201,62 @@ function render(rows){
   document.getElementById('content').innerHTML=html;
 }
 function kpi(n,l,alert){ return '<div class="kpi'+(alert?' alert':'')+'"><div class="n">'+n+'</div><div class="l">'+l+'</div></div>'; }
+
+const LBL={
+  segmento:{'moda-praia':'Moda Praia','moda-masculina':'Moda Masculina','moda-feminina':'Moda Feminina','moda-fitness':'Moda Fitness','moda-infantil':'Moda Infantil','moda-intima':'Moda Íntima','outros':'Outros'},
+  volume:{'sem-site':'Sem site','menos-30':'< 30 vendas','30-100':'30–100','100-300':'100–300','300-1000':'300–1000','mais-1000':'> 1000'},
+  trafego:{'nao':'Não investe','100-3k':'R$100–3k','3k-10k':'R$3–10k','10k-20k':'R$10–20k','20k-50k':'R$20–50k','mais-50k':'> R$50k'},
+  faturamento:{'menos-10k':'< R$10k','10-25k':'R$10–25k','25-50k':'R$25–50k','50-100k':'R$50–100k','100-300k':'R$100–300k','mais-300k':'> R$300k'}
+};
+const STEPMAP={}; STEPS.concat(BRANCH).forEach(x=>STEPMAP[x.k]=x.l);
+function lbl(cat,v){ return v?((LBL[cat]&&LBL[cat][v])||v):'–'; }
+function fmtDate(iso){ const d=new Date(iso); return d.toLocaleDateString('pt-BR')+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
+
+async function loadSessions(){
+  const el=document.getElementById('sessions');
+  el.innerHTML='<div class="sec-t" style="margin-top:28px">Sessões</div><div class="state" style="padding:20px"><div class="spinner"></div>Carregando…</div>';
+  let rows=[];
+  try{
+    const r=await fetch(SUPA+'/rest/v1/rpc/lp_funnel_sessions',{method:'POST',
+      headers:{'apikey':ANON,'Authorization':'Bearer '+ANON,'Content-Type':'application/json'},
+      body:JSON.stringify({p_source:'quiz-diagnostico',p_days:days,p_only_completed:onlyCompleted})});
+    if(!r.ok){ el.innerHTML='<div class="sec-t" style="margin-top:28px">Sessões</div><div class="state">Rode a versão atualizada do SETUP.sql (faltou a função <b>lp_funnel_sessions</b>).</div>'; return; }
+    rows=await r.json();
+  }catch(e){ el.innerHTML=''; return; }
+  sessionsCache=rows; renderSessions(rows);
+}
+
+function renderSessions(rows){
+  const el=document.getElementById('sessions');
+  let h='<div class="sess-head"><div class="sec-t" style="margin:0">Sessões<span class="cnt">'+rows.length+(rows.length>=1000?'+':'')+'</span></div>'
+    +'<div class="sess-tools"><label class="tgl"><input type="checkbox" id="onlyC"'+(onlyCompleted?' checked':'')+'> Apenas concluídos</label>'
+    +'<button class="exp" id="expBtn">⬇ Exportar CSV</button></div></div>';
+  if(!rows.length){ h+='<div class="state" style="padding:24px">Nenhuma sessão no período.</div>'; el.innerHTML=h; wireSess(); return; }
+  h+='<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Entrada</th><th>Segmento</th><th>Faturamento</th><th>Tráfego</th><th>Status</th></tr></thead><tbody>';
+  rows.forEach(r=>{
+    const status = r.completed
+      ? '<span class="bdg ok">Completo</span>'+(r.icp?'<span class="bdg icp">ICP</span>':'')
+      : '<span class="bdg stop">parou: '+(STEPMAP[r.last_step]||r.last_step||'?')+'</span>';
+    h+='<tr><td><b>'+fmtDate(r.started_at)+'</b></td><td>'+lbl('segmento',r.segmento)+'</td><td>'+lbl('faturamento',r.faturamento)+'</td><td>'+lbl('trafego',r.trafego)+'</td><td>'+status+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+  el.innerHTML=h; wireSess();
+}
+function wireSess(){
+  const c=document.getElementById('onlyC'); if(c) c.onchange=()=>{ onlyCompleted=c.checked; loadSessions(); };
+  const e=document.getElementById('expBtn'); if(e) e.onclick=exportCSV;
+}
+function exportCSV(){
+  const rows=sessionsCache||[];
+  const head=['entrada','segmento','volume','trafego','faturamento','ultima_etapa','completo','lead','icp','etapas'];
+  const lines=[head.join(',')];
+  rows.forEach(r=>{
+    const v=[fmtDate(r.started_at),lbl('segmento',r.segmento),lbl('volume',r.volume),lbl('trafego',r.trafego),lbl('faturamento',r.faturamento),(STEPMAP[r.last_step]||r.last_step||''),r.completed?'sim':'não',r.is_lead?'sim':'não',r.icp?'sim':'não',r.steps_count];
+    lines.push(v.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(','));
+  });
+  const blob=new Blob(['﻿'+lines.join('\n')],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='funil-sessoes.csv'; a.click();
+}
 
 document.querySelectorAll('.fbtn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));b.classList.add('on');days=+b.dataset.d;load();});
 document.getElementById('refresh').onclick=load;
