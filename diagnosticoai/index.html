@@ -592,7 +592,7 @@ function startAnalysis(){
   const rot = setInterval(()=>{ mi=(mi+1)%ANALYZE_MESSAGES.length; stepsEl.textContent=ANALYZE_MESSAGES[mi]; }, 1600);
 
   const minWait = new Promise(r=>setTimeout(r, REDUCE_MOTION?400:4200));
-  const apiCall = fetch('/api/diagnose', {
+  const apiCall = fetch('/api/diagnose/', {
     method:'POST', headers:{'Content-Type':'application/json'},
     body: JSON.stringify({ url: state.url, answers: state.answers })
   }).then(r=>r.json()).catch(()=>null);
