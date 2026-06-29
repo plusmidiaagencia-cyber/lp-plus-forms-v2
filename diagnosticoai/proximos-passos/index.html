@@ -222,14 +222,16 @@ h1,h2,h3{font-family:'Montserrat',sans-serif}
 <script>
 "use strict";
 const REDUCE = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-const WHATSAPP_URL = 'https://wa.me/message/MRMAWEFOOM5WO1';
+const AGENDAR_URL = '/diagnosticoai/agendar/';
+const WHATSAPP_URL = 'https://wa.me/554891735594?text=' + encodeURIComponent('Oi, tudo bem? Acabei de fazer o diagnóstico e quero tirar uma dúvida sobre a consultoria com a Plus Mídia.');
 
-// CTAs → WhatsApp (+ pixel)
-['ctaTop','ctaBottom','waLink'].forEach(id=>{
+// CTAs "Agendar consultoria" → página de agenda; link de dúvida → WhatsApp
+['ctaTop','ctaBottom'].forEach(id=>{
   const el=document.getElementById(id);
-  el.href=WHATSAPP_URL;
-  el.addEventListener('click',()=>{ if(window.fbq) fbq('trackCustom','AgendarConsultoria',{source:'quiz-diagnostico'}); });
+  el.href=AGENDAR_URL;
+  el.addEventListener('click',()=>{ if(window.fbq) fbq('trackCustom','IniciouAgendamento',{source:'quiz-diagnostico'}); });
 });
+(function(){ const w=document.getElementById('waLink'); if(w) w.href=WHATSAPP_URL; })();
 
 // Logos de clientes (reaproveita os já hospedados em /clients)
 const CLIENTS=['amarbeach.webp','clubeazular.png','donafiuza.png','futcompany.webp','likeanangel.webp','lojaac.png','oldwestcowboy.webp','smellea.png','sportimports.webp'];

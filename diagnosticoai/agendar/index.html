@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Escolha um dia e horário — Consultoria | Plus Mídia</title>
+<meta name="description" content="Agende sua consultoria estratégica com um especialista da Plus Mídia.">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="robots" content="noindex">
+
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="shortcut icon" href="/favicon.ico">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- Meta Pixel: PIXEL PM 01 -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','289183857235038');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=289183857235038&ev=PageView&noscript=1"/></noscript>
+<!-- /Meta Pixel -->
+
+<style>
+:root{
+  --bg:#0a0a0a;--bg-2:#111;--card:#161616;--card-2:#1c1c1c;--border:#262626;--border-2:#333;
+  --text:#fff;--muted:#a6a6a6;--dim:#7a7a7a;
+  --brand:#38b6ff;--brand-2:#1e9bdb;--brand-glow:rgba(56,182,255,.18);--success:#22c55e;--maxw:480px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font-family:'Roboto',sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100dvh}
+h1,h2,h3{font-family:'Montserrat',sans-serif}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.035;mix-blend-mode:overlay}
+.grain svg{width:100%;height:100%}
+
+.app{max-width:var(--maxw);margin:0 auto;padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right));min-height:100dvh;display:flex;flex-direction:column}
+.topbar{padding:22px 0 8px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.topbar .logo{height:32px;width:auto;filter:drop-shadow(0 0 14px var(--brand-glow))}
+.badge{display:inline-flex;align-items:center;gap:7px;font-family:'Montserrat';font-weight:700;font-size:.72rem;letter-spacing:.06em;color:var(--brand);background:rgba(56,182,255,.08);border:1px solid rgba(56,182,255,.25);padding:5px 12px;border-radius:999px}
+.dot-live{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 0 0 rgba(34,197,94,.5);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.45)}70%{box-shadow:0 0 0 7px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+
+h1.title{text-align:center;font-size:clamp(1.4rem,5.5vw,1.8rem);font-weight:800;margin:14px 0 16px}
+
+.specialist{display:flex;align-items:center;gap:13px;background:linear-gradient(160deg,rgba(56,182,255,.10),rgba(56,182,255,.02));border:1px solid rgba(56,182,255,.28);border-radius:16px;padding:14px 15px;margin-bottom:18px}
+.specialist .av{position:relative;width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#10222e,#0a1318);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.specialist .av .on{position:absolute;right:-3px;bottom:-3px;width:13px;height:13px;border-radius:50%;background:var(--success);border:2px solid #0a0a0a}
+.specialist .info b{display:block;font-family:'Montserrat';font-weight:700;font-size:.98rem}
+.specialist .info span{color:var(--dim);font-size:.83rem}
+.specialist .cam{margin-left:auto;color:var(--brand);font-size:1.3rem}
+
+/* Calendar */
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.cal-head .mname{font-family:'Montserrat';font-weight:700;font-size:1rem;text-transform:capitalize}
+.navbtn{width:34px;height:34px;border-radius:10px;border:1px solid var(--border-2);background:var(--card);color:var(--muted);cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:.15s}
+.navbtn:hover:not(:disabled){border-color:var(--brand);color:var(--brand)}
+.navbtn:disabled{opacity:.3;cursor:not-allowed}
+.dow{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;color:var(--dim);font-family:'Montserrat';font-weight:700;font-size:.78rem;margin-bottom:6px}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cell{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:11px;font-size:.95rem;color:var(--dim);position:relative;border:1px solid transparent}
+.cell.av{color:var(--text);background:var(--card);border-color:var(--border-2);cursor:pointer;font-weight:600;transition:.15s}
+.cell.av:hover{border-color:var(--brand)}
+.cell.sel{background:var(--brand);color:#04222f;border-color:var(--brand);font-weight:800}
+.cell .pt{width:5px;height:5px;border-radius:50%;background:var(--brand);position:absolute;bottom:7px}
+.cell.sel .pt{background:#04222f}
+
+.divider{height:1px;background:var(--border);margin:20px 0}
+
+.slots-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
+.slots-head .h{font-family:'Montserrat';font-weight:800;font-size:1.05rem}
+.tzbadge{font-size:.72rem;color:var(--muted);border:1px solid var(--border-2);border-radius:999px;padding:3px 9px;white-space:nowrap}
+.slots-sub{color:var(--muted);font-size:.88rem;margin-bottom:14px;text-transform:capitalize}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.slot{background:var(--card);border:1px solid var(--border-2);border-radius:12px;padding:14px 6px;text-align:center;font-family:'Montserrat';font-weight:700;font-size:1rem;color:var(--text);cursor:pointer;transition:.15s}
+.slot:hover{border-color:var(--brand)}
+.slot.sel{background:var(--brand);color:#04222f;border-color:var(--brand)}
+
+.state{text-align:center;color:var(--muted);padding:30px 10px;font-size:.95rem}
+.spinner{width:34px;height:34px;border:3px solid var(--border-2);border-top-color:var(--brand);border-radius:50%;margin:0 auto 14px;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:none;cursor:pointer;font-family:'Montserrat';font-weight:800;font-size:1rem;letter-spacing:.04em;text-transform:uppercase;padding:18px 22px;border-radius:14px;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#04222f;position:relative;transition:.15s;text-decoration:none}
+.btn:hover:not(.disabled){transform:translateY(-2px)}
+.btn .arrow{position:absolute;right:16px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center}
+.btn.disabled{background:#1c2a30;color:#5f7886;cursor:not-allowed;pointer-events:none}
+.btn.disabled .arrow{background:rgba(255,255,255,.05)}
+.cta-wrap{position:sticky;bottom:0;padding:16px 0 calc(20px + env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 74%,transparent);z-index:10}
+
+.footer{text-align:center;padding:22px 0 calc(28px + env(safe-area-inset-bottom));color:var(--dim);font-size:.78rem;line-height:1.7}
+.footer b{color:var(--muted)}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg></div>
+
+<div class="app">
+  <div class="topbar">
+    <img src="/plusmidia-wordmark.svg" onerror="this.onerror=null;this.src='/logo.png'" alt="Plus Mídia" class="logo">
+    <span class="badge"><span class="dot-live"></span> Agendamento</span>
+  </div>
+
+  <h1 class="title">Escolha um dia e horário.</h1>
+
+  <div class="specialist">
+    <div class="av">🎯<span class="on"></span></div>
+    <div class="info"><b>Consultoria com Especialista</b><span>Videochamada — 60min</span></div>
+    <div class="cam">🎥</div>
+  </div>
+
+  <div id="content">
+    <div class="state"><div class="spinner"></div>Buscando horários disponíveis…</div>
+  </div>
+
+  <div class="footer"><b>Plus Mídia</b> · Aumentamos as vendas e o lucro líquido do seu e-commerce<br>Todos os direitos reservados © 2026</div>
+</div>
+
+<script>
+"use strict";
+const REDUCE=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+const GC_URL='https://rkngilknpcibcwalropj.supabase.co/functions/v1/google-calendar';
+const WS='8eaae987-1b56-43de-978c-c135beb30c7e';
+const CLOSER='e46daa1e-ae51-407a-8096-4585e69f1fd7'; // Decio Almo
+const DURATION=60;
+const WHATSAPP='554891735594';
+const TZ='America/Sao_Paulo';
+const WINDOW_DAYS=4; // hoje + próximos dias úteis
+
+const MES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const DOW_SHORT=['D','S','T','Q','Q','S','S'];
+
+function pad(n){return String(n).padStart(2,'0');}
+function ymd(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function parseYMD(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
+function timeLabel(iso){return new Date(iso).toLocaleTimeString('pt-BR',{timeZone:TZ,hour:'2-digit',minute:'2-digit'});}
+function longDate(s){return parseYMD(s).toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});}
+function shortDate(s){const d=parseYMD(s);return pad(d.getDate())+'/'+pad(d.getMonth()+1);}
+function weekday(s){return parseYMD(s).toLocaleDateString('pt-BR',{weekday:'long'});}
+
+// próximos N dias úteis a partir de hoje (pula sáb/dom)
+function candidateDays(){
+  const out=[];const d=new Date();d.setHours(0,0,0,0);
+  while(out.length<WINDOW_DAYS){const dow=d.getDay();if(dow!==0&&dow!==6)out.push(ymd(new Date(d)));d.setDate(d.getDate()+1);}
+  return out;
+}
+
+const state={slotsByDate:{},dates:[],selDate:null,selSlot:null,viewY:0,viewM:0};
+
+async function fetchDay(date){
+  try{
+    const r=await fetch(GC_URL,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'get-slots',workspace_id:WS,closer_ids:[CLOSER],date,duration_minutes:DURATION,find_nearest:false})});
+    const j=await r.json();
+    return (j&&Array.isArray(j.slots))?j.slots:[];
+  }catch(e){return [];}
+}
+
+async function init(){
+  const cands=candidateDays();
+  const results=await Promise.all(cands.map(fetchDay));
+  cands.forEach((d,i)=>{ if(results[i].length) state.slotsByDate[d]=results[i].map(s=>({iso:s.start,label:timeLabel(s.start)})); });
+  state.dates=Object.keys(state.slotsByDate).sort();
+
+  if(state.dates.length===0){ renderEmpty(); return; }
+  const first=parseYMD(state.dates[0]);
+  state.viewY=first.getFullYear(); state.viewM=first.getMonth();
+  state.selDate=state.dates[0];
+  render();
+}
+
+function renderEmpty(){
+  document.getElementById('content').innerHTML=
+    '<div class="state">Não encontramos horários livres nos próximos dias.<br>Fale com a gente no WhatsApp que encontramos o melhor horário pra você.</div>'+
+    '<div class="cta-wrap"><a class="btn" id="waBtn" href="#">Falar no WhatsApp <span class="arrow">›</span></a></div>';
+  const wa='https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent('Oi, tudo bem? Acabei de fazer o diagnóstico e quero agendar a consultoria com especialista da Plus Mídia.');
+  document.getElementById('waBtn').href=wa;
+}
+
+function render(){
+  const c=document.getElementById('content');
+  c.innerHTML=`
+    <div class="cal-head">
+      <button class="navbtn" id="prev">‹</button>
+      <div class="mname">${MES[state.viewM]} ${state.viewY}</div>
+      <button class="navbtn" id="next">›</button>
+    </div>
+    <div class="dow">${DOW_SHORT.map(d=>`<span>${d}</span>`).join('')}</div>
+    <div class="grid" id="grid"></div>
+    <div class="divider"></div>
+    <div id="slotArea"></div>
+    <div class="cta-wrap"><a class="btn disabled" id="confirm" href="#">Confirmar agendamento <span class="arrow">›</span></a></div>
+  `;
+  renderGrid(); renderSlots();
+  // nav
+  const now=new Date();
+  document.getElementById('prev').disabled=(state.viewY===now.getFullYear()&&state.viewM===now.getMonth());
+  document.getElementById('prev').onclick=()=>{state.viewM--;if(state.viewM<0){state.viewM=11;state.viewY--;}render();};
+  document.getElementById('next').onclick=()=>{state.viewM++;if(state.viewM>11){state.viewM=0;state.viewY++;}render();};
+}
+
+function renderGrid(){
+  const grid=document.getElementById('grid');
+  const firstDow=new Date(state.viewY,state.viewM,1).getDay();
+  const days=new Date(state.viewY,state.viewM+1,0).getDate();
+  let html='';
+  for(let i=0;i<firstDow;i++) html+='<div class="cell"></div>';
+  for(let d=1;d<=days;d++){
+    const key=state.viewY+'-'+pad(state.viewM+1)+'-'+pad(d);
+    const avail=!!state.slotsByDate[key];
+    const sel=key===state.selDate;
+    html+=`<div class="cell${avail?' av':''}${sel?' sel':''}" data-d="${avail?key:''}">${d}${avail?'<span class="pt"></span>':''}</div>`;
+  }
+  grid.innerHTML=html;
+  grid.querySelectorAll('.cell.av').forEach(el=>el.onclick=()=>{state.selDate=el.dataset.d;state.selSlot=null;render();});
+}
+
+function renderSlots(){
+  const area=document.getElementById('slotArea');
+  if(!state.selDate||!state.slotsByDate[state.selDate]){area.innerHTML='<div class="state">Selecione um dia com horários.</div>';return;}
+  const slots=state.slotsByDate[state.selDate];
+  area.innerHTML=`
+    <div class="slots-head"><span class="h">Horários disponíveis</span><span class="tzbadge">Horário de Brasília</span></div>
+    <div class="slots-sub">${longDate(state.selDate)}</div>
+    <div class="slots" id="slots">${slots.map((s,i)=>`<div class="slot${state.selSlot===i?' sel':''}" data-i="${i}">${s.label}</div>`).join('')}</div>
+  `;
+  area.querySelectorAll('.slot').forEach(el=>el.onclick=()=>{state.selSlot=+el.dataset.i;updateSlotSel();updateConfirm();});
+  updateConfirm();
+}
+function updateSlotSel(){document.querySelectorAll('#slots .slot').forEach(el=>el.classList.toggle('sel',+el.dataset.i===state.selSlot));}
+
+function updateConfirm(){
+  const btn=document.getElementById('confirm');if(!btn)return;
+  const ok=state.selDate!=null&&state.selSlot!=null;
+  btn.classList.toggle('disabled',!ok);
+  if(ok){
+    const s=state.slotsByDate[state.selDate][state.selSlot];
+    const msg=`Oi, tudo bem? Acabei de fazer o diagnóstico e quero marcar a consultoria com especialista da Plus Mídia no dia ${shortDate(state.selDate)} (${weekday(state.selDate)}) às ${s.label} — horário de Brasília.`;
+    btn.href='https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(msg);
+    btn.onclick=()=>{if(window.fbq)fbq('trackCustom','AgendarConsultoria',{source:'quiz-diagnostico',slot:state.selDate+' '+s.label});};
+  }else{ btn.href='#'; btn.onclick=(e)=>e.preventDefault(); }
+}
+
+init();
+</script>
+</body>
+</html>
