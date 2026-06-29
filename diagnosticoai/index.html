@@ -580,18 +580,21 @@ document.getElementById('analyzeBtn').addEventListener('click', ()=>{
 
 const ANALYZE_MESSAGES = [
   'Coletando dados da sua loja…',
-  'Avaliando experiência e checkout…',
-  'Comparando com o mercado…',
+  'Avaliando experiência e navegação…',
+  'Analisando checkout e jornada de compra…',
+  'Comparando com lojas do seu segmento…',
+  'Medindo ticket médio e taxa de conversão…',
   'Calculando oportunidades de receita…',
+  'Montando seu diagnóstico…',
 ];
 function startAnalysis(){
   show('s-analyzing'); setProgress();
   // mensagens rotativas
   let mi=0;
   const stepsEl = document.getElementById('analyzeSteps');
-  const rot = setInterval(()=>{ mi=(mi+1)%ANALYZE_MESSAGES.length; stepsEl.textContent=ANALYZE_MESSAGES[mi]; }, 1600);
+  const rot = setInterval(()=>{ mi=(mi+1)%ANALYZE_MESSAGES.length; stepsEl.textContent=ANALYZE_MESSAGES[mi]; }, 2100);
 
-  const minWait = new Promise(r=>setTimeout(r, REDUCE_MOTION?400:4200));
+  const minWait = new Promise(r=>setTimeout(r, REDUCE_MOTION?800:15000));
   const apiCall = fetch('/api/diagnose/', {
     method:'POST', headers:{'Content-Type':'application/json'},
     body: JSON.stringify({ url: state.url, answers: state.answers })
