@@ -481,6 +481,8 @@ function renderQuestion(){
     b.style.animation = REDUCE_MOTION?'none':`fadeUp .4s ${i*55}ms both`;
     b.innerHTML = `<span class="emo">${o.e}</span><span class="lbl">${o.l}</span><span class="chev">›</span>`;
     b.addEventListener('click', ()=>{
+      // Sem site = fora do diagnóstico → sai do funil pra página de venda de site
+      if(q.key==='volume' && o.v==='sem-site'){ window.location.href='/diagnosticoai/site/'; return; }
       state.answers[q.key] = o.v;
       if(state.qi < QUESTIONS.length-1){ state.qi++; renderQuestion(); setProgress(); }
       else { show('s-url'); setProgress(); }
@@ -745,8 +747,19 @@ function renderResult(){
     list.appendChild(el);
   });
 
-  if(d.summary){ document.getElementById('summaryNote').innerHTML = d.summary + ' Toque no botão abaixo e comece a otimizar os seus resultados.'; }
-  document.getElementById('nextStepBtn').href = NEXT_STEP_URL;
+  // ICP: tem site (garantido, pois "sem site" sai antes) E fatura >= 10k.
+  // Fora do ICP (fatura < 10k): mostra só o diagnóstico, sem próximo passo.
+  const isICP = state.answers.faturamento !== 'menos-10k';
+  const btn = document.getElementById('nextStepBtn');
+  const ctaWrap = btn.closest('.cta-wrap');
+  if(isICP){
+    if(d.summary){ document.getElementById('summaryNote').innerHTML = d.summary + ' Toque no botão abaixo e comece a otimizar os seus resultados.'; }
+    btn.href = NEXT_STEP_URL;
+    if(ctaWrap) ctaWrap.style.display = '';
+  }else{
+    document.getElementById('summaryNote').innerHTML = (d.summary || 'Sua análise inicial mostrou que existe espaço para crescimento na sua marca.') + ' Esse é o seu diagnóstico inicial — guarde esses pontos e comece a otimizá-los na sua loja.';
+    if(ctaWrap) ctaWrap.style.display = 'none';
+  }
 }
 
 document.getElementById('nextStepBtn').addEventListener('click', ()=>{

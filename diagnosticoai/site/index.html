@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Seu primeiro passo é ter um site | Plus Mídia</title>
+<meta name="description" content="O Diagnóstico ECOM com IA é pra quem já tem site. Sem loja própria, o primeiro passo pra vender de verdade é ter o seu site.">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="robots" content="noindex">
+
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="shortcut icon" href="/favicon.ico">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- Meta Pixel: PIXEL PM 01 -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','289183857235038');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=289183857235038&ev=PageView&noscript=1"/></noscript>
+<!-- /Meta Pixel -->
+
+<style>
+:root{
+  --bg:#0a0a0a;--bg-2:#111;--card:#161616;--card-2:#1c1c1c;--border:#262626;--border-2:#333;
+  --text:#fff;--muted:#a6a6a6;--dim:#7a7a7a;
+  --brand:#38b6ff;--brand-2:#1e9bdb;--brand-glow:rgba(56,182,255,.18);--success:#22c55e;--maxw:520px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font-family:'Roboto',sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100dvh}
+h1,h2,h3{font-family:'Montserrat',sans-serif}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.035;mix-blend-mode:overlay}
+.grain svg{width:100%;height:100%}
+
+.app{max-width:var(--maxw);margin:0 auto;padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right));min-height:100dvh;display:flex;flex-direction:column}
+.topbar{padding:22px 0 8px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.topbar .logo{height:32px;width:auto;filter:drop-shadow(0 0 14px var(--brand-glow))}
+.badge{display:inline-flex;align-items:center;gap:7px;font-family:'Montserrat';font-weight:700;font-size:.72rem;letter-spacing:.06em;color:var(--brand);background:rgba(56,182,255,.08);border:1px solid rgba(56,182,255,.25);padding:5px 12px;border-radius:999px}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}
+.reveal.in{opacity:1;transform:none}
+
+.hero{background:linear-gradient(160deg,rgba(56,182,255,.10),rgba(56,182,255,.02));border:1px solid rgba(56,182,255,.28);border-radius:20px;padding:24px 20px;margin-top:10px;text-align:center}
+.hero .emo{font-size:2.4rem;line-height:1}
+.hero h1{font-size:clamp(1.5rem,6vw,2rem);font-weight:900;letter-spacing:-.01em;margin:10px 0}
+.hero p{color:var(--muted);font-size:.98rem;margin-top:10px}
+.hero p b{color:var(--text)}
+
+.block{margin-top:26px}
+.block p{color:var(--muted);font-size:.98rem;margin-bottom:12px}
+.block p b{color:var(--text)}
+
+.sec-title{text-align:center;font-weight:800;font-size:1.25rem;font-family:'Montserrat';margin-bottom:4px}
+.sec-sub{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:18px}
+
+.checks{list-style:none;display:flex;flex-direction:column;gap:13px}
+.checks li{display:flex;align-items:flex-start;gap:12px;font-size:.98rem;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 15px}
+.checks li b{color:#fff}
+.checks .ck{width:30px;height:30px;border-radius:9px;background:rgba(56,182,255,.12);color:var(--brand);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+
+.authority{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px 16px;text-align:center;margin-top:26px}
+.authority p{color:var(--muted);font-size:.93rem}
+.authority p b{color:var(--text)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.stat{background:#0d0d0d;border:1px solid var(--border);border-radius:12px;padding:12px 6px}
+.stat .n{font-family:'Montserrat';font-weight:900;font-size:1.2rem;color:var(--brand);line-height:1}
+.stat .l{font-size:.7rem;color:var(--muted);margin-top:5px}
+
+.note{text-align:center;color:var(--muted);font-size:.94rem;margin:26px 0 12px;padding:0 6px}
+.note b{color:var(--text)}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:none;cursor:pointer;font-family:'Montserrat';font-weight:800;font-size:1rem;letter-spacing:.04em;text-transform:uppercase;padding:18px 22px;border-radius:14px;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#04222f;position:relative;transition:transform .15s;text-decoration:none}
+.btn:hover{transform:translateY(-2px)}
+.btn .arrow{position:absolute;right:16px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center}
+.btn.pulse:not(:hover)::after{content:"";position:absolute;inset:0;border-radius:14px;box-shadow:0 0 0 0 var(--brand-glow);animation:ring 2.4s infinite}
+@keyframes ring{0%{box-shadow:0 0 0 0 var(--brand-glow)}70%{box-shadow:0 0 0 14px rgba(56,182,255,0)}100%{box-shadow:0 0 0 0 rgba(56,182,255,0)}}
+.cta-wrap{position:sticky;bottom:0;padding:14px 0 calc(20px + env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 74%,transparent);z-index:10}
+
+.footer{text-align:center;padding:24px 0 calc(28px + env(safe-area-inset-bottom));color:var(--dim);font-size:.78rem;line-height:1.7}
+.footer b{color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg></div>
+
+<div class="app">
+  <div class="topbar">
+    <img src="/plusmidia-wordmark.svg" onerror="this.onerror=null;this.src='/logo.png'" alt="Plus Mídia" class="logo">
+    <span class="badge">Diagnóstico ECOM</span>
+  </div>
+
+  <section class="hero reveal">
+    <div class="emo">🚧</div>
+    <h1>Opa! Esse diagnóstico ainda não é pra você.</h1>
+    <p>O <b>Diagnóstico ECOM com IA</b> analisa a operação real da sua loja — e pra isso ele precisa de um <b>site/loja própria</b> pra ler.</p>
+    <p>Sem um site seu, a IA não consegue fazer a análise. Mas calma: isso <b>não é um "não"</b> — é o seu verdadeiro <b>primeiro passo</b>.</p>
+  </section>
+
+  <section class="block reveal">
+    <div class="sec-title">Por que ter o SEU site muda o jogo.</div>
+    <div class="sec-sub">Vender só por marketplace e Instagram tem teto. Loja própria não.</div>
+    <ul class="checks">
+      <li><span class="ck">🏠</span><span>Você para de <b>depender de marketplace e do algoritmo dos outros</b>. A loja é sua, as regras são suas.</span></li>
+      <li><span class="ck">💰</span><span><b>Mais margem e lucro</b>: sem comissão de marketplace mordendo cada venda sua.</span></li>
+      <li><span class="ck">🎯</span><span><b>Seus dados, seu pixel, sua base.</b> Dá pra fazer tráfego pago, remarketing e recompra de verdade.</span></li>
+      <li><span class="ck">🚀</span><span><b>Escala real:</b> é com loja própria que tráfego, conversão e LTV decolam juntos.</span></li>
+      <li><span class="ck">⭐</span><span><b>Mais confiança e mais conversão:</b> uma loja profissional vende mais que um perfil no Insta.</span></li>
+    </ul>
+  </section>
+
+  <section class="authority reveal">
+    <p>A <b>Plus Mídia</b> cria e escala e-commerces de moda. São <b>6 anos</b> ajudando marcas a saírem do zero e venderem todo dia no próprio site.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">+200</div><div class="l">clientes ativos</div></div>
+      <div class="stat"><div class="n">+120Mi</div><div class="l">em vendas geradas</div></div>
+      <div class="stat"><div class="n">6 anos</div><div class="l">de mercado</div></div>
+    </div>
+  </section>
+
+  <p class="note">Bora construir o <b>seu site</b> e começar a vender de verdade? Toque abaixo e fale com a gente.</p>
+  <div class="cta-wrap">
+    <a class="btn pulse" id="cta" href="#">Quero meu site <span class="arrow">›</span></a>
+  </div>
+
+  <div class="footer"><b>Plus Mídia</b> · Aumentamos as vendas e o lucro líquido do seu e-commerce<br>Todos os direitos reservados © 2026</div>
+</div>
+
+<script>
+"use strict";
+const REDUCE=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+const WHATSAPP='5547992817316'; // Alex Guestter
+const MSG='Oi, tudo bem? Vim do diagnóstico e tenho interesse em fazer meu site.';
+const cta=document.getElementById('cta');
+cta.href='https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(MSG);
+cta.addEventListener('click',()=>{ if(window.fbq) fbq('trackCustom','InteresseSite',{source:'quiz-diagnostico'}); });
+
+const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>REDUCE?el.classList.add('in'):io.observe(el));
+</script>
+</body>
+</html>
