@@ -31,6 +31,7 @@ fbq('init','289183857235038');fbq('track','PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=289183857235038&ev=PageView&noscript=1"/></noscript>
 <!-- /Meta Pixel -->
+<script src="/diagnosticoai/track.js"></script>
 
 <style>
 :root{
@@ -225,11 +226,12 @@ const REDUCE = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 const AGENDAR_URL = '/diagnosticoai/agendar/';
 const WHATSAPP_URL = 'https://wa.me/5521975190117?text=' + encodeURIComponent('Oi, tudo bem? Acabei de fazer o diagnóstico e quero tirar uma dúvida sobre a consultoria com a Plus Mídia.');
 
+if(window.dgTrack) dgTrack('proximos_passos',13);
 // CTAs "Agendar consultoria" → página de agenda; link de dúvida → WhatsApp
 ['ctaTop','ctaBottom'].forEach(id=>{
   const el=document.getElementById(id);
   el.href=AGENDAR_URL;
-  el.addEventListener('click',()=>{ if(window.fbq) fbq('trackCustom','IniciouAgendamento',{source:'quiz-diagnostico'}); });
+  el.addEventListener('click',()=>{ if(window.dgTrack) dgTrack('iniciou_agendamento',14); if(window.fbq) fbq('trackCustom','IniciouAgendamento',{source:'quiz-diagnostico'}); });
 });
 (function(){ const w=document.getElementById('waLink'); if(w) w.href=WHATSAPP_URL; })();
 

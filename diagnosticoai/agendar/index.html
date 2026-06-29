@@ -27,6 +27,7 @@ fbq('init','289183857235038');fbq('track','PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=289183857235038&ev=PageView&noscript=1"/></noscript>
 <!-- /Meta Pixel -->
+<script src="/diagnosticoai/track.js"></script>
 
 <style>
 :root{
@@ -165,6 +166,7 @@ async function fetchDay(date){
 }
 
 async function init(){
+  if(window.dgTrack) dgTrack('agendar',15);
   const cands=candidateDays();
   const results=await Promise.all(cands.map(fetchDay));
   cands.forEach((d,i)=>{ if(results[i].length) state.slotsByDate[d]=results[i].map(s=>({iso:s.start,label:timeLabel(s.start)})); });
@@ -232,7 +234,7 @@ function renderSlots(){
     <div class="slots-sub">${longDate(state.selDate)}</div>
     <div class="slots" id="slots">${slots.map((s,i)=>`<div class="slot${state.selSlot===i?' sel':''}" data-i="${i}">${s.label}</div>`).join('')}</div>
   `;
-  area.querySelectorAll('.slot').forEach(el=>el.onclick=()=>{state.selSlot=+el.dataset.i;updateSlotSel();updateConfirm();});
+  area.querySelectorAll('.slot').forEach(el=>el.onclick=()=>{state.selSlot=+el.dataset.i;if(window.dgTrack)dgTrack('slot_selected',16);updateSlotSel();updateConfirm();});
   updateConfirm();
 }
 function updateSlotSel(){document.querySelectorAll('#slots .slot').forEach(el=>el.classList.toggle('sel',+el.dataset.i===state.selSlot));}
@@ -245,7 +247,7 @@ function updateConfirm(){
     const s=state.slotsByDate[state.selDate][state.selSlot];
     const msg=`Oi, tudo bem? Acabei de fazer o diagnóstico e quero marcar a consultoria com especialista da Plus Mídia no dia ${shortDate(state.selDate)} (${weekday(state.selDate)}) às ${s.label} — horário de Brasília.`;
     btn.href='https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(msg);
-    btn.onclick=()=>{if(window.fbq)fbq('trackCustom','AgendarConsultoria',{source:'quiz-diagnostico',slot:state.selDate+' '+s.label});};
+    btn.onclick=()=>{if(window.dgTrack)dgTrack('agendamento_confirmado',17,{slot:state.selDate+' '+s.label});if(window.fbq)fbq('trackCustom','AgendarConsultoria',{source:'quiz-diagnostico',slot:state.selDate+' '+s.label});};
   }else{ btn.href='#'; btn.onclick=(e)=>e.preventDefault(); }
 }
 

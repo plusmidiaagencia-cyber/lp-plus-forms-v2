@@ -37,6 +37,7 @@ fbq('track', 'PageView');
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=289183857235038&ev=PageView&noscript=1"/></noscript>
 <!-- /Meta Pixel -->
+<script src="/diagnosticoai/track.js"></script>
 
 <style>
 :root{
@@ -482,8 +483,9 @@ function renderQuestion(){
     b.innerHTML = `<span class="emo">${o.e}</span><span class="lbl">${o.l}</span><span class="chev">›</span>`;
     b.addEventListener('click', ()=>{
       // Sem site = fora do diagnóstico → sai do funil pra página de venda de site
-      if(q.key==='volume' && o.v==='sem-site'){ window.location.href='/diagnosticoai/site/'; return; }
+      if(q.key==='volume' && o.v==='sem-site'){ if(window.dgTrack) dgTrack('exit_sem_site'); window.location.href='/diagnosticoai/site/'; return; }
       state.answers[q.key] = o.v;
+      if(window.dgTrack) dgTrack('q_'+q.key, 3+state.qi);
       if(state.qi < QUESTIONS.length-1){ state.qi++; renderQuestion(); setProgress(); }
       else { show('s-url'); setProgress(); }
     });
@@ -504,6 +506,7 @@ document.getElementById('backBtn').addEventListener('click', ()=>{
 
 /* =================== INTRO START =================== */
 document.getElementById('startBtn').addEventListener('click', ()=>{
+  if(window.dgTrack) dgTrack('start',2);
   state.qi = 0; renderQuestion(); show('s-quiz'); setProgress();
 });
 
@@ -590,6 +593,7 @@ const ANALYZE_MESSAGES = [
   'Montando seu diagnóstico…',
 ];
 function startAnalysis(){
+  if(window.dgTrack){ dgTrack('url',7); dgTrack('analyzing',8); }
   show('s-analyzing'); setProgress();
   // mensagens rotativas
   let mi=0;
@@ -606,6 +610,7 @@ function startAnalysis(){
     clearInterval(rot);
     state.diagnostic = data || null;
     // se a IA falhou totalmente, ainda assim seguimos (o front tem fallback render)
+    if(window.dgTrack) dgTrack('form',9);
     show('s-form'); setProgress();
   });
 }
@@ -693,6 +698,7 @@ document.getElementById('leadForm').addEventListener('submit', e=>{
   btn.disabled = true; btn.innerHTML = 'Enviando...';
 
   sendToCRM({ name, email, phone });
+  if(window.dgTrack) dgTrack('lead',10);
   state.leadSaved = true;
 
   // tela de loading do diagnóstico, depois revela o resultado
@@ -750,6 +756,7 @@ function renderResult(){
   // ICP: tem site (garantido, pois "sem site" sai antes) E fatura >= 10k.
   // Fora do ICP (fatura < 10k): mostra só o diagnóstico, sem próximo passo.
   const isICP = state.answers.faturamento !== 'menos-10k';
+  if(window.dgTrack) dgTrack('result',11,{icp:isICP});
   const btn = document.getElementById('nextStepBtn');
   const ctaWrap = btn.closest('.cta-wrap');
   if(isICP){
@@ -763,9 +770,11 @@ function renderResult(){
 }
 
 document.getElementById('nextStepBtn').addEventListener('click', ()=>{
+  if(window.dgTrack) dgTrack('next_step',12);
   if(window.fbq) fbq('trackCustom','NextStep',{source:LP_SOURCE});
 });
 
+if(window.dgTrack) dgTrack('intro',1);
 setProgress();
 </script>
 </body>

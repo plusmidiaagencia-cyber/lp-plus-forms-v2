@@ -27,6 +27,7 @@ fbq('init','289183857235038');fbq('track','PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=289183857235038&ev=PageView&noscript=1"/></noscript>
 <!-- /Meta Pixel -->
+<script src="/diagnosticoai/track.js"></script>
 
 <style>
 :root{
@@ -140,9 +141,10 @@ h1,h2,h3{font-family:'Montserrat',sans-serif}
 const REDUCE=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 const WHATSAPP='5547992817316'; // Alex Guestter
 const MSG='Oi, tudo bem? Vim do diagnóstico e tenho interesse em fazer meu site.';
+if(window.dgTrack) dgTrack('site_view');
 const cta=document.getElementById('cta');
 cta.href='https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(MSG);
-cta.addEventListener('click',()=>{ if(window.fbq) fbq('trackCustom','InteresseSite',{source:'quiz-diagnostico'}); });
+cta.addEventListener('click',()=>{ if(window.dgTrack) dgTrack('interesse_site'); if(window.fbq) fbq('trackCustom','InteresseSite',{source:'quiz-diagnostico'}); });
 
 const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>REDUCE?el.classList.add('in'):io.observe(el));
