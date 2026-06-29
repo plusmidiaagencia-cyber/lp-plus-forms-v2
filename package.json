@@ -1,0 +1,10 @@
+{
+  "name": "lp-plus-forms-v2",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "LP Plus Mídia (forms v2) + Diagnóstico ECOM com IA em /diagnosticoai",
+  "dependencies": {
+    "@anthropic-ai/sdk": "latest"
+  }
+}
