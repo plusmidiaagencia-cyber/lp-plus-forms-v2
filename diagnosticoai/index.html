@@ -698,7 +698,12 @@ document.getElementById('leadForm').addEventListener('submit', e=>{
   btn.disabled = true; btn.innerHTML = 'Enviando...';
 
   sendToCRM({ name, email, phone });
-  if(window.dgTrack) dgTrack('lead',10);
+  // grava o contato do lead no tracking (pro dashboard de métricas mostrar o card)
+  if(window.dgTrack) dgTrack('lead',10,{
+    n:name, e:email, p:phone, url:state.url||'',
+    money:(state.diagnostic&&state.diagnostic.money_formatted)||'',
+    mat:(state.diagnostic&&state.diagnostic.maturity!=null)?String(state.diagnostic.maturity):''
+  });
   state.leadSaved = true;
 
   // tela de loading do diagnóstico, depois revela o resultado

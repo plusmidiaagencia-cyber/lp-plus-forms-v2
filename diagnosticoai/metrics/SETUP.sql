@@ -52,16 +52,22 @@ $$;
 grant execute on function public.lp_funnel_metrics(text, int) to anon, authenticated;
 
 -- ============================================================
--- Tabela por sessão (cada visitante numa linha). SEM PII —
--- só respostas do quiz, última etapa e status. security definer.
+-- Tabela por sessão (cada visitante numa linha). Inclui o CONTATO
+-- do lead (nome/email/telefone) quando a sessão virou lead, além das
+-- respostas do quiz, última etapa e status. security definer.
 -- ============================================================
+-- drop obrigatório: o tipo de retorno mudou (colunas novas de lead).
+drop function if exists public.lp_funnel_sessions(text, int, boolean);
+
 create or replace function public.lp_funnel_sessions(
   p_source text default null, p_days int default 30, p_only_completed boolean default false
 )
 returns table(
   session_id text, started_at timestamptz, last_step text, last_index int,
   steps_count int, completed boolean, is_lead boolean, icp boolean,
-  segmento text, volume text, trafego text, faturamento text
+  segmento text, volume text, trafego text, faturamento text,
+  lead_name text, lead_email text, lead_phone text,
+  store_url text, money text, maturity text
 )
 language sql security definer set search_path = public as $$
   with ev as (
@@ -81,7 +87,13 @@ language sql security definer set search_path = public as $$
     max(meta->>'v') filter (where step='q_segmento')    as segmento,
     max(meta->>'v') filter (where step='q_volume')      as volume,
     max(meta->>'v') filter (where step='q_trafego')     as trafego,
-    max(meta->>'v') filter (where step='q_faturamento') as faturamento
+    max(meta->>'v') filter (where step='q_faturamento') as faturamento,
+    max(meta->>'n')     filter (where step='lead') as lead_name,
+    max(meta->>'e')     filter (where step='lead') as lead_email,
+    max(meta->>'p')     filter (where step='lead') as lead_phone,
+    max(meta->>'url')   filter (where step='lead') as store_url,
+    max(meta->>'money') filter (where step='lead') as money,
+    max(meta->>'mat')   filter (where step='lead') as maturity
   from ev
   group by session_id
   having (not p_only_completed) or bool_or(step='result')

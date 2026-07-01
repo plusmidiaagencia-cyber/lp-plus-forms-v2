@@ -69,6 +69,39 @@ h1,h2,h3{font-family:'Montserrat',sans-serif}
 .bdg.ok{background:rgba(34,197,94,.14);color:#4ade80}
 .bdg.icp{background:rgba(56,182,255,.14);color:var(--brand);margin-left:4px}
 .bdg.stop{background:#1c1c1c;color:var(--dim);border:1px solid var(--border-2)}
+/* linhas de sessão clicáveis */
+.tbl tbody tr{cursor:pointer;transition:background .12s}
+.tbl tbody tr:hover{background:rgba(56,182,255,.06)}
+.tbl tbody tr.islead:hover{background:rgba(56,182,255,.1)}
+.lead-name{color:var(--brand);font-weight:600;font-size:.82rem;margin-top:3px;display:flex;align-items:center;gap:5px}
+.lead-name .pic{width:6px;height:6px;border-radius:50%;background:var(--brand)}
+/* modal / card do lead */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(3px);z-index:200;display:none;align-items:flex-end;justify-content:center;padding:0}
+.overlay.on{display:flex}
+@media(min-width:560px){.overlay{align-items:center;padding:20px}}
+.card{background:var(--card-2);border:1px solid var(--border-2);border-radius:18px 18px 0 0;width:100%;max-width:460px;max-height:92dvh;overflow-y:auto;animation:cardUp .28s cubic-bezier(.2,.7,.3,1)}
+@media(min-width:560px){.card{border-radius:18px}}
+@keyframes cardUp{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+.card-h{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 20px 14px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--card-2);z-index:1}
+.card-h .who .nm{font-family:'Montserrat';font-weight:800;font-size:1.18rem;line-height:1.2}
+.card-h .who .st{margin-top:8px}
+.card-x{background:#0d0d0d;border:1px solid var(--border-2);color:var(--muted);width:34px;height:34px;border-radius:50%;font-size:1.1rem;cursor:pointer;flex-shrink:0}
+.card-x:hover{border-color:var(--brand);color:var(--brand)}
+.card-b{padding:16px 20px 22px}
+.grp{margin-bottom:18px}
+.grp-t{font-family:'Montserrat';font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin-bottom:9px}
+.kv{display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-bottom:1px solid var(--border);font-size:.9rem}
+.kv:last-child{border-bottom:none}
+.kv .k{color:var(--muted);flex-shrink:0}
+.kv .v{color:var(--text);font-weight:600;text-align:right;word-break:break-word}
+.kv .v a{color:var(--brand);text-decoration:none}
+.kv .v.big{color:#ff6b6b;font-family:'Montserrat';font-weight:800}
+.card-acts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.act{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:12px;font-family:'Montserrat';font-weight:700;font-size:.86rem;text-decoration:none;cursor:pointer;border:1px solid var(--border-2)}
+.act.wa{background:#25d366;color:#04220f;border-color:#25d366}
+.act.mail{background:var(--card);color:var(--text)}
+.act.mail:hover{border-color:var(--brand)}
+.nocontact{color:var(--dim);font-size:.86rem;text-align:center;padding:10px;background:#0d0d0d;border:1px dashed var(--border-2);border-radius:10px}
 </style>
 </head>
 <body>
@@ -91,6 +124,8 @@ h1,h2,h3{font-family:'Montserrat',sans-serif}
   <div id="content"><div class="state"><div class="spinner"></div>Carregando métricas…</div></div>
 
   <div id="sessions"></div>
+
+  <div class="overlay" id="overlay"><div class="card" id="card"></div></div>
 
   <div class="note">
     Sessão = um visitante (id anônimo no navegador, sem dados pessoais). “% topo” compara com quem abriu o quiz; “passo” é a conversão em relação à etapa anterior.
@@ -233,25 +268,83 @@ function renderSessions(rows){
     +'<button class="exp" id="expBtn">⬇ Exportar CSV</button></div></div>';
   if(!rows.length){ h+='<div class="state" style="padding:24px">Nenhuma sessão no período.</div>'; el.innerHTML=h; wireSess(); return; }
   h+='<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Entrada</th><th>Segmento</th><th>Faturamento</th><th>Tráfego</th><th>Status</th></tr></thead><tbody>';
-  rows.forEach(r=>{
+  rows.forEach((r,i)=>{
     const status = r.completed
       ? '<span class="bdg ok">Completo</span>'+(r.icp?'<span class="bdg icp">ICP</span>':'')
       : '<span class="bdg stop">parou: '+(STEPMAP[r.last_step]||r.last_step||'?')+'</span>';
-    h+='<tr><td><b>'+fmtDate(r.started_at)+'</b></td><td>'+lbl('segmento',r.segmento)+'</td><td>'+lbl('faturamento',r.faturamento)+'</td><td>'+lbl('trafego',r.trafego)+'</td><td>'+status+'</td></tr>';
+    const nameLine = r.lead_name ? '<div class="lead-name"><span class="pic"></span>'+esc(r.lead_name)+'</div>' : '';
+    h+='<tr class="'+(r.lead_name?'islead':'')+'" data-i="'+i+'"><td><b>'+fmtDate(r.started_at)+'</b>'+nameLine+'</td><td>'+lbl('segmento',r.segmento)+'</td><td>'+lbl('faturamento',r.faturamento)+'</td><td>'+lbl('trafego',r.trafego)+'</td><td>'+status+'</td></tr>';
   });
   h+='</tbody></table></div>';
   el.innerHTML=h; wireSess();
 }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function waLink(phone){ const d=String(phone||'').replace(/\D/g,''); if(d.length<10) return null; return 'https://wa.me/'+(d.length<=11?'55'+d:d); }
+function openLead(i){
+  const r=sessionsCache[i]; if(!r) return;
+  const status = r.completed
+    ? '<span class="bdg ok">Completo</span>'+(r.icp?'<span class="bdg icp">ICP</span>':'')
+    : '<span class="bdg stop">parou: '+(STEPMAP[r.last_step]||r.last_step||'?')+'</span>';
+  const wa=waLink(r.lead_phone);
+  let contact;
+  if(r.lead_name||r.lead_email||r.lead_phone){
+    contact='<div class="grp"><div class="grp-t">Contato</div>'
+      +kv('Nome', esc(r.lead_name)||'–')
+      +kv('E-mail', r.lead_email?'<a href="mailto:'+esc(r.lead_email)+'">'+esc(r.lead_email)+'</a>':'–')
+      +kv('WhatsApp', r.lead_phone?(wa?'<a href="'+wa+'" target="_blank" rel="noopener">'+esc(r.lead_phone)+'</a>':esc(r.lead_phone)):'–')
+      +'</div>';
+  } else {
+    contact='<div class="grp"><div class="nocontact">Esta sessão não virou lead — sem dados de contato.</div></div>';
+  }
+  const diag = (r.money||r.maturity)
+    ? '<div class="grp"><div class="grp-t">Diagnóstico da IA</div>'
+      +kv('Dinheiro na mesa/mês', r.money?'<span class="v big">'+esc(r.money)+'</span>':'–')
+      +kv('Maturidade', r.maturity?esc(r.maturity)+'/100':'–')+'</div>'
+    : '';
+  const acts = (r.lead_name||r.lead_email||r.lead_phone)
+    ? '<div class="card-acts">'
+      +(wa?'<a class="act wa" href="'+wa+'" target="_blank" rel="noopener">💬 WhatsApp</a>':'')
+      +(r.lead_email?'<a class="act mail" href="mailto:'+esc(r.lead_email)+'">✉ E-mail</a>':'')
+      +'</div>'
+    : '';
+  document.getElementById('card').innerHTML=
+    '<div class="card-h"><div class="who"><div class="nm">'+(esc(r.lead_name)||'Sessão anônima')+'</div><div class="st">'+status+'</div></div>'
+    +'<button class="card-x" id="cardX">×</button></div>'
+    +'<div class="card-b">'
+    +contact
+    +'<div class="grp"><div class="grp-t">Respostas do quiz</div>'
+      +kv('Segmento', lbl('segmento',r.segmento))
+      +kv('Volume de vendas', lbl('volume',r.volume))
+      +kv('Tráfego pago', lbl('trafego',r.trafego))
+      +kv('Faturamento', lbl('faturamento',r.faturamento))
+      +kv('Loja', r.store_url?'<a href="'+esc(/^https?:/.test(r.store_url)?r.store_url:'https://'+r.store_url)+'" target="_blank" rel="noopener">'+esc(r.store_url)+'</a>':'–')
+      +'</div>'
+    +diag
+    +'<div class="grp"><div class="grp-t">Sessão</div>'
+      +kv('Entrada', fmtDate(r.started_at))
+      +kv('Última etapa', STEPMAP[r.last_step]||r.last_step||'–')
+      +kv('Etapas registradas', r.steps_count)
+      +'</div>'
+    +acts
+    +'</div>';
+  document.getElementById('cardX').onclick=closeLead;
+  document.getElementById('overlay').classList.add('on');
+}
+function kv(k,v){ return '<div class="kv"><span class="k">'+k+'</span><span class="v">'+v+'</span></div>'; }
+function closeLead(){ document.getElementById('overlay').classList.remove('on'); }
+document.getElementById('overlay').onclick=e=>{ if(e.target.id==='overlay') closeLead(); };
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLead(); });
 function wireSess(){
   const c=document.getElementById('onlyC'); if(c) c.onchange=()=>{ onlyCompleted=c.checked; loadSessions(); };
   const e=document.getElementById('expBtn'); if(e) e.onclick=exportCSV;
+  document.querySelectorAll('.tbl tbody tr[data-i]').forEach(tr=>tr.onclick=()=>openLead(+tr.dataset.i));
 }
 function exportCSV(){
   const rows=sessionsCache||[];
-  const head=['entrada','segmento','volume','trafego','faturamento','ultima_etapa','completo','lead','icp','etapas'];
+  const head=['entrada','nome','email','whatsapp','loja','segmento','volume','trafego','faturamento','dinheiro_na_mesa','maturidade','ultima_etapa','completo','lead','icp','etapas'];
   const lines=[head.join(',')];
   rows.forEach(r=>{
-    const v=[fmtDate(r.started_at),lbl('segmento',r.segmento),lbl('volume',r.volume),lbl('trafego',r.trafego),lbl('faturamento',r.faturamento),(STEPMAP[r.last_step]||r.last_step||''),r.completed?'sim':'não',r.is_lead?'sim':'não',r.icp?'sim':'não',r.steps_count];
+    const v=[fmtDate(r.started_at),r.lead_name||'',r.lead_email||'',r.lead_phone||'',r.store_url||'',lbl('segmento',r.segmento),lbl('volume',r.volume),lbl('trafego',r.trafego),lbl('faturamento',r.faturamento),r.money||'',r.maturity||'',(STEPMAP[r.last_step]||r.last_step||''),r.completed?'sim':'não',r.is_lead?'sim':'não',r.icp?'sim':'não',r.steps_count];
     lines.push(v.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(','));
   });
   const blob=new Blob(['﻿'+lines.join('\n')],{type:'text/csv;charset=utf-8'});
