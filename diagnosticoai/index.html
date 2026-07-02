@@ -779,7 +779,8 @@ document.getElementById('nextStepBtn').addEventListener('click', ()=>{
   if(window.fbq) fbq('trackCustom','NextStep',{source:LP_SOURCE});
 });
 
-if(window.dgTrack) dgTrack('intro',1);
+// grava as UTMs da campanha no 1º evento (URL ainda tem os parâmetros) → card do dashboard
+if(window.dgTrack) dgTrack('intro',1, getTrackingMetadata().utms || {});
 setProgress();
 </script>
 </body>

@@ -296,6 +296,16 @@ function openLead(i){
   } else {
     contact='<div class="grp"><div class="nocontact">Esta sessão não virou lead — sem dados de contato.</div></div>';
   }
+  const hasUtm = r.utm_source||r.utm_medium||r.utm_campaign||r.utm_content||r.utm_term;
+  const utm = hasUtm
+    ? '<div class="grp"><div class="grp-t">Campanha (UTM)</div>'
+      +kv('Origem', esc(r.utm_source)||'–')
+      +kv('Mídia', esc(r.utm_medium)||'–')
+      +kv('Campanha', esc(r.utm_campaign)||'–')
+      +(r.utm_content?kv('Conteúdo/Anúncio', esc(r.utm_content)):'')
+      +(r.utm_term?kv('Termo', esc(r.utm_term)):'')
+      +'</div>'
+    : '<div class="grp"><div class="grp-t">Campanha (UTM)</div><div class="nocontact">Sem UTM (tráfego direto/orgânico).</div></div>';
   const diag = (r.money||r.maturity)
     ? '<div class="grp"><div class="grp-t">Diagnóstico da IA</div>'
       +kv('Dinheiro na mesa/mês', r.money?'<span class="v big">'+esc(r.money)+'</span>':'–')
@@ -319,6 +329,7 @@ function openLead(i){
       +kv('Faturamento', lbl('faturamento',r.faturamento))
       +kv('Loja', r.store_url?'<a href="'+esc(/^https?:/.test(r.store_url)?r.store_url:'https://'+r.store_url)+'" target="_blank" rel="noopener">'+esc(r.store_url)+'</a>':'–')
       +'</div>'
+    +utm
     +diag
     +'<div class="grp"><div class="grp-t">Sessão</div>'
       +kv('Entrada', fmtDate(r.started_at))
@@ -341,10 +352,10 @@ function wireSess(){
 }
 function exportCSV(){
   const rows=sessionsCache||[];
-  const head=['entrada','nome','email','whatsapp','loja','segmento','volume','trafego','faturamento','dinheiro_na_mesa','maturidade','ultima_etapa','completo','lead','icp','etapas'];
+  const head=['entrada','nome','email','whatsapp','loja','utm_source','utm_medium','utm_campaign','utm_content','utm_term','segmento','volume','trafego','faturamento','dinheiro_na_mesa','maturidade','ultima_etapa','completo','lead','icp','etapas'];
   const lines=[head.join(',')];
   rows.forEach(r=>{
-    const v=[fmtDate(r.started_at),r.lead_name||'',r.lead_email||'',r.lead_phone||'',r.store_url||'',lbl('segmento',r.segmento),lbl('volume',r.volume),lbl('trafego',r.trafego),lbl('faturamento',r.faturamento),r.money||'',r.maturity||'',(STEPMAP[r.last_step]||r.last_step||''),r.completed?'sim':'não',r.is_lead?'sim':'não',r.icp?'sim':'não',r.steps_count];
+    const v=[fmtDate(r.started_at),r.lead_name||'',r.lead_email||'',r.lead_phone||'',r.store_url||'',r.utm_source||'',r.utm_medium||'',r.utm_campaign||'',r.utm_content||'',r.utm_term||'',lbl('segmento',r.segmento),lbl('volume',r.volume),lbl('trafego',r.trafego),lbl('faturamento',r.faturamento),r.money||'',r.maturity||'',(STEPMAP[r.last_step]||r.last_step||''),r.completed?'sim':'não',r.is_lead?'sim':'não',r.icp?'sim':'não',r.steps_count];
     lines.push(v.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(','));
   });
   const blob=new Blob(['﻿'+lines.join('\n')],{type:'text/csv;charset=utf-8'});

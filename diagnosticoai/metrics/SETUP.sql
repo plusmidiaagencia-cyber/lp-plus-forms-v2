@@ -67,7 +67,8 @@ returns table(
   steps_count int, completed boolean, is_lead boolean, icp boolean,
   segmento text, volume text, trafego text, faturamento text,
   lead_name text, lead_email text, lead_phone text,
-  store_url text, money text, maturity text
+  store_url text, money text, maturity text,
+  utm_source text, utm_medium text, utm_campaign text, utm_content text, utm_term text
 )
 language sql security definer set search_path = public as $$
   with ev as (
@@ -93,7 +94,12 @@ language sql security definer set search_path = public as $$
     max(meta->>'p')     filter (where step='lead') as lead_phone,
     max(meta->>'url')   filter (where step='lead') as store_url,
     max(meta->>'money') filter (where step='lead') as money,
-    max(meta->>'mat')   filter (where step='lead') as maturity
+    max(meta->>'mat')   filter (where step='lead') as maturity,
+    max(meta->>'utm_source')   filter (where step='intro') as utm_source,
+    max(meta->>'utm_medium')   filter (where step='intro') as utm_medium,
+    max(meta->>'utm_campaign') filter (where step='intro') as utm_campaign,
+    max(meta->>'utm_content')  filter (where step='intro') as utm_content,
+    max(meta->>'utm_term')     filter (where step='intro') as utm_term
   from ev
   group by session_id
   having (not p_only_completed) or bool_or(step='result')
