@@ -139,8 +139,7 @@ h1,h2,h3,.font-m{font-family:'Montserrat',sans-serif}
     <span class="badge"><span class="dot-live"></span> Assista até o final</span>
   </div>
 
-  <h1 class="headline">Nosso único foco: <span class="accent">aumentar as vendas e o lucro líquido</span> do seu e-commerce.</h1>
-  <p class="sub">Assista ao vídeo abaixo e descubra o método que já escalou +217 e-commerces de moda.</p>
+  <h1 class="headline">Assista o vídeo para conhecer o passo a passo para <span class="accent">destravar as vendas da sua loja</span></h1>
 
   <!-- PLAYER -->
   <div class="player" id="player">
@@ -152,7 +151,7 @@ h1,h2,h3,.font-m{font-family:'Montserrat',sans-serif}
     <div class="pauseovr" id="pauseOvr"><div class="playbtn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
     <div class="cover" id="cover">
       <div class="playbtn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-      <div class="ctxt">Clique para assistir<small>com o som ligado 🔊</small></div>
+      <div class="ctxt" id="coverTxt">Clique para assistir<small>com o som ligado 🔊</small></div>
     </div>
   </div>
 
@@ -220,45 +219,68 @@ const GPM_WEBHOOK_URL = 'https://rkngilknpcibcwalropj.supabase.co/functions/v1/w
 const OBRIGADO_URL = 'https://www.plusmidiamkt.com/obrigado';
 const LP_SOURCE = 'lp-vsl';
 
+/* ====== TRACKER de retenção (estilo VTurb, sem PII) ====== */
+const SUPA_TRACK='https://rkngilknpcibcwalropj.supabase.co';
+const ANON_TRACK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJrbmdpbGtucGNpYmN3YWxyb3BqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE2NTEzOTUsImV4cCI6MjA3NzIyNzM5NX0.b_TCn2hsU8UPFvqGnXzzKhJApm9NVMxqxxNAOHyNsdQ';
+function vsid(){ try{var s=localStorage.getItem('vsl_sid'); if(!s){s=Date.now().toString(36)+Math.random().toString(36).slice(2,10); localStorage.setItem('vsl_sid',s);} return s;}catch(e){return 'ns_'+Math.random().toString(36).slice(2,10);} }
+function vslTrack(ev, sec){
+  try{ fetch(SUPA_TRACK+'/rest/v1/lp_video_events',{method:'POST',keepalive:true,
+    headers:{'apikey':ANON_TRACK,'Authorization':'Bearer '+ANON_TRACK,'Content-Type':'application/json','Prefer':'return=minimal'},
+    body:JSON.stringify({session_id:vsid(),source:'vsl',event:ev,second:(sec==null?null:sec)})}).catch(function(){}); }catch(e){}
+}
+vslTrack('view');
+
 /* ====== PLAYER ====== */
 const video = document.getElementById('vsl');
 const player = document.getElementById('player');
 const cover = document.getElementById('cover');
+const coverTxt = document.getElementById('coverTxt');
 const pbar = document.getElementById('pbar');
 const ctaZone = document.getElementById('ctaZone');
-let revealed = false, started = false, effReveal = REVEAL_AT;
-// se o vídeo for mais curto que o tempo de revelação, revela perto do fim
+const pauseOvr = document.getElementById('pauseOvr');
+let revealed = false, started = false, effReveal = REVEAL_AT, playFired = false, lastBucket = 0;
+
 video.addEventListener('loadedmetadata', ()=>{
   if(video.duration && video.duration < REVEAL_AT + 1){ effReveal = Math.max(1, video.duration - 1); }
 });
-video.addEventListener('ended', ()=>{ if(!revealed) reveal(); });
+video.addEventListener('ended', ()=>{ vslTrack('ended'); if(!revealed) reveal(); });
 
-function startPlay(){
-  video.muted = false; video.volume = 1;
-  video.play().then(()=>{ cover.classList.add('hide'); player.classList.add('playing'); started = true; })
-    .catch(()=>{ // se o browser bloquear com som, tenta mudo e mostra botão de som
-      video.muted = true; video.play(); cover.classList.add('hide'); player.classList.add('playing'); started = true;
-    });
-}
-cover.addEventListener('click', startPlay);
+function markStarted(){ player.classList.add('playing'); started = true; if(!playFired){ playFired = true; vslTrack('play'); } }
+
+// AUTOPLAY mudo ao entrar (o navegador só permite autoplay com o som desligado)
+video.muted = true;
+video.play().then(()=>{
+  markStarted();
+  coverTxt.innerHTML = 'Clique para ativar o som<small>seu vídeo já começou 🔊</small>';
+}).catch(()=>{
+  coverTxt.innerHTML = 'Clique para assistir<small>com o som ligado 🔊</small>';
+});
+
+// clique na capa: se já está rodando mudo, só ativa o som; senão dá play
+cover.addEventListener('click', ()=>{
+  if(started && video.muted){ video.muted=false; video.volume=1; if(video.paused) video.play(); cover.classList.add('hide'); vslTrack('unmute'); }
+  else { video.muted=false; video.volume=1; video.play().then(()=>{ markStarted(); cover.classList.add('hide'); }).catch(()=>{ video.muted=true; video.play(); markStarted(); cover.classList.add('hide'); }); }
+});
+
 // clicar no vídeo pausa; overlay de play volta quando pausado
-const pauseOvr = document.getElementById('pauseOvr');
 video.addEventListener('click', ()=>{ if(!started) return; if(video.paused) video.play(); else video.pause(); });
 video.addEventListener('pause', ()=>{ if(started && !video.ended) pauseOvr.classList.add('show'); });
 video.addEventListener('play', ()=>{ pauseOvr.classList.remove('show'); });
 pauseOvr.addEventListener('click', ()=>{ video.play(); });
-// bloqueia menu de contexto (download)
 video.addEventListener('contextmenu', e=>e.preventDefault());
 
 video.addEventListener('timeupdate', ()=>{
   const dur = video.duration || effReveal;
   pbar.style.width = Math.min(100, (video.currentTime/dur)*100) + '%';
+  const b = Math.floor(video.currentTime/5)*5;              // marco a cada 5s (retenção)
+  if(b>lastBucket){ lastBucket=b; vslTrack('progress', b); }
   if(!revealed && video.currentTime >= effReveal){ reveal(); }
 });
 
 function reveal(){
   revealed = true;
   ctaZone.classList.add('show');
+  vslTrack('cta_shown', Math.round(effReveal));
   if(window.fbq) fbq('trackCustom','VslCtaRevealed');
   setTimeout(()=>ctaZone.scrollIntoView({behavior:'smooth',block:'center'}), 200);
 }
@@ -267,6 +289,7 @@ function reveal(){
 const overlay = document.getElementById('overlay');
 document.getElementById('ctaBtn').addEventListener('click', ()=>{
   overlay.classList.add('on');
+  vslTrack('cta_click');
   if(window.fbq) fbq('trackCustom','VslCtaClick');
 });
 document.getElementById('modalX').addEventListener('click', ()=>overlay.classList.remove('on'));
@@ -311,6 +334,7 @@ document.getElementById('leadForm').addEventListener('submit', e=>{
   }};
   fetch(GPM_WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),keepalive:true}).catch(()=>{});
 
+  vslTrack('lead');
   if(window.fbq) fbq('track','Lead');
   if(window.dataLayer) window.dataLayer.push({event:'lead_submit',source:LP_SOURCE,form_position:'vsl-modal',name,email,phone:ph,instagram:insta,revenue:rev});
 

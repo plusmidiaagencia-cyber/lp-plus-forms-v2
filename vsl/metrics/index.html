@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Retenção do Vídeo — VSL | Plus Mídia</title>
+<meta name="theme-color" content="#0a0a0a">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--card:#161616;--card-2:#1c1c1c;--border:#262626;--border-2:#333;--text:#fff;--muted:#a6a6a6;--dim:#7a7a7a;--brand:#38b6ff;--brand-2:#1e9bdb;--success:#22c55e;--warn:#f59e0b;--danger:#ef4444;--maxw:820px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Roboto',sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100dvh}
+h1,h2,h3{font-family:'Montserrat',sans-serif}
+.app{max-width:var(--maxw);margin:0 auto;padding:24px max(16px,env(safe-area-inset-left)) 60px}
+.head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.head h1{font-size:1.25rem;font-weight:800}
+.sub{color:var(--muted);font-size:.85rem;margin-bottom:18px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.fbtn{background:var(--card);border:1px solid var(--border-2);color:var(--muted);border-radius:10px;padding:8px 14px;font-family:'Montserrat';font-weight:700;font-size:.82rem;cursor:pointer}
+.fbtn.on{background:var(--brand);color:#04222f;border-color:var(--brand)}
+.refresh{background:none;border:1px solid var(--border-2);color:var(--muted);border-radius:10px;padding:8px 12px;cursor:pointer;font-size:.8rem}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+@media(max-width:520px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 12px;text-align:center}
+.kpi .n{font-family:'Montserrat';font-weight:900;font-size:1.5rem;color:var(--brand);line-height:1}
+.kpi .l{font-size:.72rem;color:var(--muted);margin-top:6px}
+.kpi .s{font-size:.7rem;color:var(--dim);margin-top:2px}
+.sec-t{font-family:'Montserrat';font-weight:800;font-size:1.02rem;margin:14px 0 12px}
+.chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 14px 10px}
+.chart-wrap svg{width:100%;height:auto;display:block;overflow:visible}
+.legend{color:var(--dim);font-size:.76rem;margin-top:8px;text-align:center}
+.funnel{display:flex;flex-direction:column;gap:8px}
+.frow{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;position:relative;overflow:hidden}
+.frow .fbar{position:absolute;inset:0;background:linear-gradient(90deg,rgba(56,182,255,.16),rgba(56,182,255,.04));z-index:0}
+.frow .fct{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.frow .fl{font-weight:600}.frow .fn{font-family:'Montserrat';font-weight:800}
+.frow .fp{font-size:.78rem;color:var(--muted);min-width:44px;text-align:right}
+.state{text-align:center;color:var(--muted);padding:40px 10px}
+.spinner{width:30px;height:30px;border:3px solid var(--border-2);border-top-color:var(--brand);border-radius:50%;margin:0 auto 12px;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.setup{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:12px;padding:14px;color:#fcd34d;font-size:.86rem;margin-bottom:18px;display:none}
+.note{color:var(--dim);font-size:.78rem;margin-top:20px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="head"><h1>🎬 Retenção da VSL</h1><button class="refresh" id="refresh">↻ Atualizar</button></div>
+  <div class="sub">Quantas pessoas assistem até cada trecho do vídeo · first-party · fonte: vsl</div>
+  <div class="setup" id="setup"></div>
+  <div class="filters">
+    <button class="fbtn" data-d="1">Hoje</button>
+    <button class="fbtn" data-d="7">7 dias</button>
+    <button class="fbtn on" data-d="30">30 dias</button>
+    <button class="fbtn" data-d="90">90 dias</button>
+  </div>
+  <div id="content"><div class="state"><div class="spinner"></div>Carregando…</div></div>
+  <div class="note">Curva de retenção = de cada 100 que deram <b>play</b>, quantos ainda estavam assistindo em cada trecho. A linha tracejada marca o momento em que o botão de CTA aparece.</div>
+</div>
+<script>
+"use strict";
+const SUPA='https://rkngilknpcibcwalropj.supabase.co';
+const ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJrbmdpbGtucGNpYmN3YWxyb3BqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE2NTEzOTUsImV4cCI6MjA3NzIyNzM5NX0.b_TCn2hsU8UPFvqGnXzzKhJApm9NVMxqxxNAOHyNsdQ';
+const CTA_AT = 145; // 2:25
+let days = 30;
+function mmss(s){ s=Math.round(s); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
+async function rpc(fn,body){
+  const r = await fetch(SUPA+'/rest/v1/rpc/'+fn,{method:'POST',headers:{'apikey':ANON,'Authorization':'Bearer '+ANON,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!r.ok){ throw new Error(fn+' '+r.status+' '+await r.text()); }
+  return r.json();
+}
+async function load(){
+  const c=document.getElementById('content');
+  c.innerHTML='<div class="state"><div class="spinner"></div>Carregando…</div>';
+  let sum, ret;
+  try{
+    [sum, ret] = await Promise.all([
+      rpc('lp_video_summary',{p_source:'vsl',p_days:days}),
+      rpc('lp_video_retention',{p_source:'vsl',p_days:days})
+    ]);
+  }catch(e){
+    const s=document.getElementById('setup'); s.style.display='block';
+    s.innerHTML=/PGRST202|does not exist|schema cache/i.test(String(e))
+      ? '⚙️ Falta criar a estrutura no banco (funções de vídeo). '
+      : 'Erro ao ler métricas: '+String(e).slice(0,140);
+    c.innerHTML=''; return;
+  }
+  document.getElementById('setup').style.display='none';
+  render(sum, ret);
+}
+function render(sum, ret){
+  const m={}; sum.forEach(r=>m[r.event]=+r.sessions);
+  const views=m['view']||0, plays=m['play']||0, unmute=m['unmute']||0, ctaShown=m['cta_shown']||0, ctaClick=m['cta_click']||0, leads=m['lead']||0;
+  const base = plays || 1;
+  const pr = views?Math.round(plays/views*100):0;
+  const ur = plays?Math.round(unmute/plays*100):0;
+  const ctaR = plays?Math.round(ctaShown/plays*100):0;
+
+  // tempo médio assistido (aprox pelo maior marco por sessão não temos; usamos a área da curva)
+  let html='<div class="kpis">'
+    +kpi(views,'abriram a página')
+    +kpi(plays,'deram play', pr+'% play rate')
+    +kpi(unmute,'ativaram o som', ur+'% dos plays')
+    +kpi(ctaShown,'chegaram no '+mmss(CTA_AT), ctaR+'% dos plays')
+    +kpi(ctaClick,'clicaram no botão')
+    +kpi(leads,'viraram lead')
+    +'</div>';
+
+  // curva de retenção
+  html+='<div class="sec-t">Curva de retenção</div>';
+  html+='<div class="chart-wrap">'+retentionSVG(ret, base)+'<div class="legend">eixo horizontal = tempo do vídeo · vertical = % de quem deu play ainda assistindo</div></div>';
+
+  // funil
+  html+='<div class="sec-t" style="margin-top:22px">Funil da VSL</div><div class="funnel">';
+  const steps=[['Abriu a página',views],['Deu play',plays],['Ativou o som',unmute],['Chegou no '+mmss(CTA_AT),ctaShown],['Clicou no botão',ctaClick],['Virou lead',leads]];
+  const top=views||1;
+  steps.forEach(([l,n])=>{ const p=Math.round(n/top*100); html+='<div class="frow"><div class="fbar" style="width:'+Math.max(2,p)+'%"></div><div class="fct"><span class="fl">'+l+'</span><span><span class="fn">'+n+'</span> <span class="fp">'+p+'%</span></span></div></div>'; });
+  html+='</div>';
+
+  document.getElementById('content').innerHTML=html;
+}
+function kpi(n,l,s){ return '<div class="kpi"><div class="n">'+n+'</div><div class="l">'+l+'</div>'+(s?'<div class="s">'+s+'</div>':'')+'</div>'; }
+
+function retentionSVG(ret, base){
+  if(!ret.length){ return '<div class="state" style="padding:24px">Ainda sem dados de retenção. Rode a VSL e volte aqui.</div>'; }
+  const W=760, H=240, PL=40, PR=14, PT=14, PB=28;
+  const maxSec = Math.max(CTA_AT, ...ret.map(r=>+r.second));
+  const x = s => PL + (s/maxSec)*(W-PL-PR);
+  const y = p => PT + (1-p/100)*(H-PT-PB);
+  const byS = {}; ret.forEach(r=>byS[+r.second]=+r.sessions);
+  // constrói série contínua: no 0 = base(100%), depois usa os marcos existentes (retenção é monótona decrescente)
+  const series=[]; let last=base;
+  for(let s=0;s<=maxSec;s+=5){ if(byS[s]!=null) last=byS[s]; const pct=Math.min(100, Math.round(last/base*100)); series.push([s, s===0?100:pct]); }
+  let grid='';
+  [0,25,50,75,100].forEach(p=>{ grid+='<line x1="'+PL+'" y1="'+y(p)+'" x2="'+(W-PR)+'" y2="'+y(p)+'" stroke="#242424" stroke-width="1"/><text x="'+(PL-6)+'" y="'+(y(p)+3)+'" fill="#7a7a7a" font-size="9" text-anchor="end" font-family="Montserrat">'+p+'%</text>'; });
+  // labels de tempo (a cada 30s)
+  let xlab=''; for(let s=0;s<=maxSec;s+=30){ xlab+='<text x="'+x(s)+'" y="'+(H-8)+'" fill="#7a7a7a" font-size="9" text-anchor="middle" font-family="Montserrat">'+mmss(s)+'</text>'; }
+  const line=series.map((p,i)=>(i?'L':'M')+x(p[0])+' '+y(p[1])).join(' ');
+  const area=line+' L'+x(series[series.length-1][0])+' '+y(0)+' L'+x(0)+' '+y(0)+' Z';
+  // linha do CTA
+  const ctaLine='<line x1="'+x(CTA_AT)+'" y1="'+PT+'" x2="'+x(CTA_AT)+'" y2="'+(H-PB)+'" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4 3"/><text x="'+x(CTA_AT)+'" y="'+(PT-2)+'" fill="#f59e0b" font-size="9" text-anchor="middle" font-family="Montserrat">CTA '+mmss(CTA_AT)+'</text>';
+  return '<svg viewBox="0 0 '+W+' '+H+'">'+grid+'<path d="'+area+'" fill="rgba(56,182,255,.14)"/><path d="'+line+'" fill="none" stroke="#38b6ff" stroke-width="2.5" stroke-linejoin="round"/>'+ctaLine+xlab+'</svg>';
+}
+
+document.querySelectorAll('.fbtn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));b.classList.add('on');days=+b.dataset.d;load();});
+document.getElementById('refresh').onclick=load;
+load();
+</script>
+</body>
+</html>
