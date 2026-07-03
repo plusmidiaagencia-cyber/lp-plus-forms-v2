@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Plus Mídia — aumente as vendas e o lucro do seu e-commerce</title>
+<meta name="description" content="Nosso único foco: aumentar as vendas e o lucro líquido do seu e-commerce. Assista e descubra como.">
+<meta name="theme-color" content="#0a0a0a">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Plus Mídia — aumente as vendas e o lucro do seu e-commerce">
+<meta property="og:description" content="Nosso único foco: aumentar as vendas e o lucro líquido do seu e-commerce.">
+
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="shortcut icon" href="/favicon.ico">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- Meta Pixel: PIXEL PM 01 -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '289183857235038');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=289183857235038&ev=PageView&noscript=1"/></noscript>
+<!-- /Meta Pixel -->
+
+<style>
+:root{
+  --bg:#0a0a0a; --bg-2:#111; --card:#161616; --card-2:#1c1c1c;
+  --border:#262626; --border-2:#333; --text:#fff; --muted:#a6a6a6; --dim:#7a7a7a;
+  --brand:#38b6ff; --brand-2:#1e9bdb; --brand-glow:rgba(56,182,255,.18);
+  --success:#22c55e; --radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font-family:'Roboto',sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100dvh}
+h1,h2,h3,.font-m{font-family:'Montserrat',sans-serif}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.035;mix-blend-mode:overlay}
+.grain svg{width:100%;height:100%}
+
+.wrap{max-width:820px;margin:0 auto;padding:26px max(18px,env(safe-area-inset-left)) 60px;display:flex;flex-direction:column;align-items:center;text-align:center;min-height:100dvh}
+.topbar{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:22px}
+.topbar .logo{height:40px;width:auto;filter:drop-shadow(0 0 14px var(--brand-glow))}
+.badge{display:inline-flex;align-items:center;gap:7px;font-family:'Montserrat';font-weight:700;font-size:.72rem;letter-spacing:.06em;color:var(--brand);background:rgba(56,182,255,.08);border:1px solid rgba(56,182,255,.25);padding:5px 12px;border-radius:999px}
+.dot-live{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 0 0 rgba(34,197,94,.5);animation:pulse-dot 2s infinite}
+@keyframes pulse-dot{0%{box-shadow:0 0 0 0 rgba(34,197,94,.45)}70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+
+.headline{font-size:clamp(1.6rem,5.2vw,2.5rem);font-weight:900;line-height:1.14;letter-spacing:-.02em;margin-bottom:8px;max-width:16ch}
+.headline .accent{color:var(--brand)}
+.sub{color:var(--muted);font-size:clamp(.95rem,2.6vw,1.1rem);margin:12px 0 26px;max-width:44ch}
+
+/* Player VSL — sem barra de seek (não pode pular) */
+.player{position:relative;width:100%;max-width:720px;aspect-ratio:16/9;background:#000;border:1px solid var(--border-2);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 0 1px rgba(56,182,255,.08)}
+.player video{width:100%;height:100%;object-fit:contain;display:block;background:#000}
+.player .cover{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;cursor:pointer;background:radial-gradient(circle at 50% 45%,rgba(56,182,255,.14),rgba(0,0,0,.75) 70%);transition:opacity .3s;z-index:3}
+.player .cover.hide{opacity:0;pointer-events:none}
+.playbtn{width:82px;height:82px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px var(--brand-glow);animation:pulse-play 2.2s infinite}
+.playbtn svg{width:34px;height:34px;margin-left:5px;fill:#04222f}
+@keyframes pulse-play{0%{box-shadow:0 0 0 0 rgba(56,182,255,.4)}70%{box-shadow:0 0 0 22px rgba(56,182,255,0)}100%{box-shadow:0 0 0 0 rgba(56,182,255,0)}}
+.cover .ctxt{font-family:'Montserrat';font-weight:700;font-size:.95rem;color:#fff}
+.cover .ctxt small{display:block;color:var(--muted);font-weight:500;font-size:.8rem;margin-top:3px}
+/* barra de progresso só visual (não clicável) */
+.pbar{position:absolute;left:0;bottom:0;height:4px;width:0;background:linear-gradient(90deg,var(--brand-2),var(--brand));z-index:4;transition:width .25s linear}
+.sound{position:absolute;top:12px;right:12px;z-index:4;width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.55);border:1px solid var(--border-2);color:#fff;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:1.1rem}
+.player.playing .sound{display:flex}
+
+/* countdown / aviso enquanto o botão não aparece */
+.waiting{margin-top:22px;color:var(--dim);font-size:.9rem;display:flex;align-items:center;gap:9px;justify-content:center}
+.waiting .spin{width:16px;height:16px;border:2px solid var(--border-2);border-top-color:var(--brand);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.waiting.hide{display:none}
+
+/* CTA (revelado após X min) */
+.cta-zone{margin-top:26px;width:100%;max-width:560px;opacity:0;transform:translateY(16px);max-height:0;overflow:hidden;transition:opacity .5s,transform .5s}
+.cta-zone.show{opacity:1;transform:none;max-height:400px}
+.cta-line{font-family:'Montserrat';font-weight:800;font-size:clamp(1.1rem,3.2vw,1.35rem);margin-bottom:14px}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:none;cursor:pointer;font-family:'Montserrat';font-weight:800;font-size:clamp(1rem,2.6vw,1.12rem);letter-spacing:.03em;text-transform:uppercase;padding:20px 22px;border-radius:14px;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#04222f;position:relative;transition:transform .15s;text-decoration:none}
+.btn:hover{transform:translateY(-2px)}
+.btn.pulse::after{content:"";position:absolute;inset:0;border-radius:14px;box-shadow:0 0 0 0 var(--brand-glow);animation:ring 2.4s infinite}
+@keyframes ring{0%{box-shadow:0 0 0 0 var(--brand-glow)}70%{box-shadow:0 0 0 16px rgba(56,182,255,0)}100%{box-shadow:0 0 0 0 rgba(56,182,255,0)}}
+.guarantee{color:var(--dim);font-size:.82rem;margin-top:12px;display:flex;align-items:center;gap:7px;justify-content:center}
+
+.footer{margin-top:auto;padding-top:40px;color:var(--dim);font-size:.78rem;line-height:1.7}
+.footer b{color:var(--muted);font-weight:600}
+
+/* Modal do formulário */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.74);backdrop-filter:blur(4px);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.overlay.on{display:flex}
+@media(min-width:560px){.overlay{align-items:center;padding:20px}}
+.modal{background:var(--card);border:1px solid var(--border-2);border-radius:20px 20px 0 0;width:100%;max-width:460px;max-height:94dvh;overflow-y:auto;animation:up .3s cubic-bezier(.2,.7,.3,1)}
+@media(min-width:560px){.modal{border-radius:20px}}
+@keyframes up{from{transform:translateY(26px);opacity:0}to{transform:none;opacity:1}}
+.modal-h{position:sticky;top:0;background:var(--card);padding:20px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;z-index:1}
+.modal-h h2{font-size:1.2rem;font-weight:800;line-height:1.2}
+.modal-h p{color:var(--muted);font-size:.86rem;margin-top:5px}
+.modal-x{background:#0d0d0d;border:1px solid var(--border-2);color:var(--muted);width:34px;height:34px;border-radius:50%;font-size:1.1rem;cursor:pointer;flex-shrink:0}
+.modal-x:hover{border-color:var(--brand);color:var(--brand)}
+.modal-b{padding:16px 22px 24px}
+.field{margin-bottom:14px;text-align:left}
+.field label{display:block;font-family:'Montserrat';font-weight:600;font-size:.85rem;margin-bottom:7px}
+.field label .opt{color:var(--dim);font-weight:500;font-size:.78rem}
+.field input,.field select{width:100%;background:#fff;border:1px solid var(--border-2);border-radius:12px;padding:15px 16px;color:#111;font-size:1rem;font-family:'Roboto'}
+.field input::placeholder{color:#9a9a9a}
+.field input:focus,.field select:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-glow)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2338b6ff' stroke-width='3' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.secure{display:flex;align-items:center;justify-content:center;gap:7px;color:var(--dim);font-size:.82rem;margin-top:12px}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+</div>
+
+<div class="wrap">
+  <div class="topbar">
+    <img src="/logo.png" alt="Plus Mídia" class="logo">
+    <span class="badge"><span class="dot-live"></span> Assista até o final</span>
+  </div>
+
+  <h1 class="headline">Nosso único foco: <span class="accent">aumentar as vendas e o lucro líquido</span> do seu e-commerce.</h1>
+  <p class="sub">Assista ao vídeo abaixo e descubra o método que já escalou +217 e-commerces de moda.</p>
+
+  <!-- PLAYER -->
+  <div class="player" id="player">
+    <video id="vsl" playsinline preload="metadata" controlslist="nodownload noplaybackrate" disablepictureinpicture poster="/vsl/poster.jpg">
+      <source src="/vsl/vsl.mp4" type="video/mp4">
+      Seu navegador não suporta vídeo.
+    </video>
+    <button class="sound" id="soundBtn" aria-label="Som">🔊</button>
+    <div class="pbar" id="pbar"></div>
+    <div class="cover" id="cover">
+      <div class="playbtn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="ctxt">Clique para assistir<small>com o som ligado 🔊</small></div>
+    </div>
+  </div>
+
+  <div class="waiting" id="waiting"><span class="spin"></span> <span id="waitTxt">Continue assistindo…</span></div>
+
+  <!-- CTA revelado após o tempo -->
+  <div class="cta-zone" id="ctaZone">
+    <div class="cta-line">Pronto para escalar o seu e-commerce?</div>
+    <button class="btn pulse" id="ctaBtn">Quero falar com um especialista <span>›</span></button>
+    <div class="guarantee">🔒 Vagas limitadas · atendimento consultivo</div>
+  </div>
+
+  <div class="footer">
+    <b>Plus Mídia</b> · Todos os direitos reservados © 2026
+  </div>
+</div>
+
+<!-- MODAL FORM -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-h">
+      <div><h2>Falta pouco!</h2><p>Preencha para falar com um especialista da Plus Mídia.</p></div>
+      <button class="modal-x" id="modalX" aria-label="Fechar">×</button>
+    </div>
+    <div class="modal-b">
+      <form id="leadForm" novalidate>
+        <div class="field"><label for="f-name">Seu nome</label>
+          <input type="text" id="f-name" name="name" required placeholder="Como te chamamos?"></div>
+        <div class="field"><label for="f-email">E-mail</label>
+          <input type="email" id="f-email" name="email" required placeholder="seu@email.com"></div>
+        <div class="field"><label for="f-phone">WhatsApp</label>
+          <input type="tel" id="f-phone" name="phone" required inputmode="tel" placeholder="(11) 99999-9999"></div>
+        <div class="field"><label for="f-insta">Instagram do e-commerce</label>
+          <input type="text" id="f-insta" name="instagram" required placeholder="@sualoja"></div>
+        <div class="field"><label for="f-site">Site do e-commerce <span class="opt">(opcional)</span></label>
+          <input type="text" id="f-site" name="site" placeholder="www.sualoja.com.br"></div>
+        <div class="field"><label for="f-rev">Qual a média do seu faturamento mensal?</label>
+          <select id="f-rev" name="revenue" required>
+            <option value="">Selecione aqui</option>
+            <option>Estou começando</option>
+            <option>De R$ 1.000 a R$ 5.000</option>
+            <option>De R$ 5.000 a R$ 10.000</option>
+            <option>De R$ 10.000 a R$ 15.000</option>
+            <option>De R$ 15.000 a R$ 20.000</option>
+            <option>De R$ 20.000 a R$ 30.000</option>
+            <option>De R$ 30.000 a R$ 50.000</option>
+            <option>De R$ 50.000 a R$ 100.000</option>
+            <option>Mais de R$ 100.000</option>
+          </select>
+        </div>
+        <button type="submit" class="btn pulse" style="margin-top:6px">Quero falar com um especialista <span>›</span></button>
+        <div class="secure">🔒 Seus dados estão 100% seguros.</div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+/* ====== CONFIG ====== */
+// Botão aparece após 3 min DE VÍDEO ASSISTIDO. Pra testar sem esperar, use ?reveal=10 (segundos).
+const REVEAL_AT = (() => {
+  const q = parseInt(new URLSearchParams(location.search).get('reveal'), 10);
+  return (q && q > 0) ? q : 180; // 180s = 3 min
+})();
+const GPM_WEBHOOK_URL = 'https://rkngilknpcibcwalropj.supabase.co/functions/v1/webhook-handler?slug=822c89c759e6a664f4b485ef';
+const OBRIGADO_URL = 'https://www.plusmidiamkt.com/obrigado';
+const LP_SOURCE = 'lp-vsl';
+
+/* ====== PLAYER ====== */
+const video = document.getElementById('vsl');
+const player = document.getElementById('player');
+const cover = document.getElementById('cover');
+const pbar = document.getElementById('pbar');
+const soundBtn = document.getElementById('soundBtn');
+const ctaZone = document.getElementById('ctaZone');
+const waiting = document.getElementById('waiting');
+let revealed = false, started = false, effReveal = REVEAL_AT;
+// se o vídeo for mais curto que o tempo de revelação, revela perto do fim
+video.addEventListener('loadedmetadata', ()=>{
+  if(video.duration && video.duration < REVEAL_AT + 1){ effReveal = Math.max(1, video.duration - 1); }
+});
+video.addEventListener('ended', ()=>{ if(!revealed) reveal(); });
+
+function startPlay(){
+  video.muted = false; video.volume = 1;
+  video.play().then(()=>{ cover.classList.add('hide'); player.classList.add('playing'); started = true; })
+    .catch(()=>{ // se o browser bloquear com som, tenta mudo e mostra botão de som
+      video.muted = true; video.play(); cover.classList.add('hide'); player.classList.add('playing'); started = true;
+    });
+}
+cover.addEventListener('click', startPlay);
+// clicar no vídeo pausa/retoma (sem barra de seek)
+video.addEventListener('click', ()=>{ if(!started) return; if(video.paused) video.play(); else video.pause(); });
+soundBtn.addEventListener('click', (e)=>{ e.stopPropagation(); video.muted = !video.muted; if(!video.muted && video.volume===0) video.volume=1; soundBtn.textContent = video.muted ? '🔇' : '🔊'; });
+
+// bloqueia menu de contexto (download)
+video.addEventListener('contextmenu', e=>e.preventDefault());
+
+video.addEventListener('timeupdate', ()=>{
+  const dur = video.duration || effReveal;
+  pbar.style.width = Math.min(100, (video.currentTime/dur)*100) + '%';
+  if(!revealed && video.currentTime >= effReveal){ reveal(); }
+  else if(!revealed){
+    const left = Math.max(0, Math.ceil(effReveal - video.currentTime));
+    const mm = String(Math.floor(left/60)).padStart(1,'0'), ss = String(left%60).padStart(2,'0');
+    document.getElementById('waitTxt').textContent = 'Continue assistindo… (' + mm + ':' + ss + ')';
+  }
+});
+
+function reveal(){
+  revealed = true;
+  waiting.classList.add('hide');
+  ctaZone.classList.add('show');
+  if(window.fbq) fbq('trackCustom','VslCtaRevealed');
+  setTimeout(()=>ctaZone.scrollIntoView({behavior:'smooth',block:'center'}), 200);
+}
+
+/* ====== MODAL ====== */
+const overlay = document.getElementById('overlay');
+document.getElementById('ctaBtn').addEventListener('click', ()=>{
+  overlay.classList.add('on');
+  if(window.fbq) fbq('trackCustom','VslCtaClick');
+});
+document.getElementById('modalX').addEventListener('click', ()=>overlay.classList.remove('on'));
+overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.classList.remove('on'); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') overlay.classList.remove('on'); });
+
+/* ====== PHONE MASK ====== */
+const phone = document.getElementById('f-phone');
+phone.addEventListener('input', e=>{
+  let d = e.target.value.replace(/\D/g,'').slice(0,11), out = d;
+  if(d.length>0) out = '(' + d.slice(0,2);
+  if(d.length>=3) out += ') ' + d.slice(2,7);
+  if(d.length>=8) out += '-' + d.slice(7,11);
+  e.target.value = out;
+});
+
+/* ====== TRACKING META ====== */
+function getCookie(n){ const m=document.cookie.match(new RegExp('(^|;\\s*)'+n+'=([^;]+)')); return m?decodeURIComponent(m[2]):undefined; }
+function trackingMeta(){
+  const u = new URL(location.href), utms = {};
+  ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(k=>{ const v=u.searchParams.get(k); if(v) utms[k]=v; });
+  return { fbclid:u.searchParams.get('fbclid')||undefined, utms, fbp:getCookie('_fbp'), fbc:getCookie('_fbc'), pageUrl:location.href, userAgent:navigator.userAgent };
+}
+
+/* ====== SUBMIT ====== */
+document.getElementById('leadForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const form = e.target;
+  const name = form.name.value.trim(), email = form.email.value.trim(), ph = form.phone.value.trim();
+  const insta = form.instagram.value.trim(), rev = form.revenue.value;
+  if(!name || !/.+@.+\..+/.test(email) || ph.replace(/\D/g,'').length<10 || !insta || !rev){ form.reportValidity(); return; }
+  const btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true; btn.innerHTML = 'Enviando...';
+
+  const meta = trackingMeta();
+  const payload = { submission:{
+    fields:{
+      name, email, phone:ph, instagram:insta, site:form.site.value.trim(), revenue:rev,
+      ...meta.utms, fbclid:meta.fbclid, lp_source:LP_SOURCE, form_position:'vsl-modal',
+    },
+    metadata:{ fbp:meta.fbp, fbc:meta.fbc, fbclid:meta.fbclid, userAgent:meta.userAgent, page:{url:meta.pageUrl} }
+  }};
+  fetch(GPM_WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),keepalive:true}).catch(()=>{});
+
+  if(window.fbq) fbq('track','Lead');
+  if(window.dataLayer) window.dataLayer.push({event:'lead_submit',source:LP_SOURCE,form_position:'vsl-modal',name,email,phone:ph,instagram:insta,revenue:rev});
+
+  setTimeout(()=>{ location.href = OBRIGADO_URL; }, 300);
+});
+</script>
+</body>
+</html>
