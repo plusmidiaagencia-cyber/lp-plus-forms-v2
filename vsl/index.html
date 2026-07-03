@@ -223,12 +223,12 @@ const LP_SOURCE = 'lp-vsl';
 const SUPA_TRACK='https://rkngilknpcibcwalropj.supabase.co';
 const ANON_TRACK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJrbmdpbGtucGNpYmN3YWxyb3BqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE2NTEzOTUsImV4cCI6MjA3NzIyNzM5NX0.b_TCn2hsU8UPFvqGnXzzKhJApm9NVMxqxxNAOHyNsdQ';
 function vsid(){ try{var s=localStorage.getItem('vsl_sid'); if(!s){s=Date.now().toString(36)+Math.random().toString(36).slice(2,10); localStorage.setItem('vsl_sid',s);} return s;}catch(e){return 'ns_'+Math.random().toString(36).slice(2,10);} }
-function vslTrack(ev, sec){
+function vslTrack(ev, sec, meta){
   try{ fetch(SUPA_TRACK+'/rest/v1/lp_video_events',{method:'POST',keepalive:true,
     headers:{'apikey':ANON_TRACK,'Authorization':'Bearer '+ANON_TRACK,'Content-Type':'application/json','Prefer':'return=minimal'},
-    body:JSON.stringify({session_id:vsid(),source:'vsl',event:ev,second:(sec==null?null:sec)})}).catch(function(){}); }catch(e){}
+    body:JSON.stringify({session_id:vsid(),source:'vsl',event:ev,second:(sec==null?null:sec),meta:meta||{}})}).catch(function(){}); }catch(e){}
 }
-vslTrack('view');
+vslTrack('view', null, trackingMeta().utms || {}); // captura UTM da campanha no 1º evento
 
 /* ====== PLAYER ====== */
 const video = document.getElementById('vsl');
@@ -334,7 +334,7 @@ document.getElementById('leadForm').addEventListener('submit', e=>{
   }};
   fetch(GPM_WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),keepalive:true}).catch(()=>{});
 
-  vslTrack('lead');
+  vslTrack('lead', null, { n:name, e:email, p:ph, insta, site:form.site.value.trim(), rev, ...meta.utms });
   if(window.fbq) fbq('track','Lead');
   if(window.dataLayer) window.dataLayer.push({event:'lead_submit',source:LP_SOURCE,form_position:'vsl-modal',name,email,phone:ph,instagram:insta,revenue:rev});
 

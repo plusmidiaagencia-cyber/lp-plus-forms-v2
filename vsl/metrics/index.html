@@ -43,6 +43,35 @@ h1,h2,h3{font-family:'Montserrat',sans-serif}
 @keyframes spin{to{transform:rotate(360deg)}}
 .setup{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:12px;padding:14px;color:#fcd34d;font-size:.86rem;margin-bottom:18px;display:none}
 .note{color:var(--dim);font-size:.78rem;margin-top:20px;line-height:1.6}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;margin-top:4px}
+.tbl{width:100%;border-collapse:collapse;font-size:.86rem;min-width:520px}
+.tbl th{text-align:left;color:var(--dim);font-family:'Montserrat';font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:.04em;padding:11px 12px;background:#0d0d0d;border-bottom:1px solid var(--border)}
+.tbl td{padding:11px 12px;border-bottom:1px solid var(--border);color:var(--muted)}
+.tbl td b{color:var(--text);font-weight:600}
+.tbl tbody tr{cursor:pointer;transition:background .12s}
+.tbl tbody tr:hover{background:rgba(56,182,255,.08)}
+.tbl tr:last-child td{border-bottom:none}
+.bdg{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:999px;background:rgba(56,182,255,.14);color:var(--brand)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.74);backdrop-filter:blur(3px);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.overlay.on{display:flex}
+@media(min-width:560px){.overlay{align-items:center;padding:20px}}
+.card{background:var(--card-2);border:1px solid var(--border-2);border-radius:18px 18px 0 0;width:100%;max-width:460px;max-height:92dvh;overflow-y:auto}
+@media(min-width:560px){.card{border-radius:18px}}
+.card-h{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 20px 14px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--card-2)}
+.card-h .nm{font-family:'Montserrat';font-weight:800;font-size:1.15rem}
+.card-x{background:#0d0d0d;border:1px solid var(--border-2);color:var(--muted);width:34px;height:34px;border-radius:50%;font-size:1.1rem;cursor:pointer;flex-shrink:0}
+.card-b{padding:16px 20px 22px}
+.grp{margin-bottom:16px}
+.grp-t{font-family:'Montserrat';font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin-bottom:9px}
+.kv{display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-bottom:1px solid var(--border);font-size:.9rem}
+.kv:last-child{border-bottom:none}
+.kv .k{color:var(--muted)}.kv .v{color:var(--text);font-weight:600;text-align:right;word-break:break-word}
+.kv .v a{color:var(--brand);text-decoration:none}
+.card-acts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.act{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:12px;font-family:'Montserrat';font-weight:700;font-size:.86rem;text-decoration:none;border:1px solid var(--border-2)}
+.act.wa{background:#25d366;color:#04220f;border-color:#25d366}
+.act.mail{background:var(--card);color:var(--text)}
+.nocontact{color:var(--dim);font-size:.86rem;text-align:center;padding:14px;background:#0d0d0d;border:1px dashed var(--border-2);border-radius:10px}
 </style>
 </head>
 <body>
@@ -57,6 +86,8 @@ h1,h2,h3{font-family:'Montserrat',sans-serif}
     <button class="fbtn" data-d="90">90 dias</button>
   </div>
   <div id="content"><div class="state"><div class="spinner"></div>Carregando…</div></div>
+  <div id="leads"></div>
+  <div class="overlay" id="overlay"><div class="card" id="card"></div></div>
   <div class="note">Curva de retenção = de cada 100 que deram <b>play</b>, quantos ainda estavam assistindo em cada trecho. A linha tracejada marca o momento em que o botão de CTA aparece.</div>
 </div>
 <script>
@@ -89,6 +120,7 @@ async function load(){
   }
   document.getElementById('setup').style.display='none';
   render(sum, ret);
+  loadLeads();
 }
 function render(sum, ret){
   const m={}; sum.forEach(r=>m[r.event]=+r.sessions);
@@ -143,6 +175,56 @@ function retentionSVG(ret, base){
   const ctaLine='<line x1="'+x(CTA_AT)+'" y1="'+PT+'" x2="'+x(CTA_AT)+'" y2="'+(H-PB)+'" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4 3"/><text x="'+x(CTA_AT)+'" y="'+(PT-2)+'" fill="#f59e0b" font-size="9" text-anchor="middle" font-family="Montserrat">CTA '+mmss(CTA_AT)+'</text>';
   return '<svg viewBox="0 0 '+W+' '+H+'">'+grid+'<path d="'+area+'" fill="rgba(56,182,255,.14)"/><path d="'+line+'" fill="none" stroke="#38b6ff" stroke-width="2.5" stroke-linejoin="round"/>'+ctaLine+xlab+'</svg>';
 }
+
+/* ====== LEADS + UTM ====== */
+let leadsCache=[];
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function waLink(p){ const d=String(p||'').replace(/\D/g,''); if(d.length<10) return null; return 'https://wa.me/'+(d.length<=11?'55'+d:d); }
+async function loadLeads(){
+  const el=document.getElementById('leads');
+  el.innerHTML='<div class="sec-t" style="margin-top:26px">Leads</div><div class="state" style="padding:20px"><div class="spinner"></div>Carregando…</div>';
+  let rows=[];
+  try{ rows=await rpc('lp_video_leads',{p_source:'vsl',p_days:days}); }
+  catch(e){ el.innerHTML='<div class="sec-t" style="margin-top:26px">Leads</div><div class="state">Rode o SQL atualizado (função lp_video_leads).</div>'; return; }
+  leadsCache=rows;
+  let h='<div class="sec-t" style="margin-top:26px">Leads <span style="color:var(--dim);font-size:.8rem;font-weight:700">'+rows.length+'</span></div>';
+  if(!rows.length){ h+='<div class="state" style="padding:24px">Nenhum lead no período.</div>'; el.innerHTML=h; return; }
+  h+='<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Nome</th><th>Faturamento</th><th>Origem</th><th>Assistiu</th></tr></thead><tbody>';
+  rows.forEach((r,i)=>{
+    const origem = r.utm_source ? esc(r.utm_source)+(r.utm_campaign?' · '+esc(r.utm_campaign):'') : '<span style="color:var(--dim)">direto</span>';
+    h+='<tr data-i="'+i+'"><td><b>'+(esc(r.lead_name)||'—')+'</b></td><td>'+(esc(r.revenue)||'–')+'</td><td>'+origem+'</td><td>'+(r.watched_sec!=null?mmss(r.watched_sec):'–')+'</td></tr>';
+  });
+  h+='</tbody></table></div>'; el.innerHTML=h;
+  el.querySelectorAll('tr[data-i]').forEach(tr=>tr.onclick=()=>openLead(+tr.dataset.i));
+}
+function kvrow(k,v){ return '<div class="kv"><span class="k">'+k+'</span><span class="v">'+v+'</span></div>'; }
+function openLead(i){
+  const r=leadsCache[i]; if(!r) return;
+  const wa=waLink(r.lead_phone);
+  const hasUtm=r.utm_source||r.utm_medium||r.utm_campaign||r.utm_content||r.utm_term;
+  const utm = hasUtm
+    ? '<div class="grp"><div class="grp-t">Campanha (UTM)</div>'+kvrow('Origem',esc(r.utm_source)||'–')+kvrow('Mídia',esc(r.utm_medium)||'–')+kvrow('Campanha',esc(r.utm_campaign)||'–')+(r.utm_content?kvrow('Conteúdo/Anúncio',esc(r.utm_content)):'')+(r.utm_term?kvrow('Termo',esc(r.utm_term)):'')+'</div>'
+    : '<div class="grp"><div class="grp-t">Campanha (UTM)</div><div class="nocontact">Sem UTM (tráfego direto).</div></div>';
+  document.getElementById('card').innerHTML=
+    '<div class="card-h"><div class="nm">'+(esc(r.lead_name)||'Lead')+'</div><button class="card-x" id="cardX">×</button></div>'
+    +'<div class="card-b">'
+    +'<div class="grp"><div class="grp-t">Contato</div>'
+      +kvrow('E-mail', r.lead_email?'<a href="mailto:'+esc(r.lead_email)+'">'+esc(r.lead_email)+'</a>':'–')
+      +kvrow('WhatsApp', r.lead_phone?(wa?'<a href="'+wa+'" target="_blank" rel="noopener">'+esc(r.lead_phone)+'</a>':esc(r.lead_phone)):'–')
+      +kvrow('Instagram', esc(r.instagram)||'–')
+      +kvrow('Site', r.site?'<a href="'+esc(/^https?:/.test(r.site)?r.site:'https://'+r.site)+'" target="_blank" rel="noopener">'+esc(r.site)+'</a>':'–')
+      +kvrow('Faturamento', esc(r.revenue)||'–')
+      +'</div>'
+    +utm
+    +'<div class="grp"><div class="grp-t">Vídeo</div>'+kvrow('Assistiu até', r.watched_sec!=null?mmss(r.watched_sec):'–')+kvrow('Entrada', new Date(r.started_at).toLocaleString('pt-BR'))+'</div>'
+    +((r.lead_phone||r.lead_email)?'<div class="card-acts">'+(wa?'<a class="act wa" href="'+wa+'" target="_blank" rel="noopener">💬 WhatsApp</a>':'')+(r.lead_email?'<a class="act mail" href="mailto:'+esc(r.lead_email)+'">✉ E-mail</a>':'')+'</div>':'')
+    +'</div>';
+  document.getElementById('cardX').onclick=closeLead;
+  document.getElementById('overlay').classList.add('on');
+}
+function closeLead(){ document.getElementById('overlay').classList.remove('on'); }
+document.getElementById('overlay').onclick=e=>{ if(e.target.id==='overlay') closeLead(); };
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLead(); });
 
 document.querySelectorAll('.fbtn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));b.classList.add('on');days=+b.dataset.d;load();});
 document.getElementById('refresh').onclick=load;
