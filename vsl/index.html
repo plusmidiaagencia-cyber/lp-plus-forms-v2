@@ -62,8 +62,11 @@ h1,h2,h3,.font-m{font-family:'Montserrat',sans-serif}
 .sub{color:var(--muted);font-size:clamp(.95rem,2.6vw,1.1rem);margin:12px 0 26px;max-width:44ch}
 
 /* Player VSL — sem barra de seek (não pode pular) */
-.player{position:relative;width:100%;max-width:720px;aspect-ratio:16/9;background:#000;border:1px solid var(--border-2);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 0 1px rgba(56,182,255,.08)}
-.player video{width:100%;height:100%;object-fit:contain;display:block;background:#000}
+.player{position:relative;width:100%;max-width:430px;aspect-ratio:1080/1350;background:#000;border:1px solid var(--border-2);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 0 1px rgba(56,182,255,.08)}
+.player video{width:100%;height:100%;object-fit:cover;display:block;background:#000}
+/* overlay de pausa — botão de play volta quando pausa */
+.pauseovr{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.4);cursor:pointer;z-index:2}
+.pauseovr.show{display:flex}
 .player .cover{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;cursor:pointer;background:radial-gradient(circle at 50% 45%,rgba(56,182,255,.14),rgba(0,0,0,.75) 70%);transition:opacity .3s;z-index:3}
 .player .cover.hide{opacity:0;pointer-events:none}
 .playbtn{width:82px;height:82px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px var(--brand-glow);animation:pulse-play 2.2s infinite}
@@ -143,6 +146,7 @@ h1,h2,h3,.font-m{font-family:'Montserrat',sans-serif}
     </video>
     <button class="sound" id="soundBtn" aria-label="Som">🔊</button>
     <div class="pbar" id="pbar"></div>
+    <div class="pauseovr" id="pauseOvr"><div class="playbtn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
     <div class="cover" id="cover">
       <div class="playbtn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       <div class="ctxt">Clique para assistir<small>com o som ligado 🔊</small></div>
@@ -238,8 +242,12 @@ function startPlay(){
     });
 }
 cover.addEventListener('click', startPlay);
-// clicar no vídeo pausa/retoma (sem barra de seek)
+// clicar no vídeo pausa; overlay de play volta quando pausado
+const pauseOvr = document.getElementById('pauseOvr');
 video.addEventListener('click', ()=>{ if(!started) return; if(video.paused) video.play(); else video.pause(); });
+video.addEventListener('pause', ()=>{ if(started && !video.ended) pauseOvr.classList.add('show'); });
+video.addEventListener('play', ()=>{ pauseOvr.classList.remove('show'); });
+pauseOvr.addEventListener('click', ()=>{ video.play(); });
 soundBtn.addEventListener('click', (e)=>{ e.stopPropagation(); video.muted = !video.muted; if(!video.muted && video.volume===0) video.volume=1; soundBtn.textContent = video.muted ? '🔇' : '🔊'; });
 
 // bloqueia menu de contexto (download)
