@@ -210,7 +210,7 @@ h1,h2,h3,.font-m{font-family:'Montserrat',sans-serif}
 // Botão aparece após 3 min DE VÍDEO ASSISTIDO. Pra testar sem esperar, use ?reveal=10 (segundos).
 const REVEAL_AT = (() => {
   const q = parseInt(new URLSearchParams(location.search).get('reveal'), 10);
-  return (q && q > 0) ? q : 180; // 180s = 3 min
+  return (q && q > 0) ? q : 145; // 145s = 2min25
 })();
 const GPM_WEBHOOK_URL = 'https://rkngilknpcibcwalropj.supabase.co/functions/v1/webhook-handler?slug=822c89c759e6a664f4b485ef';
 const OBRIGADO_URL = 'https://www.plusmidiamkt.com/obrigado';
