@@ -153,8 +153,6 @@ h1,h2,h3,.font-m{font-family:'Montserrat',sans-serif}
     </div>
   </div>
 
-  <div class="waiting" id="waiting"><span class="spin"></span> <span id="waitTxt">Continue assistindo…</span></div>
-
   <!-- CTA revelado após o tempo -->
   <div class="cta-zone" id="ctaZone">
     <div class="cta-line">Pronto para escalar o seu e-commerce?</div>
@@ -226,7 +224,6 @@ const cover = document.getElementById('cover');
 const pbar = document.getElementById('pbar');
 const soundBtn = document.getElementById('soundBtn');
 const ctaZone = document.getElementById('ctaZone');
-const waiting = document.getElementById('waiting');
 let revealed = false, started = false, effReveal = REVEAL_AT;
 // se o vídeo for mais curto que o tempo de revelação, revela perto do fim
 video.addEventListener('loadedmetadata', ()=>{
@@ -257,16 +254,10 @@ video.addEventListener('timeupdate', ()=>{
   const dur = video.duration || effReveal;
   pbar.style.width = Math.min(100, (video.currentTime/dur)*100) + '%';
   if(!revealed && video.currentTime >= effReveal){ reveal(); }
-  else if(!revealed){
-    const left = Math.max(0, Math.ceil(effReveal - video.currentTime));
-    const mm = String(Math.floor(left/60)).padStart(1,'0'), ss = String(left%60).padStart(2,'0');
-    document.getElementById('waitTxt').textContent = 'Continue assistindo… (' + mm + ':' + ss + ')';
-  }
 });
 
 function reveal(){
   revealed = true;
-  waiting.classList.add('hide');
   ctaZone.classList.add('show');
   if(window.fbq) fbq('trackCustom','VslCtaRevealed');
   setTimeout(()=>ctaZone.scrollIntoView({behavior:'smooth',block:'center'}), 200);
