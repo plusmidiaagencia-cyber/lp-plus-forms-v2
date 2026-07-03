@@ -67,13 +67,17 @@ h1,h2,h3,.font-m{font-family:'Montserrat',sans-serif}
 /* overlay de pausa — botão de play volta quando pausa */
 .pauseovr{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.4);cursor:pointer;z-index:2}
 .pauseovr.show{display:flex}
-.player .cover{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;cursor:pointer;background:radial-gradient(circle at 50% 45%,rgba(56,182,255,.14),rgba(0,0,0,.75) 70%);transition:opacity .3s;z-index:3}
+.player .cover{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;cursor:pointer;background:radial-gradient(circle at 50% 42%,rgba(56,182,255,.18),rgba(0,0,0,.5) 52%,rgba(0,0,0,.84));transition:opacity .35s;z-index:3}
 .player .cover.hide{opacity:0;pointer-events:none}
-.playbtn{width:82px;height:82px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px var(--brand-glow);animation:pulse-play 2.2s infinite}
-.playbtn svg{width:34px;height:34px;margin-left:5px;fill:#04222f}
-@keyframes pulse-play{0%{box-shadow:0 0 0 0 rgba(56,182,255,.4)}70%{box-shadow:0 0 0 22px rgba(56,182,255,0)}100%{box-shadow:0 0 0 0 rgba(56,182,255,0)}}
-.cover .ctxt{font-family:'Montserrat';font-weight:700;font-size:.95rem;color:#fff}
-.cover .ctxt small{display:block;color:var(--muted);font-weight:500;font-size:.8rem;margin-top:3px}
+.playbtn{position:relative;width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#5cc6ff,#1e9bdb);display:flex;align-items:center;justify-content:center;border:3px solid rgba(255,255,255,.95);box-shadow:0 12px 44px rgba(56,182,255,.6),0 6px 18px rgba(0,0,0,.5);transition:transform .2s}
+.player .cover:hover .playbtn{transform:scale(1.07)}
+.playbtn::before,.playbtn::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:2px solid rgba(56,182,255,.55);animation:ripple 2.6s ease-out infinite}
+.playbtn::after{animation-delay:1.3s}
+@keyframes ripple{0%{transform:scale(1);opacity:.8}100%{transform:scale(2);opacity:0}}
+.playbtn svg{width:40px;height:40px;margin-left:6px;fill:#fff;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+.cover .ctxt{font-family:'Montserrat';font-weight:800;font-size:clamp(1.15rem,4.2vw,1.4rem);letter-spacing:.005em;color:#fff;text-align:center;text-shadow:0 2px 14px rgba(0,0,0,.75);animation:ctxtpulse 2.2s ease-in-out infinite}
+@keyframes ctxtpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+.cover .ctxt small{display:block;color:#c6e7ff;font-weight:600;font-size:.86rem;margin-top:7px;text-shadow:0 1px 8px rgba(0,0,0,.7);animation:none}
 /* barra de progresso só visual (não clicável) */
 .pbar{position:absolute;left:0;bottom:0;height:4px;width:0;background:linear-gradient(90deg,var(--brand-2),var(--brand));z-index:4;transition:width .25s linear}
 .sound{position:absolute;top:12px;right:12px;z-index:4;width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.55);border:1px solid var(--border-2);color:#fff;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:1.1rem}
