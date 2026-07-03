@@ -59,7 +59,7 @@ h1,h2,h3,.font-m{font-family:'Montserrat',sans-serif}
 
 .headline{font-size:clamp(1.6rem,5.2vw,2.5rem);font-weight:900;line-height:1.14;letter-spacing:-.02em;margin-bottom:8px;max-width:16ch}
 .headline .accent{color:var(--brand)}
-.sub{color:var(--muted);font-size:clamp(.95rem,2.6vw,1.1rem);margin:12px 0 26px;max-width:44ch}
+.sub{color:#ededed;font-size:clamp(.95rem,2.6vw,1.1rem);margin:12px 0 26px;max-width:44ch}
 
 /* Player VSL — sem barra de seek (não pode pular) */
 .player{position:relative;width:100%;max-width:430px;aspect-ratio:1080/1350;background:#000;border:1px solid var(--border-2);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 0 1px rgba(56,182,255,.08)}
@@ -144,7 +144,6 @@ h1,h2,h3,.font-m{font-family:'Montserrat',sans-serif}
       <source src="/vsl/vsl.mp4" type="video/mp4">
       Seu navegador não suporta vídeo.
     </video>
-    <button class="sound" id="soundBtn" aria-label="Som">🔊</button>
     <div class="pbar" id="pbar"></div>
     <div class="pauseovr" id="pauseOvr"><div class="playbtn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
     <div class="cover" id="cover">
@@ -222,7 +221,6 @@ const video = document.getElementById('vsl');
 const player = document.getElementById('player');
 const cover = document.getElementById('cover');
 const pbar = document.getElementById('pbar');
-const soundBtn = document.getElementById('soundBtn');
 const ctaZone = document.getElementById('ctaZone');
 let revealed = false, started = false, effReveal = REVEAL_AT;
 // se o vídeo for mais curto que o tempo de revelação, revela perto do fim
@@ -245,8 +243,6 @@ video.addEventListener('click', ()=>{ if(!started) return; if(video.paused) vide
 video.addEventListener('pause', ()=>{ if(started && !video.ended) pauseOvr.classList.add('show'); });
 video.addEventListener('play', ()=>{ pauseOvr.classList.remove('show'); });
 pauseOvr.addEventListener('click', ()=>{ video.play(); });
-soundBtn.addEventListener('click', (e)=>{ e.stopPropagation(); video.muted = !video.muted; if(!video.muted && video.volume===0) video.volume=1; soundBtn.textContent = video.muted ? '🔇' : '🔊'; });
-
 // bloqueia menu de contexto (download)
 video.addEventListener('contextmenu', e=>e.preventDefault());
 
