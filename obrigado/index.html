@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Cadastro concluído — Plus Mídia</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Cadastro concluído. Em poucos minutos a Plus Mídia entra em contato pelo WhatsApp.">
+<meta property="og:title" content="Cadastro concluído — Plus Mídia">
+<meta property="og:description" content="Em poucos minutos a Plus Mídia entra em contato pelo WhatsApp.">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon-32.png" type="image/png">
+<link rel="apple-touch-icon" href="favicon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0a;--card:#141414;--card-2:#1a1a1a;--border:#222;
+  --text:#f5f5f5;--muted:#a0a0a0;--dim:#6b7280;
+  --brand:#38b6ff;--brand-2:#0098e8;--brand-glow:rgba(56,182,255,.18);
+  --success:#22c55e;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Roboto',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Montserrat',sans-serif;letter-spacing:-.02em;line-height:1.1}
+a{color:var(--brand);text-decoration:none}
+.container{max-width:880px;margin:0 auto;padding:0 24px}
+
+.header{padding:22px 0;border-bottom:1px solid var(--border)}
+.header-inner{display:flex;align-items:center;justify-content:center;gap:12px}
+.logo-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;color:#001827;font-weight:900;font-family:'Montserrat'}
+.logo-text{font-family:'Montserrat';font-weight:800;font-size:1.05rem;letter-spacing:.02em}
+
+.stage{min-height:calc(100vh - 80px);display:flex;align-items:center;justify-content:center;padding:60px 0;position:relative;overflow:hidden}
+.stage::before{content:"";position:absolute;top:50%;left:50%;width:760px;height:760px;border-radius:50%;background:radial-gradient(circle,var(--brand-glow),transparent 70%);transform:translate(-50%,-50%);filter:blur(60px);z-index:-1}
+.card{
+  background:linear-gradient(135deg,var(--card),var(--card-2));
+  border:1px solid var(--border);border-radius:24px;
+  padding:54px 44px;text-align:center;position:relative;
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.75);
+}
+.check{
+  width:96px;height:96px;border-radius:50%;
+  background:radial-gradient(circle,rgba(34,197,94,.25),rgba(34,197,94,.08));
+  border:2px solid rgba(34,197,94,.5);
+  display:grid;place-items:center;margin:0 auto 28px;
+  animation:checkPop .55s cubic-bezier(.25,1.5,.55,1) both;
+}
+.check svg{width:48px;height:48px;color:var(--success)}
+@keyframes checkPop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+
+.eyebrow{font-family:'Montserrat';font-weight:700;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--brand);margin-bottom:14px}
+h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:900;margin-bottom:18px}
+h1 .accent{color:var(--brand)}
+.lead{font-size:clamp(1.05rem,2vw,1.18rem);color:var(--muted);max-width:580px;margin:0 auto 26px}
+.body-copy{font-size:.98rem;color:#cfcfcf;max-width:560px;margin:0 auto}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:36px auto 0;max-width:680px}
+.step{background:rgba(56,182,255,.05);border:1px solid var(--border);border-radius:14px;padding:18px 14px;text-align:left}
+.step-num{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#001827;font-family:'Montserrat';font-weight:900;display:grid;place-items:center;font-size:.85rem;margin-bottom:10px}
+.step-title{font-family:'Montserrat';font-weight:700;font-size:.92rem;margin-bottom:4px}
+.step-desc{font-size:.82rem;color:var(--muted);line-height:1.45}
+
+.cta-row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:36px}
+.btn{font-family:'Montserrat';font-weight:800;font-size:.92rem;letter-spacing:.02em;padding:14px 28px;border-radius:12px;border:0;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
+.btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#001827;box-shadow:0 12px 30px -10px rgba(56,182,255,.5)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 18px 36px -10px rgba(56,182,255,.6)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+
+.note{margin-top:30px;font-size:.85rem;color:var(--dim);display:flex;justify-content:center;align-items:center;gap:8px}
+.note-dot{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 0 4px rgba(34,197,94,.18)}
+
+footer{text-align:center;padding:34px 24px;color:var(--dim);font-size:.78rem;border-top:1px solid var(--border);margin-top:60px}
+footer a{color:var(--muted)}
+
+@media (max-width:720px){
+  .card{padding:36px 22px;border-radius:18px}
+  .steps{grid-template-columns:1fr;gap:10px}
+  .step{padding:14px 14px}
+}
+</style>
+<!-- Meta Pixel — PIXEL PM 01 -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '289183857235038');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=289183857235038&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
+</head>
+<body>
+
+<header class="header">
+  <div class="container header-inner">
+    <div class="logo-mark">P</div>
+    <div class="logo-text">PLUS MÍDIA</div>
+  </div>
+</header>
+
+<main class="stage">
+  <div class="container">
+    <div class="card">
+      <div class="check" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6"/></svg>
+      </div>
+      <div class="eyebrow">Cadastro recebido</div>
+      <h1>Cadastro <span class="accent">concluído!</span></h1>
+      <p class="lead">Você está prestes a destravar o próximo nível do seu e-commerce.</p>
+      <p class="body-copy">Em poucos minutos, nosso time vai entrar em contato com você pelo <strong>WhatsApp</strong> para agendar sua sessão estratégica personalizada.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  © <span id="year"></span> Plus Mídia
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+if(window.fbq) fbq('track','Lead',{content_name:'lp-plus-app-obrigado'});
+if(window.dataLayer) window.dataLayer.push({event:'page_obrigado_view'});
+</script>
+
+</body>
+</html>
