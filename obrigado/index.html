@@ -32,7 +32,7 @@ a{color:var(--brand);text-decoration:none}
 .logo-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;color:#001827;font-weight:900;font-family:'Montserrat'}
 .logo-text{font-family:'Montserrat';font-weight:800;font-size:1.05rem;letter-spacing:.02em}
 
-.stage{min-height:calc(100vh - 80px);display:flex;align-items:center;justify-content:center;padding:60px 0;position:relative;overflow:hidden}
+.stage{min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:40px 0;position:relative;overflow:hidden}
 .stage::before{content:"";position:absolute;top:50%;left:50%;width:760px;height:760px;border-radius:50%;background:radial-gradient(circle,var(--brand-glow),transparent 70%);transform:translate(-50%,-50%);filter:blur(60px);z-index:-1}
 .card{
   background:linear-gradient(135deg,var(--card),var(--card-2));
@@ -100,13 +100,6 @@ src="https://www.facebook.com/tr?id=289183857235038&ev=PageView&noscript=1"/></n
 </head>
 <body>
 
-<header class="header">
-  <div class="container header-inner">
-    <div class="logo-mark">P</div>
-    <div class="logo-text">PLUS MÍDIA</div>
-  </div>
-</header>
-
 <main class="stage">
   <div class="container">
     <div class="card">
@@ -121,13 +114,7 @@ src="https://www.facebook.com/tr?id=289183857235038&ev=PageView&noscript=1"/></n
   </div>
 </main>
 
-<footer>
-  © <span id="year"></span> Plus Mídia
-</footer>
-
 <script>
-document.getElementById('year').textContent = new Date().getFullYear();
-if(window.fbq) fbq('track','Lead',{content_name:'lp-plus-app-obrigado'});
 if(window.dataLayer) window.dataLayer.push({event:'page_obrigado_view'});
 </script>
 
