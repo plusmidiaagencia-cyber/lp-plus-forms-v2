@@ -2982,7 +2982,7 @@ function bindLeadForm(formId, formSourceTag){
     if(window.fbq) fbq('track','Lead');
     if(window.dataLayer) window.dataLayer.push({event:'lead_submit', source, form_position: formSourceTag, ...fields});
 
-    setTimeout(()=>{ window.location.href = 'https://www.plusmidiamkt.com/obrigado'; }, 300);
+    setTimeout(()=>{ window.location.href = 'https://lp.plusmidiamkt.com/obrigado/'; }, 300);
   });
 }
 bindLeadForm('leadForm','hero');
