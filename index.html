@@ -29,6 +29,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- intl-tel-input (seletor de país no WhatsApp) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
 
 <style>
 :root{
@@ -236,8 +239,17 @@ section.block{padding:90px 0;position:relative}
 }
 .field input::placeholder{color:#9ca3af}
 .phone-wrap{position:relative}
-.phone-prefix{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:#0a0a0a;font-weight:700;font-size:1rem;padding-right:12px;border-right:1px solid #d1d5db;pointer-events:none;line-height:1}
-.phone-wrap input{padding-left:72px}
+/* intl-tel-input: seletor de país no campo WhatsApp */
+.phone-wrap .iti{width:100%;display:block}
+.phone-wrap .iti input[type=tel]{width:100%}
+.iti--separate-dial-code .iti__selected-flag{background-color:rgba(0,0,0,.04);border-radius:12px 0 0 12px}
+.iti__selected-dial-code{color:#0a0a0a;font-weight:700}
+.iti__country-list{background:#161616;border:1px solid #262626;color:#fff;border-radius:12px;box-shadow:0 16px 40px rgba(0,0,0,.55);padding:4px}
+.iti__country{padding:9px 12px;border-radius:8px}
+.iti__country.iti__highlight{background:rgba(56,182,255,.16)}
+.iti__country-name{color:#e5e5e5}
+.iti__dial-code{color:#8a8a8a}
+.iti__divider{border-bottom:1px solid #2a2a2a}
 .field input:focus,.field select:focus{outline:0;box-shadow:0 0 0 3px var(--brand-glow),0 0 0 1px var(--brand)}
 .field select{
   appearance:none;background:#fff;color:#0a0a0a;font-weight:600;
@@ -821,7 +833,7 @@ src="https://www.facebook.com/tr?id=289183857235038&ev=PageView&noscript=1"/></n
       <form id="leadForm" novalidate>
         <div class="field"><label for="name">Seu nome</label><input id="name" name="name" type="text" required placeholder="Como te chamamos?"></div>
         <div class="field"><label for="email">E-mail</label><input id="email" name="email" type="email" required placeholder="seu@email.com"></div>
-        <div class="field"><label for="phone">WhatsApp</label><div class="phone-wrap"><span class="phone-prefix">+55</span><input id="phone" name="phone" type="tel" required placeholder="(11) 99999-9999"></div></div>
+        <div class="field"><label for="phone">WhatsApp</label><div class="phone-wrap"><input id="phone" name="phone" type="tel" required placeholder="(11) 99999-9999"></div></div>
         <div class="field"><label for="instagram">Instagram do e-commerce</label><input id="instagram" name="instagram" type="text" required placeholder="@sualoja"></div>
         <div class="field"><label for="site">Site do e-commerce</label><input id="site" name="site" type="text" placeholder="www.sualoja.com.br"></div>
         <div class="field"><label for="revenue">Qual a media do seu faturamento mensal?</label>
@@ -2736,7 +2748,7 @@ src="https://www.facebook.com/tr?id=289183857235038&ev=PageView&noscript=1"/></n
       <form id="leadForm2" novalidate>
         <div class="field"><label for="name-2">Seu nome</label><input id="name-2" name="name" type="text" required placeholder="Como te chamamos?"></div>
         <div class="field"><label for="email-2">E-mail</label><input id="email-2" name="email" type="email" required placeholder="seu@email.com"></div>
-        <div class="field"><label for="phone-2">WhatsApp</label><div class="phone-wrap"><span class="phone-prefix">+55</span><input id="phone-2" name="phone" type="tel" required placeholder="(11) 99999-9999"></div></div>
+        <div class="field"><label for="phone-2">WhatsApp</label><div class="phone-wrap"><input id="phone-2" name="phone" type="tel" required placeholder="(11) 99999-9999"></div></div>
         <div class="field"><label for="instagram-2">Instagram do e-commerce</label><input id="instagram-2" name="instagram" type="text" required placeholder="@sualoja"></div>
         <div class="field"><label for="site-2">Site do e-commerce</label><input id="site-2" name="site" type="text" placeholder="www.sualoja.com.br"></div>
         <div class="field"><label for="revenue-2">Qual a media do seu faturamento mensal?</label>
@@ -2882,9 +2894,23 @@ window.addEventListener('scroll', ()=>{
   });
 });
 
-// Phone mask BR
+// Seletor de país (intl-tel-input) + máscara BR condicional
+const itiMap = {};
 document.querySelectorAll('input[type="tel"]').forEach(input=>{
+  if(window.intlTelInput){
+    const iti = window.intlTelInput(input, {
+      initialCountry: 'br',
+      separateDialCode: true,
+      preferredCountries: ['br','pt','us','ar','py','uy'],
+      dropdownContainer: document.body,
+      utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js'
+    });
+    itiMap[input.id] = iti;
+  }
   input.addEventListener('input',(e)=>{
+    const iti = itiMap[input.id];
+    const iso = iti ? iti.getSelectedCountryData().iso2 : 'br';
+    if(iso && iso!=='br') return; // máscara automática só pro Brasil
     let v = e.target.value.replace(/\D/g,'').slice(0,11);
     if(v.length>=11) v = v.replace(/(\d{2})(\d{5})(\d{4}).*/,'($1) $2-$3');
     else if(v.length>=7) v = v.replace(/(\d{2})(\d{4,5})(\d{0,4}).*/,'($1) $2-$3');
@@ -2892,6 +2918,7 @@ document.querySelectorAll('input[type="tel"]').forEach(input=>{
     e.target.value = v;
   });
 });
+window.__itiMap = itiMap;
 
 // Form submit -> webhooks (GPM + Reportana)
 const GPM_WEBHOOK_URL = 'https://rkngilknpcibcwalropj.supabase.co/functions/v1/webhook-handler?slug=64fcc8535224c5f25269def4';
@@ -2932,6 +2959,18 @@ function bindLeadForm(formId, formSourceTag){
 
     const fields = Object.fromEntries(new FormData(form).entries());
     const meta = getTrackingMetadata();
+
+    // telefone com DDI do país selecionado no seletor de bandeira
+    const phoneInput = form.querySelector('input[type="tel"]');
+    const iti = (phoneInput && window.__itiMap) ? window.__itiMap[phoneInput.id] : null;
+    if(iti){
+      const e164 = iti.getNumber(); // ex: +5511999999999
+      if(e164){ fields.phone = e164; }
+      else {
+        const dc = (iti.getSelectedCountryData().dialCode) || '55';
+        fields.phone = '+' + dc + (fields.phone || '').replace(/\D/g,'');
+      }
+    }
 
     const payload = {
       submission: {
