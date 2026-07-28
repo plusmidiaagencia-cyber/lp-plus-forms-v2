@@ -18,6 +18,22 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- intl-tel-input (seletor de país no WhatsApp) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+<style>
+.field .iti{width:100%;display:block}
+.field .iti input[type=tel]{width:100%}
+.iti--separate-dial-code .iti__selected-flag{background-color:rgba(0,0,0,.05);border-radius:12px 0 0 12px}
+.iti__selected-dial-code{color:#111;font-weight:700}
+.iti__country-list{background:#161616;border:1px solid #262626;color:#fff;border-radius:12px;box-shadow:0 16px 40px rgba(0,0,0,.6);padding:4px;z-index:99999}
+.iti--container{z-index:99999}
+.iti__country{padding:9px 12px;border-radius:8px}
+.iti__country.iti__highlight{background:rgba(56,182,255,.16)}
+.iti__country-name{color:#e5e5e5}
+.iti__dial-code{color:#8a8a8a}
+.iti__divider{border-bottom:1px solid #2a2a2a}
+</style>
 
 <!-- Meta Pixel: PIXEL PM 01 -->
 <script>
@@ -181,7 +197,7 @@ h1,h2,h3,.font-m{font-family:'Montserrat',sans-serif}
         <div class="field"><label for="f-email">E-mail</label>
           <input type="email" id="f-email" name="email" required placeholder="seu@email.com"></div>
         <div class="field"><label for="f-phone">WhatsApp</label>
-          <input type="tel" id="f-phone" name="phone" required inputmode="tel" placeholder="(11) 99999-9999"></div>
+          <input type="tel" id="f-phone" name="phone" required inputmode="tel" placeholder="(DDD + NÚMERO)"></div>
         <div class="field"><label for="f-insta">Instagram do e-commerce</label>
           <input type="text" id="f-insta" name="instagram" required placeholder="@sualoja"></div>
         <div class="field"><label for="f-site">Site do e-commerce <span class="opt">(opcional)</span></label>
@@ -296,9 +312,22 @@ document.getElementById('modalX').addEventListener('click', ()=>overlay.classLis
 overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.classList.remove('on'); });
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') overlay.classList.remove('on'); });
 
-/* ====== PHONE MASK ====== */
+/* ====== PHONE: seletor de país + máscara BR ====== */
 const phone = document.getElementById('f-phone');
+let phoneIti = null;
+if(window.intlTelInput){
+  phoneIti = window.intlTelInput(phone, {
+    initialCountry: 'br',
+    separateDialCode: true,
+    autoPlaceholder: 'off',
+    preferredCountries: ['br','pt','us','ar','py','uy'],
+    dropdownContainer: document.body,
+    utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js'
+  });
+}
 phone.addEventListener('input', e=>{
+  const iso = phoneIti ? phoneIti.getSelectedCountryData().iso2 : 'br';
+  if(iso && iso!=='br') return; // máscara automática só pro Brasil
   let d = e.target.value.replace(/\D/g,'').slice(0,11), out = d;
   if(d.length>0) out = '(' + d.slice(0,2);
   if(d.length>=3) out += ') ' + d.slice(2,7);
@@ -325,18 +354,25 @@ document.getElementById('leadForm').addEventListener('submit', e=>{
   btn.disabled = true; btn.innerHTML = 'Enviando...';
 
   const meta = trackingMeta();
+  // telefone com DDI do país selecionado
+  let phFull = ph;
+  if(phoneIti){
+    const e164 = phoneIti.getNumber();
+    if(e164){ phFull = e164; }
+    else { const dc = (phoneIti.getSelectedCountryData().dialCode) || '55'; phFull = '+' + dc + ph.replace(/\D/g,''); }
+  }
   const payload = { submission:{
     fields:{
-      name, email, phone:ph, instagram:insta, site:form.site.value.trim(), revenue:rev,
+      name, email, phone:phFull, instagram:insta, site:form.site.value.trim(), revenue:rev,
       ...meta.utms, fbclid:meta.fbclid, lp_source:LP_SOURCE, form_position:'vsl-modal',
     },
     metadata:{ fbp:meta.fbp, fbc:meta.fbc, fbclid:meta.fbclid, userAgent:meta.userAgent, page:{url:meta.pageUrl} }
   }};
   fetch(GPM_WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),keepalive:true}).catch(()=>{});
 
-  vslTrack('lead', null, { n:name, e:email, p:ph, insta, site:form.site.value.trim(), rev, ...meta.utms });
+  vslTrack('lead', null, { n:name, e:email, p:phFull, insta, site:form.site.value.trim(), rev, ...meta.utms });
   if(window.fbq) fbq('track','Lead');
-  if(window.dataLayer) window.dataLayer.push({event:'lead_submit',source:LP_SOURCE,form_position:'vsl-modal',name,email,phone:ph,instagram:insta,revenue:rev});
+  if(window.dataLayer) window.dataLayer.push({event:'lead_submit',source:LP_SOURCE,form_position:'vsl-modal',name,email,phone:phFull,instagram:insta,revenue:rev});
 
   setTimeout(()=>{ location.href = OBRIGADO_URL; }, 300);
 });
