@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Plus Car Scale — Sua loja vendendo mais carros e girando o estoque mais rápido</title>
+<meta name="description" content="Nosso único foco: aumentar as vendas e o giro de estoque da sua revenda. Começamos pela base que você já tem — e se não se pagar no 1º mês, o 2º é por nossa conta.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#000; --bg-2:#0a0a0a; --card:#111; --card-2:#161616; --border:#262626;
+  --text:#fff; --muted:#a6a6a6; --dim:#7a7a7a;
+  --brand:#FF7A00; --brand-2:#FF6A00; --brand-glow:rgba(255,122,0,.20);
+  --success:#22c55e; --danger:#ef4444;
+  --radius:14px; --maxw:1180px;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+#form,#form2{scroll-margin-top:80px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Roboto',system-ui,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative;width:100%}
+h1,h2,h3,h4{font-family:'Montserrat',sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.15;margin:0 0 .5em}
+h1{font-size:clamp(2.1rem,5.6vw,4.2rem);font-weight:900;line-height:1.08}
+h2{font-size:clamp(1.7rem,3.8vw,2.8rem)}
+h3{font-size:1.25rem;font-weight:700}
+p{margin:0 0 1em;color:#d6d6d6}
+a{color:var(--brand);text-decoration:none}
+img{max-width:100%;display:block}
+[hidden]{display:none!important}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.accent{background:linear-gradient(135deg,var(--brand),#FFA347 60%,#FFC98A);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+
+/* ÍCONES */
+.i{width:1.05em;height:1.05em;flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.15em}
+.i-brand{color:var(--brand)}
+.cmp h3 .i,.fit h3 .i{width:20px;height:20px}
+.mk2 .i{width:12px;height:12px;stroke-width:3}
+
+/* GRAIN */
+.grain-overlay{position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.04;mix-blend-mode:overlay;
+ background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
+.scroll-progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--brand),#FFA347);z-index:100;transition:width .1s ease-out;box-shadow:0 0 12px var(--brand-glow)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase;padding:18px 36px;border-radius:999px;border:0;cursor:pointer;background:linear-gradient(135deg,#FFA347,var(--brand));color:#2A1000;box-shadow:0 14px 40px -8px var(--brand-glow);transition:transform .18s ease,box-shadow .25s ease;animation:ctaPulse 2.4s ease-in-out infinite;position:relative;overflow:hidden}
+.btn:hover{transform:translateY(-2px);box-shadow:0 22px 56px -10px rgba(255,122,0,.55)}
+.btn:hover,.btn:focus-visible{animation:none}
+@keyframes ctaPulse{0%,100%{box-shadow:0 14px 40px -8px var(--brand-glow),0 0 0 0 rgba(255,122,0,.55)}50%{box-shadow:0 18px 48px -8px var(--brand-glow),0 0 0 16px rgba(255,122,0,0)}}
+.btn .arrow{transition:transform .2s ease}
+.btn:hover .arrow{transform:translateX(4px)}
+.btn-light{background:linear-gradient(135deg,#fff 0%,#FFF0E0 50%,#FFE2C4 100%);color:#0a0a0a;border:1px solid rgba(255,122,0,.35);box-shadow:0 14px 50px -8px rgba(255,255,255,.3);animation:lightPulse 2.4s ease-in-out infinite}
+@keyframes lightPulse{0%,100%{box-shadow:0 14px 50px -8px rgba(255,255,255,.3),0 0 0 0 rgba(255,255,255,.5)}50%{box-shadow:0 18px 56px -8px rgba(255,255,255,.45),0 0 0 18px rgba(255,255,255,0)}}
+@media (prefers-reduced-motion:reduce){.btn{animation:none!important}}
+
+/* HERO */
+.hero{position:relative;padding:80px 0 60px;text-align:center;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(800px 500px at 50% 30%,rgba(255,122,0,.18),transparent 60%),radial-gradient(900px 600px at 80% 70%,rgba(255,122,0,.06),transparent 60%);animation:heroGlow 9s ease-in-out infinite}
+@keyframes heroGlow{0%,100%{opacity:.85}50%{opacity:1}}
+.hero-logo{display:flex;align-items:center;justify-content:center;margin:0 auto 30px;position:relative}
+.wordmark{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(1.3rem,3vw,1.75rem);letter-spacing:-.02em;display:flex;align-items:center;gap:11px;filter:drop-shadow(0 0 18px rgba(255,122,0,.32))}
+.wordmark .mk{width:46px;height:38px;flex:0 0 auto}
+.wordmark .p{color:rgba(255,255,255,.55);font-weight:700}
+.wordmark .n{color:var(--brand)}
+.hero h1{max-width:920px;margin:0 auto 22px;position:relative}
+.hero p.lead{font-size:1.1rem;color:#cfcfcf;max-width:640px;margin:0 auto 36px;position:relative}
+.hero .btn{font-size:.85rem;padding:18px 40px;position:relative}
+.clients-eyebrow{margin:64px auto 28px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.05rem;color:#cfcfcf;max-width:560px;line-height:1.4;position:relative}
+.clients-eyebrow strong{color:var(--brand);font-weight:900;font-size:1.5em}
+
+/* MARQUEE */
+.strip{position:relative;overflow:hidden;padding:14px 0;margin-bottom:20px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.strip-track{display:flex;gap:16px;width:max-content;animation:slide 34s linear infinite}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.strip:hover .strip-track{animation-play-state:paused}
+.pcard{flex-shrink:0;width:230px;height:98px;background:linear-gradient(180deg,#0f0f0f,#070707);border:1px solid rgba(255,122,0,.25);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;text-align:center;transition:.3s}
+.pcard:hover{transform:translateY(-4px);border-color:var(--brand);box-shadow:0 16px 40px rgba(255,122,0,.3)}
+.pcard .t{font-family:'Montserrat';font-weight:900;font-size:1.05rem;color:#fff;line-height:1.1}
+.pcard .s{font-size:.76rem;color:var(--muted);margin-top:5px;line-height:1.25}
+
+/* SECTION HEAD */
+section.block{padding:80px 0;position:relative;overflow:hidden}
+.section-head{text-align:center;max-width:780px;margin:0 auto 46px;position:relative}
+.section-head h2{font-size:clamp(1.9rem,4.4vw,2.9rem);font-weight:900;line-height:1.1;color:#fff;margin-bottom:16px}
+.section-head p{color:#cfcfcf;font-size:1.05rem;line-height:1.55;max-width:640px;margin:0 auto}
+.section-head p strong{color:var(--brand);font-weight:700}
+.glowbg::before{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:1200px;height:600px;background:radial-gradient(closest-side,rgba(255,122,0,.07),transparent 70%);pointer-events:none}
+
+/* STAT PILLS */
+.stats-pills{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1180px;margin:0 auto;position:relative}
+.stat-pill{position:relative;padding:36px 26px;border-radius:999px;background:linear-gradient(135deg,#161616,#0a0a0a);text-align:center;transition:transform .3s ease}
+.stat-pill::before{content:"";position:absolute;inset:0;border-radius:999px;padding:1.5px;background:linear-gradient(135deg,var(--brand) 0%,rgba(255,122,0,.2) 30%,rgba(255,122,0,.1) 60%,var(--brand) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.stat-pill:hover{transform:translateY(-4px)}
+.stat-pill .num{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1;color:#fff;margin-bottom:8px;letter-spacing:-.02em}
+.stat-pill .lbl{color:#bababa;font-size:.92rem;line-height:1.3}
+@media(max-width:940px){.stats-pills{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.stats-pills{grid-template-columns:1fr}.stat-pill{border-radius:20px}}
+
+/* AGENCIES VS */
+.avp-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1180px;margin:0 auto;position:relative}
+@media(max-width:860px){.avp-grid{grid-template-columns:1fr}}
+.avp{display:flex;flex-direction:column;padding:34px 30px;border-radius:20px;background:linear-gradient(180deg,#0f0f0f,#070707);border:1px solid var(--border)}
+.avp-good{border-color:rgba(255,122,0,.45);box-shadow:0 18px 60px -20px rgba(255,122,0,.35)}
+.avp-tag{display:inline-block;align-self:center;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;padding:6px 12px;border-radius:6px;margin-bottom:16px}
+.avp-bad .avp-tag{background:rgba(255,255,255,.08);color:#9a9a9a;border:1px solid rgba(255,255,255,.08)}
+.avp-good .avp-tag{background:var(--brand);color:#2A1000}
+.avp h3{text-align:center;font-size:1.3rem;margin-bottom:22px}
+.avp-bad h3{color:#9a9a9a}
+.avp-good h3{color:#fff}
+.avp ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:14px}
+.avp li{display:flex;gap:12px;font-size:1rem;line-height:1.5;color:#d6d6d6}
+.avp li b{color:#fff}
+.mk2{flex:0 0 22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;margin-top:2px}
+.avp-bad .mk2{background:rgba(255,255,255,.07);color:#8a8a8a}
+.avp-good .mk2{background:rgba(255,122,0,.18);color:var(--brand)}
+
+/* CYCLE CARDS (brancos) */
+.cycle-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;max-width:1180px;margin:0 auto;position:relative}
+@media(max-width:1000px){.cycle-cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.cycle-cards{grid-template-columns:1fr}}
+.cyc-card{background:linear-gradient(180deg,#fff 0%,#FFF6EC 100%);color:#0a0a0a;border-radius:20px;padding:42px 26px 30px;position:relative;overflow:hidden;text-align:left;min-height:250px;transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .35s ease;box-shadow:0 10px 50px rgba(255,122,0,.12)}
+.cyc-card::before{content:"";position:absolute;inset:-1px;border-radius:21px;padding:1.5px;background:linear-gradient(135deg,rgba(255,122,0,.7),transparent 40%,transparent 60%,rgba(255,122,0,.5));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.cyc-card::after{content:attr(data-bignum);position:absolute;top:-30px;right:-10px;font-family:'Montserrat',sans-serif;font-weight:900;font-size:9rem;line-height:1;background:linear-gradient(180deg,rgba(255,122,0,.18),rgba(255,122,0,.04));-webkit-background-clip:text;background-clip:text;color:transparent;pointer-events:none}
+.cyc-card:hover{transform:translateY(-10px);box-shadow:0 22px 70px rgba(255,122,0,.45),0 0 0 1px var(--brand)}
+.cyc-card:hover .cyc-ic{transform:scale(1.08) rotate(-4deg)}
+.cyc-ic{width:54px;height:54px;border-radius:14px;background:linear-gradient(135deg,var(--brand),#FF6A00);display:grid;place-items:center;margin-bottom:18px;box-shadow:0 10px 30px rgba(255,122,0,.4);transition:transform .35s cubic-bezier(.34,1.56,.64,1);position:relative;z-index:2}
+.cyc-ic svg{width:28px;height:28px;color:#fff;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.cyc-card h3{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.4rem;color:var(--brand);margin-bottom:12px;position:relative;z-index:2}
+.cyc-card p{color:#0a0a0a;font-size:.98rem;line-height:1.5;margin:0;font-weight:500;position:relative;z-index:2}
+.cyc-when{display:inline-block;font-family:'Montserrat';font-weight:800;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:#8A3B00;background:rgba(255,122,0,.16);padding:4px 10px;border-radius:6px;margin-bottom:14px;position:relative;z-index:2}
+
+/* INCLUSO */
+.incluso-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1240px;margin:0 auto;position:relative}
+@media(max-width:1000px){.incluso-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.incluso-grid{grid-template-columns:1fr}}
+.inc-card{background:linear-gradient(135deg,#1E1206 0%,#170D04 50%,#1A1008 100%);border:1px solid rgba(255,122,0,.45);border-radius:16px;padding:24px 22px;display:flex;align-items:center;gap:16px;position:relative;overflow:hidden;transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
+.inc-card:hover{transform:translateY(-5px);border-color:var(--brand);box-shadow:0 18px 44px rgba(255,122,0,.35)}
+.inc-ic{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,rgba(255,122,0,.32),rgba(255,122,0,.12));border:1px solid rgba(255,122,0,.55);display:grid;place-items:center;flex-shrink:0;box-shadow:inset 0 0 14px rgba(255,122,0,.18)}
+.inc-ic svg{width:22px;height:22px;color:#FFB570;fill:none;stroke:#FFB570;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px rgba(255,122,0,.55))}
+.inc-label{font-family:'Roboto',sans-serif;font-weight:700;font-size:1rem;color:#fff;line-height:1.3}
+
+/* COMPARE */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1180px;margin:0 auto;position:relative}
+@media(max-width:860px){.compare-grid{grid-template-columns:1fr}}
+.cmp{border-radius:20px;padding:34px 30px;background:linear-gradient(180deg,#0f0f0f,#070707);border:1px solid var(--border)}
+.cmp.on{border-color:rgba(255,122,0,.45);background:linear-gradient(180deg,#170D04,#0D0703)}
+.cmp h3{font-size:1.25rem;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.cmp.off h3{color:#9a9a9a}
+.cmp ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:13px}
+.cmp li{display:flex;gap:11px;font-size:.98rem;line-height:1.5;color:#d6d6d6}
+
+/* GARANTIA */
+.guar-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:1080px;margin:0 auto;position:relative}
+@media(max-width:800px){.guar-grid{grid-template-columns:1fr}}
+.guar{display:flex;gap:18px;padding:32px 28px;border-radius:20px;background:linear-gradient(180deg,#170D04,#0D0703);border:1px solid rgba(255,122,0,.45);position:relative;overflow:hidden}
+.guar .seal{flex:0 0 56px;height:56px;border-radius:50%;background:linear-gradient(135deg,rgba(255,122,0,.3),rgba(255,122,0,.08));border:1px solid rgba(255,122,0,.6);display:grid;place-items:center}
+.guar .seal svg{width:26px;height:26px;stroke:#FFB570;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.guar h3{font-size:1.15rem;margin-bottom:8px;color:#fff}
+.guar p{font-size:.95rem;color:#bcbcbc;margin:0 0 .6em}
+.guar p:last-child{margin:0}
+
+/* FIT */
+.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:1080px;margin:0 auto;position:relative}
+@media(max-width:800px){.fit-grid{grid-template-columns:1fr}}
+.fit{border-radius:20px;padding:32px 28px;background:linear-gradient(180deg,#0f0f0f,#070707);border:1px solid var(--border)}
+.fit.yes{border-color:rgba(255,122,0,.45)}
+.fit h3{font-size:1.15rem;margin-bottom:18px}
+.fit.yes h3{color:var(--brand)}
+.fit.no h3{color:#8a8a8a}
+.fit ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
+.fit li{display:flex;gap:11px;font-size:.98rem;line-height:1.5;color:#d6d6d6}
+
+/* FAQ */
+details{border:1px solid var(--border);border-radius:14px;background:linear-gradient(180deg,#0f0f0f,#080808);margin-bottom:12px;overflow:hidden;transition:border-color .2s}
+details[open]{border-color:rgba(255,122,0,.45)}
+summary{cursor:pointer;padding:20px 24px;font-family:'Montserrat';font-weight:700;font-size:1rem;list-style:none;display:flex;justify-content:space-between;gap:14px;align-items:center;color:#fff}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--brand);font-size:1.5rem;font-weight:700;flex:0 0 auto;line-height:1}
+details[open] summary::after{content:"–"}
+details p{padding:0 24px 22px;margin:0;color:#bcbcbc;font-size:.97rem}
+
+/* FORM */
+.form-block{padding:80px 0 100px;position:relative}
+.form-card{max-width:560px;margin:0 auto;background:linear-gradient(180deg,#0c0c0c,#050505);border:1px solid #1a1a1a;border-radius:24px;padding:36px 32px;position:relative;overflow:hidden;box-shadow:0 30px 80px -20px rgba(255,122,0,.15)}
+.form-card::before{content:"";position:absolute;inset:0;border-radius:24px;padding:1px;background:linear-gradient(135deg,rgba(255,122,0,.4),transparent 40%,transparent 60%,rgba(255,122,0,.25));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.form-head{text-align:center;max-width:620px;margin:0 auto 34px}
+.form-head h2{font-size:clamp(1.7rem,4vw,2.5rem);font-weight:900;color:#fff;margin-bottom:12px}
+.form-head p{color:#cfcfcf;font-size:1.02rem}
+.field{margin-bottom:14px;position:relative}
+.field label{display:block;font-size:.82rem;font-weight:500;color:#9a9a9a;margin-bottom:6px;font-family:'Roboto'}
+.field input,.field select{width:100%;background:#fff;border:0;color:#0a0a0a;padding:16px 18px;border-radius:12px;font-family:inherit;font-size:1rem;transition:box-shadow .15s ease;outline:none}
+.field input:focus,.field select:focus{box-shadow:0 0 0 3px rgba(255,122,0,.55)}
+.field select{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF6A00' stroke-width='2.5' stroke-linecap='round'><polyline points='6 9 12 15 18 9'/></svg>");background-repeat:no-repeat;background-position:right 14px center;background-size:18px;padding-right:44px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:520px){.f2{grid-template-columns:1fr}}
+.form-card .btn{width:100%;margin-top:10px;padding:18px 24px}
+.form-note{text-align:center;font-size:.8rem;color:var(--dim);margin-top:16px;line-height:1.5}
+.hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+.okmsg{text-align:center;padding:24px 8px}
+.okmsg .ic{width:70px;height:70px;border-radius:50%;background:rgba(34,197,94,.14);border:1px solid rgba(34,197,94,.5);display:grid;place-items:center;margin:0 auto 18px;font-size:32px}
+
+/* FINAL CTA */
+.final-cta{padding:80px 0 100px;text-align:center;position:relative}
+.final-cta::before{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:560px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,0,.18),transparent 65%);pointer-events:none;filter:blur(20px)}
+.final-cta h2{font-size:clamp(1.9rem,4.6vw,3rem);font-weight:900;max-width:760px;margin:0 auto 18px;position:relative}
+.final-cta p{color:#cfcfcf;max-width:560px;margin:0 auto 34px;position:relative}
+.final-cta .btn-light{font-size:.85rem;padding:22px 60px;position:relative}
+
+footer{border-top:1px solid var(--border);padding:44px 0 calc(44px + env(safe-area-inset-bottom,0px));font-size:.86rem;color:var(--dim)}
+footer .container{display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:center}
+footer .wordmark{font-size:1rem;filter:none}
+footer .wordmark .mk{width:34px;height:28px}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.hero::before,.strip-track{animation:none!important}}
+@media(max-width:700px){
+  .hero{padding:50px 0 40px}
+  section.block,.form-block{padding:56px 0}
+  .btn{padding:15px 26px;font-size:.78rem}
+}
+</style>
+</head>
+<body>
+<div class="grain-overlay"></div>
+<div class="scroll-progress" id="sp"></div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-logo">
+      <div class="wordmark"><svg class="mk" viewBox="0 0 120 100" aria-hidden="true"><defs><linearGradient id="lgh" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#FF6A00"/><stop offset="55%" stop-color="#FF7A00"/><stop offset="100%" stop-color="#FFA347"/></linearGradient><mask id="mkh"><rect width="120" height="100" fill="#fff"/><g fill="#000"><rect x="19.5" y="69.5" width="9" height="7.5" rx="1.4"/><rect x="33" y="69.5" width="9" height="7.5" rx="1.4"/></g></mask></defs><g transform="translate(14,0) skewX(-12)" fill="url(#lgh)" mask="url(#mkh)"><rect x="10" y="58" width="18" height="30" rx="3.2"/><rect x="33" y="42" width="18" height="46" rx="3.2"/><rect x="56" y="26" width="18" height="62" rx="3.2"/><rect x="79" y="10" width="18" height="78" rx="3.2"/></g></svg><span><span class="p">PLUS</span> <span class="n">CAR SCALE</span></span></div>
+    </div>
+    <h1>Nosso único foco: <span class="accent">aumentar as vendas e o giro de estoque</span> da sua revenda.</h1>
+    <p class="lead">Você não precisa de mais lead. Precisa responder os que já tem, chamar de volta quem sumiu e tirar o carro do pátio mais rápido. É isso que a gente faz — e começa a dar resultado no primeiro mês, sem você gastar mais um real em anúncio.</p>
+    <a class="btn" href="#form">Quero vender mais carros <span class="arrow">→</span></a>
+
+    <p class="clients-eyebrow">Somos a operação automotiva do <strong>Grupo Plus</strong><br>o mesmo time que já rodou performance para centenas de negócios</p>
+
+    <div class="strip">
+      <div class="strip-track" id="track">
+        <div class="pcard"><div class="t">+6 anos</div><div class="s">de mercado em performance</div></div>
+        <div class="pcard"><div class="t">+200</div><div class="s">negócios atendidos pelo grupo</div></div>
+        <div class="pcard"><div class="t">+R$ 120M</div><div class="s">em vendas geradas para clientes</div></div>
+        <div class="pcard"><div class="t">+R$ 27M</div><div class="s">investidos em mídia</div></div>
+        <div class="pcard"><div class="t">+50</div><div class="s">estrategistas no time</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FORM 1 ===== -->
+<section class="form-block" id="form">
+  <div class="container">
+    <div class="form-head">
+      <h2>Quer vender mais? <span class="accent">Cadastre-se abaixo</span></h2>
+      <p>Um especialista analisa sua loja e te chama no WhatsApp. O diagnóstico é gratuito.</p>
+    </div>
+    <div class="form-card">
+      <form class="lead-form" novalidate>
+        <div class="field"><label>Seu nome</label><input name="nome" required placeholder="Como podemos te chamar"></div>
+        <div class="f2">
+          <div class="field"><label>WhatsApp</label><input name="whatsapp" class="tel" required inputmode="tel" placeholder="(00) 00000-0000"></div>
+          <div class="field"><label>Cidade / UF</label><input name="cidade" required placeholder="Cidade e estado"></div>
+        </div>
+        <div class="field"><label>Nome da loja</label><input name="loja" required placeholder="Nome da revenda"></div>
+        <div class="field"><label>Instagram ou site da loja</label><input name="instagram" placeholder="@sualoja"></div>
+        <div class="f2">
+          <div class="field"><label>Carros em estoque</label>
+            <select name="estoque" required><option value="">Selecione</option><option>Menos de 15</option><option>15 a 40</option><option>40 a 100</option><option>Mais de 100</option></select>
+          </div>
+          <div class="field"><label>Vendedores na loja</label>
+            <select name="vendedores" required><option value="">Selecione</option><option>Só eu</option><option>2 a 3</option><option>4 a 6</option><option>7 ou mais</option></select>
+          </div>
+        </div>
+        <div class="f2">
+          <div class="field"><label>Carros vendidos por mês</label>
+            <select name="vendas" required><option value="">Selecione</option><option>Até 5</option><option>6 a 15</option><option>16 a 30</option><option>Mais de 30</option></select>
+          </div>
+          <div class="field"><label>Investimento em anúncio/mês</label>
+            <select name="midia" required><option value="">Selecione</option><option>Não invisto</option><option>Até R$ 1.000</option><option>R$ 1.000 a R$ 3.000</option><option>R$ 3.000 a R$ 10.000</option><option>Mais de R$ 10.000</option></select>
+          </div>
+        </div>
+        <div class="field"><label>Você guarda os contatos de quem já falou com a loja?</label>
+          <select name="base" required><option value="">Selecione</option><option>Sim, tenho CRM</option><option>Sim, em planilha</option><option>Sim, no WhatsApp da loja</option><option>Tenho, mas está bagunçado</option><option>Não guardo</option></select>
+        </div>
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn" type="submit">Quero meu diagnóstico <span class="arrow">→</span></button>
+        <p class="form-note">Seus dados estão seguros. Não fazemos spam.<br>Retornamos em até 2 horas úteis no WhatsApp.</p>
+      </form>
+      <div class="okmsg" hidden>
+        <div class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h3>Recebido!</h3>
+        <p>Um especialista vai analisar sua loja e te chamar no WhatsApp em até 2 horas úteis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS ===== -->
+<section class="block glowbg">
+  <div class="container">
+    <div class="section-head">
+      <h2>O dinheiro que sua loja <span class="accent">já perdeu</span> este mês</h2>
+      <p>Não está em campanha ruim. Está no cliente que ninguém respondeu e no carro que não saiu do pátio.</p>
+    </div>
+    <div class="stats-pills reveal">
+      <div class="stat-pill"><div class="num">97%</div><div class="lbl">das oportunidades em lojas de seminovos são desperdiçadas</div></div>
+      <div class="stat-pill"><div class="num">22% → 4%</div><div class="lbl">é o que sobra da sua conversão quando o cliente espera 1 hora em vez de 5 minutos</div></div>
+      <div class="stat-pill"><div class="num">44%</div><div class="lbl">dos vendedores param no primeiro contato. E 80% das vendas acontecem a partir do quinto</div></div>
+      <div class="stat-pill"><div class="num">R$ 47</div><div class="lbl">é o que cada carro parado no seu pátio custa por dia, só de capital travado</div></div>
+    </div>
+    <p style="text-align:center;font-size:.82rem;color:var(--dim);margin-top:26px;position:relative">Fontes: De Loja Pra Loja · Syonet/AutoForce · IRC Sales Solutions · Megadealer PVU</p>
+  </div>
+</section>
+
+<!-- ===== AGENCIES VS ===== -->
+<section class="block glowbg">
+  <div class="container">
+    <div class="section-head">
+      <h2>Por que outras agências <span class="accent">param no lead?</span></h2>
+      <p>Porque entregar lead é fácil. <strong>Fazer o carro sair do pátio exige entrar no seu comercial.</strong></p>
+    </div>
+    <div class="avp-grid reveal">
+      <div class="avp avp-bad">
+        <span class="avp-tag">Funil curto</span>
+        <h3>Anúncio, WhatsApp e torcida</h3>
+        <ul>
+          <li><span class="mk2">✕</span><span>O cliente manda mensagem e fica <b>horas esperando</b> resposta</span></li>
+          <li><span class="mk2">✕</span><span>Quem visitou a loja e não comprou nunca mais é chamado</span></li>
+          <li><span class="mk2">✕</span><span>No fim do mês você recebe relatório de clique e alcance</span></li>
+          <li><span class="mk2">✕</span><span>O vendedor recebe o contato e faz do jeito que sempre fez</span></li>
+          <li><span class="mk2">✕</span><span>Sem verba alta desde o primeiro dia, não mostram nada</span></li>
+        </ul>
+      </div>
+      <div class="avp avp-good">
+        <span class="avp-tag">Jornada completa</span>
+        <h3>Do primeiro contato até a chave na mão</h3>
+        <ul>
+          <li><span class="mk2">✓</span><span>Ninguém fica sem resposta. <b>Nem às 22h, nem no domingo</b></span></li>
+          <li><span class="mk2">✓</span><span><b>Começamos pela sua base</b>: quem já falou com a loja e sumiu</span></li>
+          <li><span class="mk2">✓</span><span>Seu relatório mostra <b>visita agendada, carro vendido e dias em estoque</b></span></li>
+          <li><span class="mk2">✓</span><span><b>Seu vendedor recebe script, playbook e treino</b> — e é cobrado por número</span></li>
+          <li><span class="mk2">✓</span><span>A mídia só entra no mês 2, quando já tem estrutura pra aproveitar</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MÉTODO (cards brancos) ===== -->
+<section class="block glowbg">
+  <div class="container">
+    <div class="section-head">
+      <h2>Colheita <span class="accent">&</span> Máquina</h2>
+      <p>Primeiro sua loja volta a vender com o que já está na mão. <strong>Depois a gente liga a máquina.</strong></p>
+    </div>
+    <div class="cycle-cards reveal">
+      <div class="cyc-card" data-bignum="1">
+        <div class="cyc-ic"><svg viewBox="0 0 24 24"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
+        <span class="cyc-when">Mês 1 · Colheita</span>
+        <h3>Resgate da base</h3>
+        <p>Todo mundo que já falou com a loja e não comprou volta para a mesa. Sem gastar um real em anúncio.</p>
+      </div>
+      <div class="cyc-card" data-bignum="2">
+        <div class="cyc-ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <span class="cyc-when">Mês 1 · Colheita</span>
+        <h3>Atendimento em minutos</h3>
+        <p>Cada mensagem é respondida na hora, qualificada e transformada em visita marcada na agenda da loja.</p>
+      </div>
+      <div class="cyc-card" data-bignum="3">
+        <div class="cyc-ic"><svg viewBox="0 0 24 24"><path d="M12 20h9M4 20h4M4 20V9m4 11V4m4 16v-6m4 6V7m4 13v-9"/></svg></div>
+        <span class="cyc-when">Mês 1 · Colheita</span>
+        <h3>CRM e time treinado</h3>
+        <p>Funil montado, follow-up rodando sozinho e o vendedor sabendo exatamente o que falar em cada etapa.</p>
+      </div>
+      <div class="cyc-card" data-bignum="4">
+        <div class="cyc-ic"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg></div>
+        <span class="cyc-when">Mês 2+ · Máquina</span>
+        <h3>Canal próprio no ar</h3>
+        <p>Tráfego, página com seu estoque, criativos e portais — tudo alimentando um processo que já está de pé.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INCLUSO ===== -->
+<section class="block glowbg">
+  <div class="container">
+    <div class="section-head">
+      <h2>O que está incluído na <span class="accent">assessoria</span></h2>
+      <p>Uma operação comercial inteira rodando na sua loja. <strong>Não um serviço solto.</strong></p>
+    </div>
+    <div class="incluso-grid reveal">
+      <div class="inc-card"><div class="inc-ic"><svg viewBox="0 0 24 24"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div><div class="inc-label">Resgate da sua base</div></div>
+      <div class="inc-card"><div class="inc-ic"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 16h.01M16 16h.01"/></svg></div><div class="inc-label">Atendimento com IA 24h</div></div>
+      <div class="inc-card"><div class="inc-ic"><svg viewBox="0 0 24 24"><path d="M9 17H7A5 5 0 0 1 7 7h2M15 7h2a5 5 0 0 1 0 10h-2M8 12h8"/></svg></div><div class="inc-label">CRM implantado</div></div>
+      <div class="inc-card"><div class="inc-ic"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5zM6 12v5c0 1 3 3 6 3s6-2 6-3v-5"/></svg></div><div class="inc-label">Treinamento comercial</div></div>
+      <div class="inc-card"><div class="inc-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg></div><div class="inc-label">Tráfego pago Meta e Google</div></div>
+      <div class="inc-card"><div class="inc-ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><div class="inc-label">Criativos e vídeos</div></div>
+      <div class="inc-card"><div class="inc-ic"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><div class="inc-label">Landing page com estoque</div></div>
+      <div class="inc-card"><div class="inc-ic"><svg viewBox="0 0 24 24"><path d="M5 17h14M6 17V9l2-4h8l2 4v8"/><circle cx="8" cy="17" r="2"/><circle cx="16" cy="17" r="2"/></svg></div><div class="inc-label">Anúncios nos marketplaces</div></div>
+      <div class="inc-card"><div class="inc-ic"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="inc-label">Google Meu Negócio</div></div>
+      <div class="inc-card"><div class="inc-ic"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 18h.01"/></svg></div><div class="inc-label">Conteúdo para o Instagram</div></div>
+      <div class="inc-card"><div class="inc-ic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg></div><div class="inc-label">Relatório de vendas e giro</div></div>
+      <div class="inc-card"><div class="inc-ic"><svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg></div><div class="inc-label">Garantia por escrito</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COMPARE ===== -->
+<section class="block glowbg">
+  <div class="container">
+    <div class="section-head">
+      <h2>Por que a Plus Car Scale <span class="accent">não é igual às outras agências?</span></h2>
+      <p>Porque nenhuma delas entra na sua loja — e <strong>é lá dentro que o carro é vendido.</strong></p>
+    </div>
+    <div class="compare-grid reveal">
+      <div class="cmp off">
+        <h3><svg class="i" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg> Outras agências</h3>
+        <ul>
+          <li><span class="mk2">✕</span><span>Entregam lead e mandam a fatura</span></li>
+          <li><span class="mk2">✕</span><span>Não falam com o seu cliente</span></li>
+          <li><span class="mk2">✕</span><span>Não sabem quantos contatos você tem parados</span></li>
+          <li><span class="mk2">✕</span><span>Nunca conversaram com o seu vendedor</span></li>
+          <li><span class="mk2">✕</span><span>Não fazem ideia de quanto tempo seu carro fica parado</span></li>
+          <li><span class="mk2">✕</span><span>Cobram no primeiro dia e não garantem nada</span></li>
+          <li><span class="mk2">✕</span><span>Se não der certo, o prejuízo é todo seu</span></li>
+        </ul>
+      </div>
+      <div class="cmp on">
+        <h3><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg> Plus Car Scale</h3>
+        <ul>
+          <li><span class="mk2">✓</span><span>Entregamos <b>visita marcada</b>, não contato</span></li>
+          <li><span class="mk2">✓</span><span>Respondemos <b>cada cliente em minutos, a qualquer hora</b></span></li>
+          <li><span class="mk2">✓</span><span>Sua base inteira organizada dentro de um CRM</span></li>
+          <li><span class="mk2">✓</span><span><b>Script, playbook e treino</b> para quem vende</span></li>
+          <li><span class="mk2">✓</span><span>Somos cobrados pelos <b>dias que o carro fica parado</b></span></li>
+          <li><span class="mk2">✓</span><span><b>Não se pagou no primeiro mês? O segundo é grátis</b></span></li>
+          <li><span class="mk2">✓</span><span>E você pode sair a partir do 3º mês, sem multa</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GARANTIAS ===== -->
+<section class="block glowbg">
+  <div class="container">
+    <div class="section-head">
+      <h2>Duas garantias <span class="accent">por escrito</span></h2>
+      <p>Nenhuma agência do mercado brasileiro oferece garantia. <strong>Nós oferecemos duas.</strong></p>
+    </div>
+    <div class="guar-grid reveal">
+      <div class="guar">
+        <div class="seal"><svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <div>
+          <h3>O projeto se paga no 1º mês</h3>
+          <p>Se a margem das vendas atribuídas ao projeto no primeiro mês não cobrir o valor do plano, <b style="color:#fff">o segundo mês é por nossa conta</b>.</p>
+          <p>Com margem bruta média de R$ 9.247 por carro, basta <b style="color:#fff">1 carro</b> para a garantia ser cumprida.</p>
+        </div>
+      </div>
+      <div class="guar">
+        <div class="seal"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg></div>
+        <div>
+          <h3>Saída livre a partir do 3º mês</h3>
+          <p>O contrato é de 12 meses, mas se você não estiver satisfeito a partir do terceiro mês, <b style="color:#fff">sai com 30 dias de aviso e sem multa</b>.</p>
+          <p>Você não fica preso a um resultado que não veio.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PARA QUEM ===== -->
+<section class="block glowbg">
+  <div class="container">
+    <div class="section-head">
+      <h2>Não é para <span class="accent">todo mundo</span></h2>
+      <p>Nossa garantia depende de você ter matéria-prima para o primeiro mês. <strong>Por isso somos seletivos.</strong></p>
+    </div>
+    <div class="fit-grid reveal">
+      <div class="fit yes">
+        <h3><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg> É para você se</h3>
+        <ul>
+          <li><span class="mk2">✓</span><span>Sua loja tem <b style="color:#fff">15 carros ou mais</b> em estoque</span></li>
+          <li><span class="mk2">✓</span><span>Você tem <b style="color:#fff">2 ou mais vendedores</b></span></li>
+          <li><span class="mk2">✓</span><span>Tem alguma <b style="color:#fff">base de contatos guardada</b> — CRM, planilha ou o WhatsApp da loja</span></li>
+          <li><span class="mk2">✓</span><span>Já está em operação há pelo menos 1 ano</span></li>
+          <li><span class="mk2">✓</span><span>Tem verba para mídia a partir do mês 2</span></li>
+          <li><span class="mk2">✓</span><span>O dono participa e quer meter a mão</span></li>
+        </ul>
+      </div>
+      <div class="fit no">
+        <h3><svg class="i" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg> Não é para você se</h3>
+        <ul>
+          <li><span class="mk2">✕</span><span>A loja é nova e não tem histórico de cliente</span></li>
+          <li><span class="mk2">✕</span><span>Tem menos de 15 carros no pátio</span></li>
+          <li><span class="mk2">✕</span><span>Só o dono atende, sem vendedor</span></li>
+          <li><span class="mk2">✕</span><span>Está procurando o gestor de anúncio mais barato</span></li>
+          <li><span class="mk2">✕</span><span>Quer resultado sem mudar nada em como o time atende</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="block glowbg">
+  <div class="container" style="max-width:860px">
+    <div class="section-head"><h2>Perguntas <span class="accent">frequentes</span></h2></div>
+    <div class="reveal">
+      <details><summary>Preciso ter verba para anúncio?</summary><p>No primeiro mês, não. A fase de Colheita trabalha a base que sua loja já tem, sem custo de mídia. A partir do mês 2, sim — e a verba é sua, paga direto às plataformas, separada do nosso valor.</p></details>
+      <details><summary>Vocês vendem lead?</summary><p>Não. Não somos portal nem revendemos lead de terceiro. Construímos o canal próprio da sua loja: o lead é seu, o CRM é seu e os dados ficam com você.</p></details>
+      <details><summary>Em quanto tempo vejo resultado?</summary><p>O objetivo do primeiro mês é o projeto se pagar — por isso começamos pela sua base, que dá retorno mais rápido. Trabalhamos com método e dados, não com promessa de número garantido.</p></details>
+      <details><summary>Vocês substituem meu vendedor?</summary><p>Não. Treinamos e municiamos o time que você já tem. A IA responde, qualifica e agenda a visita; quem negocia e fecha o carro continua sendo o seu vendedor.</p></details>
+      <details><summary>Preciso parar de anunciar na Webmotors ou OLX?</summary><p>Não. Inclusive gerenciamos seus anúncios nos portais. O que muda é que eles deixam de ser sua única fonte de cliente — e você para de depender do preço que eles decidirem cobrar.</p></details>
+      <details><summary>Quanto custa?</summary><p>Depende do tamanho do seu estoque e do escopo. Apresentamos o valor na reunião de diagnóstico, depois de entender sua operação. Não cobramos taxa de implementação.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FINAL CTA ===== -->
+<section class="final-cta">
+  <div class="container">
+    <h2>Pronto pra fazer seu estoque <span class="accent">girar</span>?</h2>
+    <p>Cada semana parada é carro envelhecendo no pátio e cliente esquecendo que sua loja existe.</p>
+    <a class="btn btn-light" href="#form2">Quero meu diagnóstico gratuito</a>
+  </div>
+</section>
+
+<!-- ===== FORM 2 ===== -->
+<section class="form-block" id="form2">
+  <div class="container">
+    <div class="form-head">
+      <h2>Vamos olhar a <span class="accent">sua operação</span></h2>
+      <p>Leva menos de 1 minuto. Você sai com o raio-x da sua loja mesmo que não feche com a gente.</p>
+    </div>
+    <div class="form-card">
+      <form class="lead-form" novalidate>
+        <div class="field"><label>Seu nome</label><input name="nome" required placeholder="Como podemos te chamar"></div>
+        <div class="f2">
+          <div class="field"><label>WhatsApp</label><input name="whatsapp" class="tel" required inputmode="tel" placeholder="(00) 00000-0000"></div>
+          <div class="field"><label>Cidade / UF</label><input name="cidade" required placeholder="Cidade e estado"></div>
+        </div>
+        <div class="field"><label>Nome da loja</label><input name="loja" required placeholder="Nome da revenda"></div>
+        <div class="f2">
+          <div class="field"><label>Carros em estoque</label>
+            <select name="estoque" required><option value="">Selecione</option><option>Menos de 15</option><option>15 a 40</option><option>40 a 100</option><option>Mais de 100</option></select>
+          </div>
+          <div class="field"><label>Vendedores na loja</label>
+            <select name="vendedores" required><option value="">Selecione</option><option>Só eu</option><option>2 a 3</option><option>4 a 6</option><option>7 ou mais</option></select>
+          </div>
+        </div>
+        <div class="field"><label>Você guarda os contatos de quem já falou com a loja?</label>
+          <select name="base" required><option value="">Selecione</option><option>Sim, tenho CRM</option><option>Sim, em planilha</option><option>Sim, no WhatsApp da loja</option><option>Tenho, mas está bagunçado</option><option>Não guardo</option></select>
+        </div>
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn" type="submit">Agendar meu diagnóstico <span class="arrow">→</span></button>
+        <p class="form-note">Seus dados estão seguros. Não fazemos spam.</p>
+      </form>
+      <div class="okmsg" hidden>
+        <div class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h3>Recebido!</h3>
+        <p>Um especialista vai analisar sua loja e te chamar no WhatsApp em até 2 horas úteis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div>
+      <div class="wordmark" style="margin-bottom:10px"><svg class="mk" viewBox="0 0 120 100" aria-hidden="true"><defs><linearGradient id="lgf" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#FF6A00"/><stop offset="55%" stop-color="#FF7A00"/><stop offset="100%" stop-color="#FFA347"/></linearGradient><mask id="mkf"><rect width="120" height="100" fill="#fff"/><g fill="#000"><rect x="19.5" y="69.5" width="9" height="7.5" rx="1.4"/><rect x="33" y="69.5" width="9" height="7.5" rx="1.4"/></g></mask></defs><g transform="translate(14,0) skewX(-12)" fill="url(#lgf)" mask="url(#mkf)"><rect x="10" y="58" width="18" height="30" rx="3.2"/><rect x="33" y="42" width="18" height="46" rx="3.2"/><rect x="56" y="26" width="18" height="62" rx="3.2"/><rect x="79" y="10" width="18" height="78" rx="3.2"/></g></svg><span><span class="p">PLUS</span> <span class="n">CAR SCALE</span></span></div>
+      <div>Aceleração comercial para revendas de seminovos · Uma operação do Grupo Plus</div>
+    </div>
+    <div style="text-align:right">
+      <div>contato@pluscarscale.com.br</div>
+      <div style="margin-top:6px">© 2026 Plus Car Scale · Política de Privacidade</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// scroll progress
+const sp=document.getElementById('sp');
+addEventListener('scroll',()=>{const h=document.body.scrollHeight-innerHeight;sp.style.width=(h>0?scrollY/h*100:0)+'%'},{passive:true});
+
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// marquee duplicado p/ loop contínuo
+const tr=document.getElementById('track');
+tr.innerHTML+=tr.innerHTML;
+
+// máscara telefone
+document.querySelectorAll('.tel').forEach(w=>{
+  w.addEventListener('input',()=>{
+    let v=w.value.replace(/\D/g,'').slice(0,11);
+    if(v.length>6)v=`(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+    else if(v.length>2)v=`(${v.slice(0,2)}) ${v.slice(2)}`;
+    else if(v.length)v=`(${v}`;
+    w.value=v;
+  });
+});
+
+// submit
+document.querySelectorAll('.lead-form').forEach(f=>{
+  f.addEventListener('submit',ev=>{
+    ev.preventDefault();
+    if(f.website.value)return;
+    if(!f.checkValidity()){f.reportValidity();return}
+    const data=Object.fromEntries(new FormData(f).entries());
+    delete data.website;
+    data.origem='LP Plus Car Scale';
+    data.url=location.href;
+    console.log('LEAD →',data);   // TODO: enviar ao CRM/webhook
+    f.hidden=true;
+    const ok=f.parentElement.querySelector('.okmsg');
+    ok.hidden=false;
+    ok.scrollIntoView({behavior:'smooth',block:'center'});
+  });
+});
+</script>
+</body>
+</html>
