@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Proposta Chai Demarch</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #000; --line: #26282c; --blue: #45b8ff; --blue2: #1f9bf0;
+  --txt: #fff; --mut: #b9bcc2; --dim: #8a8d93;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--txt); font-family: 'Roboto', sans-serif; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+.blue { color: var(--blue); }
+p, li { font-weight: 300; font-size: 17px; line-height: 1.7; color: var(--mut); }
+strong { color: #fff; font-weight: 500; }
+
+/* nav */
+nav { position: sticky; top: 0; z-index: 10; background: rgba(0,0,0,.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,.06); }
+nav .wrap { display: flex; justify-content: space-between; align-items: center; height: 68px; }
+nav img { height: 26px; display: block; }
+nav .links { display: flex; gap: 28px; }
+nav .links a { color: var(--dim); text-decoration: none; font-family: Montserrat; font-weight: 700; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; transition: color .2s; }
+nav .links a:hover { color: #fff; }
+
+/* hero */
+.hero { position: relative; min-height: min(calc(100vh - 68px), 860px); display: flex; flex-direction: column; justify-content: center; padding: 80px 0 64px; text-align: center; overflow: hidden;
+  background: radial-gradient(ellipse 60% 50% at 50% 30%, rgba(30,110,170,.38), transparent 70%), #000; }
+.hero::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px); background-size: 48px 48px; -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 35%, #000, transparent); mask-image: radial-gradient(ellipse 60% 55% at 50% 35%, #000, transparent); }
+.hero > * { position: relative; }
+.pill { display: inline-flex; align-items: center; gap: 10px; border: 1px solid rgba(69,184,255,.45); background: rgba(10,60,100,.35); border-radius: 99px; padding: 9px 20px; font-family: Montserrat; font-weight: 700; font-size: 12px; letter-spacing: .22em; color: #cfe9ff; }
+.pill i { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 10px var(--blue); }
+.hero h1 { font-family: Montserrat; font-weight: 900; font-size: clamp(44px, 8vw, 96px); letter-spacing: -.02em; line-height: 1; }
+.hero .x { color: var(--dim); font-size: 32px; margin: 14px 0; font-weight: 300; }
+.hero .sub { font-size: clamp(17px, 2vw, 21px); color: #d0d2d6; max-width: 640px; margin: 36px auto 0; }
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 72px; text-align: left; }
+.trio .card { padding: 24px 26px 28px; border-top: 2px solid var(--blue2); }
+.trio p { color: #e3e5e8; font-weight: 400; font-size: 16px; margin-top: 10px; line-height: 1.55; }
+
+/* seções */
+section.sec { padding: 110px 0; border-top: 1px solid rgba(255,255,255,.05); }
+section.sec.alt { background: radial-gradient(ellipse 70% 40% at 50% 0%, rgba(40,110,160,.18), transparent 70%), #050607; }
+.tag { display: flex; align-items: center; gap: 10px; font-family: Montserrat; font-weight: 800; font-size: 12px; letter-spacing: .28em; color: var(--blue); }
+.tag b { background: var(--blue); color: #001526; border-radius: 4px; padding: 2px 7px; letter-spacing: .05em; font-size: 11px; }
+h2 { font-family: Montserrat; font-weight: 800; font-size: clamp(30px, 4.2vw, 46px); letter-spacing: -.01em; margin: 14px 0 36px; line-height: 1.12; }
+.card { background: linear-gradient(180deg, #16171a, #0f1012); border: 1px solid var(--line); border-radius: 16px; transition: border-color .25s, transform .25s; }
+.card:hover { border-color: #3a3d43; }
+.card.hl { border-color: rgba(69,184,255,.55); background: linear-gradient(180deg, #06243a, #0a1016 60%); box-shadow: 0 0 36px rgba(31,155,240,.18); }
+.lbl { font-family: Montserrat; font-weight: 800; font-size: 11px; letter-spacing: .2em; color: #d8dadf; text-transform: uppercase; }
+.lbl.b { color: var(--blue); }
+
+/* contexto */
+.ctx { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: start; }
+.ctx p + p { margin-top: 16px; }
+.ctx .card { padding: 22px 26px; }
+.ctx .card + .card { margin-top: 16px; }
+.ctx .card p { margin-top: 6px; font-size: 16px; line-height: 1.55; }
+
+/* etapas */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.steps .card { padding: 28px 26px; }
+.num { font-family: Montserrat; font-weight: 900; font-size: 26px; color: #3a3d43; line-height: 1; }
+.card.hl .num { color: var(--blue); }
+.steps h4 { font-family: Montserrat; font-weight: 700; font-size: 17px; margin: 14px 0 8px; line-height: 1.25; }
+.steps p { font-size: 15px; line-height: 1.55; }
+
+/* ativos */
+.assets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.assets .card { padding: 22px 24px; }
+.assets .hd { display: flex; gap: 14px; align-items: center; }
+.assets .n { flex: 0 0 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(69,184,255,.5); background: rgba(31,155,240,.12); color: var(--blue); display: grid; place-items: center; font-family: Montserrat; font-weight: 700; font-size: 14px; }
+.assets h4 { font-family: Montserrat; font-weight: 700; font-size: 16px; line-height: 1.3; }
+.assets p { font-size: 15px; line-height: 1.55; margin-top: 12px; }
+.note { border-left: 2px solid var(--blue); padding-left: 16px; margin-top: 28px; font-size: 14px; line-height: 1.55; color: var(--dim); }
+
+/* modelo comercial */
+.lead { max-width: 720px; margin: -12px 0 40px; }
+.price { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.price .card { padding: 28px; display: flex; flex-direction: column; }
+.val { display: flex; align-items: flex-start; gap: 6px; margin-top: 18px; font-family: Montserrat; font-weight: 900; font-size: 52px; letter-spacing: -.02em; line-height: 1; }
+.val small { font-size: 20px; color: var(--dim); font-weight: 800; margin-top: 6px; }
+.price .unit { color: var(--blue); font-size: 17px; font-weight: 400; margin-top: 10px; }
+.price hr { border: 0; border-top: 1px solid var(--line); margin: 20px 0 14px; }
+.price p { font-size: 15px; line-height: 1.55; }
+.sim { margin-top: 32px; border-radius: 20px; display: grid; grid-template-columns: 280px 1fr; background: linear-gradient(90deg, #1b95e6, #47b9ff); color: #04121d; box-shadow: 0 0 60px rgba(31,155,240,.35); }
+.sim > div { padding: 32px 36px; }
+.sim > div + div { border-left: 1px solid rgba(0,0,0,.15); }
+.sim .lbl { color: #06243a; }
+.sim .big { font-family: Montserrat; font-weight: 900; font-size: 80px; line-height: 1; margin-top: 10px; letter-spacing: -.03em; }
+.sim .bs { font-family: Montserrat; font-weight: 700; font-size: 20px; margin-top: 4px; }
+.sim h3 { font-family: Montserrat; font-weight: 900; font-size: clamp(24px, 3vw, 34px); line-height: 1.15; margin-top: 12px; }
+.sim p { color: #0b2a42; font-weight: 400; font-size: 16px; margin-top: 12px; line-height: 1.55; }
+
+/* construção */
+.build { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.build .card { padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+.build .ic { width: 30px; height: 30px; border-radius: 50%; background: rgba(31,155,240,.15); border: 1px solid rgba(69,184,255,.5); color: var(--blue); display: grid; place-items: center; font-weight: 700; font-size: 14px; }
+.build h4 { font-family: Montserrat; font-weight: 700; font-size: 16px; line-height: 1.3; }
+.build p { font-size: 14.5px; line-height: 1.5; margin-top: 6px; }
+.yours { margin-top: 24px; padding: 30px 34px; }
+.yours h3 { font-family: Montserrat; font-weight: 800; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.25; margin-top: 10px; }
+.yours p { margin-top: 8px; }
+
+/* cenários */
+.scen { margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.scen .card { padding: 28px; }
+.scen .q { font-family: Montserrat; font-weight: 800; font-size: 15px; color: #d8dadf; }
+.scen .tot { font-family: Montserrat; font-weight: 900; font-size: 40px; letter-spacing: -.02em; margin-top: 12px; line-height: 1; }
+.scen .tot small { font-size: 18px; color: var(--dim); font-weight: 800; margin-right: 4px; }
+.scen .card.hot { background: linear-gradient(135deg, #1b95e6, #47b9ff); border-color: transparent; box-shadow: 0 0 50px rgba(31,155,240,.35); }
+.scen .card.hot .q, .scen .card.hot .tot, .scen .card.hot .tot small { color: #04121d; }
+.scen .card.hot p { color: #0b2a42; font-weight: 400; }
+.scen p { font-size: 15px; margin-top: 10px; line-height: 1.5; }
+.fine { font-size: 14px; color: var(--dim); margin-top: 18px; }
+
+/* atribuição / próximo passo */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.two .card { padding: 32px; }
+.two h3 { font-family: Montserrat; font-weight: 800; font-size: 22px; line-height: 1.25; margin: 16px 0 12px; }
+.two p { font-size: 16px; line-height: 1.6; }
+.two p + p { margin-top: 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.chips span { border: 1px solid rgba(69,184,255,.4); background: rgba(31,155,240,.1); border-radius: 99px; padding: 6px 14px; font-size: 14px; color: #d6ecff; }
+
+/* fechamento */
+.close { text-align: center; padding: 120px 0 100px; background: radial-gradient(ellipse 55% 60% at 50% 100%, rgba(30,110,170,.35), transparent 70%), #000; border-top: 1px solid rgba(255,255,255,.05); }
+.close h3 { font-family: Montserrat; font-weight: 900; font-size: clamp(28px, 4.5vw, 52px); line-height: 1.12; max-width: 860px; margin: 0 auto; }
+.close p { font-size: 17px; margin-top: 18px; }
+footer { border-top: 1px solid var(--line); }
+footer .wrap { display: flex; justify-content: space-between; align-items: center; padding: 28px 24px; font-size: 14px; color: var(--dim); }
+footer img { height: 18px; display: block; }
+
+/* responsivo */
+@media (max-width: 960px) {
+  .build { grid-template-columns: repeat(2, 1fr); }
+  .assets { grid-template-columns: repeat(2, 1fr); }
+  .scen { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  nav .links { display: none; }
+  section.sec { padding: 72px 0; }
+  .trio, .ctx, .price, .two, .assets { grid-template-columns: 1fr; }
+  .ctx { gap: 28px; }
+  .trio { margin-top: 48px; }
+  .sim { grid-template-columns: 1fr; }
+  .sim > div + div { border-left: 0; border-top: 1px solid rgba(0,0,0,.15); }
+  .sim > div { padding: 26px; }
+  .sim .big { font-size: 64px; }
+  footer .wrap { flex-direction: column; gap: 12px; }
+}
+@media (max-width: 520px) {
+  .build { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <img src="logo.png" alt="Plus Mídia">
+    <div class="links">
+      <a href="#ganhos">O que você ganha</a>
+      <a href="#como">A gente faz</a>
+      <a href="#receita">Sua receita</a>
+      <a href="#proximo">Próximo passo</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="pill"><i></i>PROJETO-PILOTO · BLACK FRIDAY 2026</div>
+    <h1 style="margin-top:40px">Chai Demarch</h1>
+    <div class="x">×</div>
+    <h1 class="blue">Plus Mídia</h1>
+    <p class="sub">Uma live de Black Friday para as suas alunas. Elas chegam na data mais importante do ano com um plano na mão, e <strong>você ganha uma nova fonte de receita sem trabalho a mais</strong>.</p>
+    <div class="trio">
+      <div class="card"><div class="lbl b">Para as suas alunas</div><p>Um plano prático para preparar a loja de moda para a Black Friday</p></div>
+      <div class="card"><div class="lbl b">Para você</div><p>Fee pela live, comissão por cliente e receita recorrente</p></div>
+      <div class="card"><div class="lbl b">Esforço da sua parte</div><p>Gravar um convite com roteiro pronto. O resto é com a gente</p></div>
+    </div>
+  </div>
+</header>
+
+<section class="sec" id="ganhos">
+  <div class="wrap">
+    <div class="tag"><b>01</b>O QUE VOCÊ GANHA</div>
+    <h2>Mais valor para a comunidade, <span class="blue">mais receita para você</span></h2>
+    <div class="assets">
+      <div class="card"><div class="hd"><div class="n">1</div><h4>Um conteúdo novo para entregar</h4></div><p>Suas alunas recebem uma aula prática de Black Friday feita por quem opera anúncios de loja de moda todos os dias.</p></div>
+      <div class="card"><div class="hd"><div class="n">2</div><h4>Alunas com mais resultado</h4></div><p>Loja que vende mais na Black é aluna mais satisfeita, que renova e indica a sua mentoria.</p></div>
+      <div class="card"><div class="hd"><div class="n">3</div><h4>Receita sem criar produto</h4></div><p>Você recebe pela live e por cada aluna que virar cliente, com participação enquanto ela continuar com a gente.</p></div>
+      <div class="card"><div class="hd"><div class="n">4</div><h4>Zero operação</h4></div><p>Página, anúncios, disparos, aula e atendimento: a Plus Mídia monta e executa tudo.</p></div>
+      <div class="card"><div class="hd"><div class="n">5</div><h4>Sua comunidade respeitada</h4></div><p>Sem venda empurrada na live. Só conversamos com quem levantar a mão e pedir ajuda.</p></div>
+      <div class="card"><div class="hd"><div class="n">6</div><h4>Transparência total</h4></div><p>Link exclusivo da ação e relatório de quem entrou em contato e de quem fechou.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="como">
+  <div class="wrap">
+    <div class="tag"><b>02</b>A GENTE CONSTRÓI TUDO</div>
+    <h2>Você não gasta energia. <span class="blue">A Plus Mídia monta a ação inteira.</span></h2>
+    <p class="lead">Do convite ao atendimento, cada peça do lançamento da live é feita pelo nosso time. Você só aparece onde a sua voz faz diferença.</p>
+    <div class="build">
+      <div class="card"><div class="ic">✓</div><div><h4>Landing page de inscrição</h4><p>Página da live com a sua marca e a nossa, pronta para receber as inscrições.</p></div></div>
+      <div class="card"><div class="ic">✓</div><div><h4>Roteiro para você gravar</h4><p>Script pronto do vídeo de convite e dos stories. Você só grava.</p></div></div>
+      <div class="card"><div class="ic">✓</div><div><h4>Artes e peças de divulgação</h4><p>Posts, stories e textos para o grupo, prontos para publicar.</p></div></div>
+      <div class="card"><div class="ic">✓</div><div><h4>Anúncios para a live</h4><p>Campanha paga pela Plus Mídia para levar mais lojistas à inscrição.</p></div></div>
+      <div class="card"><div class="ic">✓</div><div><h4>Disparos oficiais</h4><p>Convites e lembretes por WhatsApp (API oficial) e e-mail, com a sua autorização.</p></div></div>
+      <div class="card"><div class="ic">✓</div><div><h4>A aula de Black Friday</h4><p>Conteúdo, apresentação e condução da live pelo nosso time.</p></div></div>
+      <div class="card"><div class="ic">✓</div><div><h4>Atendimento pós-live</h4><p>Nosso time responde e acompanha cada aluna que pedir ajuda.</p></div></div>
+      <div class="card"><div class="ic">✓</div><div><h4>Relatório de resultado</h4><p>Inscritas, presentes, quem pediu ajuda e quem virou cliente.</p></div></div>
+    </div>
+    <div class="yours card hl">
+      <div class="lbl b">A sua parte</div>
+      <h3>Gravar o convite com o roteiro pronto e aprovar a divulgação.</h3>
+      <p>Só isso. Todo o resto do lançamento fica com a Plus Mídia.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="receita">
+  <div class="wrap">
+    <div class="tag"><b>03</b>SUA RECEITA</div>
+    <h2>Você ganha em <span class="blue">três frentes</span></h2>
+    <p class="lead">Um valor garantido pela live e ganhos que crescem conforme as suas alunas viram clientes e permanecem com a gente.</p>
+    <div class="price">
+      <div class="card"><div class="lbl">Pela live</div><div class="val"><small>R$</small>3.000</div><div class="unit">Garantido</div><hr><p>Pago pela realização da ação, independente do resultado.</p></div>
+      <div class="card hl"><div class="lbl b">Por aluna que virar cliente</div><div class="val"><small>R$</small>1.000</div><div class="unit">Por cliente</div><hr><p>Pagamento único para cada cliente que chegar pela ação.</p></div>
+      <div class="card"><div class="lbl">Recorrente</div><div class="val">5%</div><div class="unit">Todo mês</div><hr><p>Da mensalidade de cada cliente da ação, enquanto ela continuar com a Plus Mídia.</p></div>
+    </div>
+    <div class="scen">
+      <div class="card"><div class="q">Se 5 alunas virarem clientes</div><div class="tot"><small>R$</small>8.000</div><p>+ 5% recorrente das 5 mensalidades</p></div>
+      <div class="card"><div class="q">Se 10 alunas virarem clientes</div><div class="tot"><small>R$</small>13.000</div><p>+ 5% recorrente das 10 mensalidades</p></div>
+      <div class="card hot"><div class="q">Se 20 alunas virarem clientes</div><div class="tot"><small>R$</small>23.000</div><p>+ 5% recorrente das 20 mensalidades</p></div>
+    </div>
+    <p class="fine">Os valores somam o fee da live com as comissões por cliente. Os cenários são ilustrativos e não representam uma garantia de resultado.</p>
+  </div>
+</section>
+
+<section class="sec alt" id="proximo">
+  <div class="wrap">
+    <div class="two">
+      <div class="card"><div class="tag"><b>04</b>TRANSPARÊNCIA</div><h3>Você acompanha cada aluna que vier da live</h3>
+        <p>Toda aluna que chegar pela ação é identificada desde o primeiro contato até o fechamento. Você recebe o relatório e sabe exatamente quanto tem a receber.</p>
+        <div class="chips"><span>Link exclusivo</span><span>Formulário da ação</span><span>WhatsApp dedicado</span><span>Relatório</span></div></div>
+      <div class="card"><div class="tag"><b>05</b>PRÓXIMO PASSO</div><h3>Começamos com uma live. Se fizer sentido, vira parceria.</h3>
+        <p>Esta primeira ação é um piloto, sem compromisso de longo prazo. Se o resultado for bom para as suas alunas e para você, montamos juntos as próximas ações.</p>
+        <p>Para a live ter efeito na Black Friday, o ideal é realizá-la ainda em outubro. Vamos definir a data?</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap">
+    <h3>Suas alunas mais preparadas para a Black. <span class="blue">Você com uma nova receita.</span></h3>
+    <p>Chai Demarch × Plus Mídia · Black Friday 2026</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap"><img src="logo.png" alt="Plus Mídia"><span>Proposta de parceria · Setembro de 2026</span></div>
+</footer>
+
+</body>
+</html>
