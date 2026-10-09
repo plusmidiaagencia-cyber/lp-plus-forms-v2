@@ -1,13 +1,33 @@
 {
   "trailingSlash": true,
   "functions": {
-    "api/diagnose.js": { "maxDuration": 30 }
+    "api/diagnose.js": {
+      "maxDuration": 30
+    }
   },
   "rewrites": [
-    { "source": "/lpgpm/", "destination": "https://lp-gpm-lpgpm.vercel.app/lpgpm" },
-    { "source": "/lpgpm/:path+", "destination": "https://lp-gpm-lpgpm.vercel.app/lpgpm/:path+" }
+    {
+      "source": "/lpgpm/_next/image/",
+      "destination": "https://lp-gpm-lpgpm.vercel.app/lpgpm/_next/image"
+    },
+    {
+      "source": "/lpgpm/",
+      "destination": "https://lp-gpm-lpgpm.vercel.app/lpgpm"
+    },
+    {
+      "source": "/lpgpm/:path+",
+      "destination": "https://lp-gpm-lpgpm.vercel.app/lpgpm/:path+"
+    }
   ],
   "headers": [
-    { "source": "/lpgpm/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
+    {
+      "source": "/lpgpm/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
   ]
 }
