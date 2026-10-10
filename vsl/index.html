@@ -327,13 +327,27 @@ if(window.intlTelInput){
 }
 phone.addEventListener('input', e=>{
   const iso = phoneIti ? phoneIti.getSelectedCountryData().iso2 : 'br';
+  phone.setCustomValidity('');
   if(iso && iso!=='br') return; // máscara automática só pro Brasil
-  let d = e.target.value.replace(/\D/g,'').slice(0,11), out = d;
+  let d = e.target.value.replace(/\D/g,'');
+  // lead digitou o 55 (a bandeira já mostra +55): tira antes de cortar, senão perde os 2 últimos dígitos
+  if(d.length>=12 && d.startsWith('55')) d = d.slice(2);
+  d = d.slice(0,11);
+  let out = d;
   if(d.length>0) out = '(' + d.slice(0,2);
   if(d.length>=3) out += ') ' + d.slice(2,7);
   if(d.length>=8) out += '-' + d.slice(7,11);
   e.target.value = out;
 });
+
+// Telefone incompleto/inválido bloqueia o envio (antes chegava cortado no CRM)
+function phoneError(){
+  const iso = phoneIti ? phoneIti.getSelectedCountryData().iso2 : 'br';
+  const d = phone.value.replace(/\D/g,'');
+  if(iso==='br' && d.length!==10 && d.length!==11) return 'Confira o WhatsApp: DDD + número, sem o 55.';
+  if(phoneIti && window.intlTelInputUtils && phoneIti.isValidNumber()===false) return 'Confira o WhatsApp: número inválido.';
+  return '';
+}
 
 /* ====== TRACKING META ====== */
 function getCookie(n){ const m=document.cookie.match(new RegExp('(^|;\\s*)'+n+'=([^;]+)')); return m?decodeURIComponent(m[2]):undefined; }
@@ -349,7 +363,8 @@ document.getElementById('leadForm').addEventListener('submit', e=>{
   const form = e.target;
   const name = form.name.value.trim(), email = form.email.value.trim(), ph = form.phone.value.trim();
   const insta = form.instagram.value.trim(), rev = form.revenue.value;
-  if(!name || !/.+@.+\..+/.test(email) || ph.replace(/\D/g,'').length<10 || !insta || !rev){ form.reportValidity(); return; }
+  phone.setCustomValidity(phoneError());
+  if(!name || !/.+@.+\..+/.test(email) || ph.replace(/\D/g,'').length<10 || !insta || !rev || !form.checkValidity()){ form.reportValidity(); return; }
   const btn = form.querySelector('button[type="submit"]');
   btn.disabled = true; btn.innerHTML = 'Enviando...';
 

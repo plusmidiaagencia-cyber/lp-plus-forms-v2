@@ -2909,10 +2909,14 @@ document.querySelectorAll('input[type="tel"]').forEach(input=>{
     itiMap[input.id] = iti;
   }
   input.addEventListener('input',(e)=>{
+    input.setCustomValidity('');
     const iti = itiMap[input.id];
     const iso = iti ? iti.getSelectedCountryData().iso2 : 'br';
     if(iso && iso!=='br') return; // máscara automática só pro Brasil
-    let v = e.target.value.replace(/\D/g,'').slice(0,11);
+    let v = e.target.value.replace(/\D/g,'');
+    // lead digitou o 55 (a bandeira já mostra +55): tira antes de cortar, senão perde os 2 últimos dígitos
+    if(v.length>=12 && v.startsWith('55')) v = v.slice(2);
+    v = v.slice(0,11);
     if(v.length>=11) v = v.replace(/(\d{2})(\d{5})(\d{4}).*/,'($1) $2-$3');
     else if(v.length>=7) v = v.replace(/(\d{2})(\d{4,5})(\d{0,4}).*/,'($1) $2-$3');
     else if(v.length>=3) v = v.replace(/(\d{2})(\d{0,5}).*/,'($1) $2');
@@ -2920,6 +2924,16 @@ document.querySelectorAll('input[type="tel"]').forEach(input=>{
   });
 });
 window.__itiMap = itiMap;
+
+// Telefone incompleto/inválido bloqueia o envio (antes chegava cortado no CRM)
+function phoneError(input){
+  const iti = itiMap[input.id];
+  const iso = iti ? iti.getSelectedCountryData().iso2 : 'br';
+  const d = input.value.replace(/\D/g,'');
+  if(iso==='br' && d.length!==10 && d.length!==11) return 'Confira o WhatsApp: DDD + número, sem o 55.';
+  if(iti && window.intlTelInputUtils && iti.isValidNumber()===false) return 'Confira o WhatsApp: número inválido.';
+  return '';
+}
 
 // Form submit -> webhooks (GPM + Reportana)
 const GPM_WEBHOOK_URL = 'https://rkngilknpcibcwalropj.supabase.co/functions/v1/webhook-handler?slug=64fcc8535224c5f25269def4';
@@ -2953,6 +2967,8 @@ function bindLeadForm(formId, formSourceTag){
   if(!form) return;
   form.addEventListener('submit', (e)=>{
     e.preventDefault();
+    const tel = form.querySelector('input[type="tel"]');
+    if(tel) tel.setCustomValidity(phoneError(tel));
     if(!form.checkValidity()){ form.reportValidity(); return; }
 
     const submitBtn = form.querySelector('button[type="submit"]');
