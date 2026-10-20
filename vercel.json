@@ -28,6 +28,27 @@
           "value": "noindex, nofollow"
         }
       ]
+    },
+    {
+      "source": "/AIv1/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/aiv1",
+      "destination": "/AIv1/",
+      "permanent": false
+    },
+    {
+      "source": "/aiv1/",
+      "destination": "/AIv1/",
+      "permanent": false
     }
   ]
 }
