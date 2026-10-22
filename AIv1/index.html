@@ -5,9 +5,8 @@
 <title>Agência Sem Contratar · Método 150/20</title>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta name="description" content="Agência escala, sim. A sua só não tem processo. Como a Plus Mídia saiu de R$ 25 mil para R$ 250 mil/mês com processo e IA. Curso gravado, direto na tela.">
+<meta name="description" content="Tire a análise das contas e o follow-up da sua mesa na 1ª semana. Comandos e rotinas prontos para colar no ChatGPT ou no Claude, da operação da Plus Mídia. Curso gravado, R$ 47.">
 <meta name="theme-color" content="#FAFAFC">
-<!-- RASCUNHO v3 CLARA (19/10/2026). Sem pixel, sem analytics. Fontes, fotos e logos hospedados na própria pasta. Checkout = "#". -->
 <link rel="preload" href="assets/fonts/Inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/InstrumentSerif-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -111,6 +110,9 @@ section{position:relative;padding:72px 0}
 .vthumb .pb svg{width:16px;height:16px;margin-left:3px;color:var(--blue)}
 .vthumb .du{font-size:12px;font-weight:600;color:#fff;background:rgba(10,20,60,.4);padding:3px 9px;border-radius:99px}
 .vthumb:hover .pb{transform:scale(1.07)}
+.hero-pts{list-style:none;display:grid;gap:8px;margin:4px 0 0;padding:0;font-size:15px;line-height:1.4;color:var(--body)}
+.hero-pts li{display:flex;gap:8px;align-items:flex-start}
+.hero-pts .okc{color:var(--i-green);font-weight:700}
 .vcap{margin-top:8px;font-size:12px;color:var(--faint)}
 .vtext{display:none}
 .hero-cta{display:flex;flex-direction:column;gap:12px;margin-top:20px}
@@ -416,6 +418,7 @@ dialog.zoom button{border:0;background:var(--soft);border-radius:99px;padding:8p
 .phone .ck.off i{background:#D1D5DB}
 
 footer{border-top:1px solid var(--line);padding:24px 0 110px;font-size:13px;color:var(--muted)}
+footer a{color:inherit;text-decoration:underline}
 footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between}
 
 .buy{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:50;display:flex;align-items:center;gap:12px;padding:7px 7px 7px 18px;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:999px;box-shadow:0 20px 40px -16px rgba(17,24,39,.35);transform:translateY(150%);transition:transform .3s ease}
@@ -429,6 +432,60 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
 .rv.in{opacity:1;transform:none}
 .duo>*,.hero-grid>*,.cta-card>*{min-width:0}
 
+/* v4: hero com demo */
+.demo-pane[hidden]{display:none}
+html{scroll-behavior:smooth}
+#preco{scroll-margin-top:64px}
+.byline.by-m{display:none}
+@media (max-width:759px){.byline.by-d{display:none}.byline.by-m{display:flex;margin-top:14px}}
+@media (max-width:759px){.hero{padding-top:20px}.hero .lead{font-size:1rem;margin-bottom:16px}.hero-cta{margin-top:14px}.byline{margin-top:12px}.demo .chat{min-height:0;padding:12px;gap:10px}.demo .msg{padding:10px 12px}.demo .ai-line{padding:6px 0}}
+.h1-hero{font-size:clamp(33px,8.6vw,54px);line-height:1.06}
+.byline{display:flex;align-items:center;gap:10px;margin-top:18px;font-size:13.5px;color:var(--muted)}
+.byline img{width:38px;height:38px;border-radius:50%;object-fit:cover;object-position:50% 18%;background:var(--blue-50);border:2px solid #fff;box-shadow:var(--sh)}
+.byline b{color:var(--ink)}
+.demo{box-shadow:var(--sh-lg);margin-top:8px}
+.demo-tabs{display:flex;gap:6px;padding:10px 12px 0;background:#fff}
+.demo-tabs button{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:6px 10px;border-radius:12px;border:1px solid var(--line);background:#fff;font:600 13px var(--sans);color:var(--muted);cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease}
+.demo-tabs button svg{width:15px;height:15px}
+.demo-tabs button[aria-selected="true"]{background:var(--blue-50);border-color:var(--blue-100);color:var(--blue)}
+.demo .chat{min-height:318px;align-content:start}
+.demo .prompt{font-size:12.5px}
+.demo .ai-line .tx{font-size:13.5px;line-height:1.45}
+.demo-foot{padding:11px 14px;border-top:1px solid var(--line);background:#FBFBFD;font-size:12.5px;color:var(--muted)}
+.demo-foot b{color:var(--ink)}
+/* v4: hoje x com as rotinas */
+.cmp{max-width:860px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--sh);overflow:hidden}
+.cmp-h{display:grid;grid-template-columns:1fr 1fr;background:#FBFBFD;border-bottom:1px solid var(--line)}
+.cmp-h span{padding:12px 14px;font-size:12px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:var(--muted)}
+.cmp-h span+span{color:var(--blue);background:var(--blue-50)}
+.cmp-r{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.cmp-r:first-of-type{border-top:0}
+.cmp-r span{display:flex;gap:9px;align-items:flex-start;padding:13px 14px;font-size:14px;line-height:1.42;color:var(--body)}
+.cmp-r .good{background:linear-gradient(90deg,#F5F8FF,#fff);color:var(--ink)}
+.cmp-r i{flex:none;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;margin-top:1px}
+.cmp-r i svg{width:11px;height:11px}
+.cmp-r .bad i{background:#FDECEC;color:#B91C1C}
+.cmp-r .good i{background:var(--p-green);color:#15803D}
+/* v4: kit */
+.kit{display:grid;gap:12px}
+.kit-col{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:var(--sh)}
+.kit-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.kit-top.kt2{margin-top:18px}
+.kit-top .h3{font-size:18px}
+.kit-top .qt{margin-left:auto;font-size:12px;font-weight:600;color:var(--blue);background:var(--blue-50);border-radius:99px;padding:3px 10px;white-space:nowrap}
+.kit-col ul{list-style:none}
+.kit-col li{position:relative;padding:9px 0 9px 22px;border-top:1px solid var(--line);font-size:14.5px;color:var(--body);line-height:1.4}
+.kit-col li::before{content:"";position:absolute;left:4px;top:15px;width:8px;height:8px;border-radius:2px;background:var(--blue);opacity:.75}
+.kit-sum{text-align:center;margin-top:20px;font-size:15px}
+@media (max-width:420px){.cmp-r span{padding:11px 10px;font-size:13px;gap:7px}.cmp-h span{padding:10px}}
+@media (min-width:760px){
+  .demo{margin-top:0}
+  .demo .chat{min-height:300px}
+  .kit{grid-template-columns:repeat(3,1fr);gap:16px}
+  .kit-col{padding:24px 22px}
+  .cmp-r span{padding:16px 20px;font-size:15.5px}
+  .cmp-h span{padding:14px 20px}
+}
 @media (max-width:759px){
   section{padding:52px 0}
   .sec-head{margin-bottom:22px}
@@ -553,73 +610,58 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
   <symbol id="i-file" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></g></symbol>
 </svg>
 
-<!-- TOPO -->
 <header class="bar">
   <div class="wrap">
     <div class="logo"><span class="mk"><svg><use href="#i-spark"/></svg></span>Agência <span class="w">sem contratar</span></div>
-    <a class="mini" href="#" data-cta="topo-barra">R$ 47 <svg width="14" height="14"><use href="#i-arrow"/></svg></a>
+    <a class="mini" href="#preco" data-cta="topo-barra">R$ 47 <svg width="14" height="14"><use href="#i-arrow"/></svg></a>
   </div>
   <div class="progress" id="progress"></div>
 </header>
 
-<!-- HERO -->
 <section class="hero glow">
   <div class="wrap">
     <div class="hero-grid">
       <div class="hero-copy">
-        <span class="eyebrow">Para donos de agência · Método 150/20</span>
-        <h1 class="h1">Agência escala, sim. <span class="it">A sua só não tem processo.</span></h1>
-        <p class="lead">Venda mais, faça mais com o time que você tem e pare de ser o <b>gargalo</b>. Foi com <b>processo e IA</b> que a Plus Mídia saiu de R$&nbsp;25&nbsp;mil para R$&nbsp;250&nbsp;mil/mês.</p>
-
-        <div class="vbox">
-          <a class="vthumb" href="#" data-video aria-label="Assistir ao vídeo do Yago (espaço reservado)">
-            <img src="assets/yago-cut.webp" alt="" width="591" height="546">
-            <span class="vt">Abri a operação <span class="it">da minha agência</span></span>
-            <span class="pl"><span class="pb"><svg><use href="#i-play"/></svg></span><span class="du">2:30</span></span>
-          </a>
-          <div class="vtext"><b>Abri a operação da minha agência</b><p class="vcap">vídeo do Yago, ~2min30 (abertura B)</p><span class="du2"><svg width="12" height="12"><use href="#i-play"/></svg>Assistir · 2:30</span></div>
-        </div>
-        <p class="vcap">vídeo do Yago, ~2min30 (abertura B)</p>
-
+        <span class="eyebrow">Para donos de agência · curso gravado</span>
+        <h1 class="h1 h1-hero">Tire a análise das contas e o follow-up <span class="it">da sua mesa na 1ª semana.</span></h1>
+        <p class="lead">Comandos prontos para colar no <b>ChatGPT ou no Claude que você já usa</b>. Da operação da Plus Mídia, que saiu de R$&nbsp;25&nbsp;mil para R$&nbsp;250&nbsp;mil/mês.</p>
         <div class="hero-cta">
-          <a class="btn" href="#" data-cta="hero" id="heroBtn">Escalar minha agência · R$&nbsp;47 <span class="arr"><svg><use href="#i-arrow"/></svg></span></a>
-          <div class="micro"><span><span class="okc">✓</span> 7 dias: risco meu</span><span>Acesso imediato <span class="chk">Conferir</span></span></div>
+          <a class="btn" href="#preco" data-cta="hero" id="heroBtn">Quero o kit e as rotinas · R$&nbsp;47 <span class="arr"><svg><use href="#i-arrow"/></svg></span></a>
+          <div class="micro"><span><span class="okc">✓</span> 7 dias: risco meu</span><span><span class="okc">✓</span> Pagamento único</span></div>
         </div>
+        <div class="byline by-d"><img src="assets/yago-cut.webp" alt="" width="591" height="546"><span><b>Yago</b>, dono da Plus Mídia · 150+ clientes atendidos</span></div>
       </div>
 
       <div class="hero-visual">
-        <div class="expert-wrap">
-          <div class="blob" aria-hidden="true">
-            <svg viewBox="0 0 200 200"><defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C7D8FF"/><stop offset="1" stop-color="#E9DEFF"/></linearGradient></defs>
-              <path fill="url(#bg1)" d="M43.6,-58.3C56.1,-50.7,65.6,-37.4,70.6,-22.5C75.6,-7.6,76.1,8.9,70.2,22.6C64.3,36.3,52,47.2,38.3,55.8C24.6,64.4,9.5,70.7,-6.6,72.1C-22.8,73.5,-40.1,70,-51.9,60C-63.7,50,-70.1,33.6,-73.2,16.6C-76.3,-0.4,-76.1,-18,-68.6,-31.6C-61.1,-45.3,-46.4,-55.1,-31.8,-62.2C-17.2,-69.3,-2.8,-73.7,10.9,-72C24.6,-70.3,31.1,-65.9,43.6,-58.3Z" transform="translate(100 100)"/></svg>
+        <div class="win demo" id="demo">
+          <div class="win-top"><span class="dots"><i></i><i></i><i></i></span><span class="t">chat de IA · 1 comando do kit</span><span class="badge">exemplo fictício</span></div>
+          <div class="demo-tabs" role="tablist" aria-label="Exemplos">
+            <button type="button" role="tab" aria-selected="true" data-tab="fu"><svg><use href="#i-chat"/></svg>Follow-up do lead</button>
+            <button type="button" role="tab" aria-selected="false" data-tab="an"><svg><use href="#i-chart"/></svg>Análise da conta</button>
           </div>
-          <span class="ring" aria-hidden="true"></span>
-          <span class="spark" style="right:12%;top:3%" aria-hidden="true"><svg><use href="#i-spark"/></svg></span>
-          <span class="spark" style="left:6%;top:48%;opacity:.35" aria-hidden="true"><svg style="width:14px;height:14px"><use href="#i-spark"/></svg></span>
-          <img class="expert" src="assets/yago-cut.webp" alt="Yago, dono da Plus Mídia" width="591" height="546" fetchpriority="high">
-
-          <div class="mc mc1">
-            <div class="t">Faturamento da Plus <span class="up">10x</span></div>
-            <div class="n">R$ 250 mil<em>/mês</em></div>
-            <svg class="sp" viewBox="0 0 160 30" preserveAspectRatio="none" aria-hidden="true">
-              <defs><linearGradient id="sg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2563EB" stop-opacity=".22"/><stop offset="1" stop-color="#2563EB" stop-opacity="0"/></linearGradient></defs>
-              <path d="M4 26 L156 4 L156 30 L4 30Z" fill="url(#sg1)"/>
-              <path class="ln" d="M4 26 L156 4" fill="none" stroke="#2563EB" stroke-width="2.4" stroke-linecap="round"/>
-              <circle cx="4" cy="26" r="3" fill="#fff" stroke="#2563EB" stroke-width="2"/><circle cx="156" cy="4" r="3.2" fill="#2563EB"/>
-            </svg>
-            <div class="s">eram R$ 25 mil</div>
+          <div class="chat demo-pane" data-pane="fu">
+            <div class="msg me"><div class="prompt">A Ana (loja de moda) pediu preço ontem e sumiu. Escreva 3 follow-ups curtos pro WhatsApp: amanhã, em 3 e em 7 dias. Sem pressão, cada um com uma pergunta.</div></div>
+            <div class="msg ai">
+              <div class="who"><i><svg><use href="#i-spark"/></svg></i>Resposta da IA</div>
+              <div class="typing"><i></i><i></i><i></i></div>
+              <div class="ai-line"><span class="k test">Amanhã</span><span class="tx">"Ana, conseguiu olhar a proposta? Se quiser, te mostro em 10 min como seria a 1ª campanha da loja."</span></div>
+              <div class="ai-line"><span class="k test">3 dias</span><span class="tx">"Ana, pensei em 2 ideias de anúncio pra coleção nova. Te mando por aqui?"</span></div>
+              <div class="ai-line"><span class="k keep">7 dias</span><span class="tx">"Ana, sem problema se agora não for o momento. Te chamo no mês que vem?"</span></div>
+            </div>
           </div>
-          <div class="mc mc2">
-            <div class="t"><span class="mi c-pink"><svg><use href="#i-users"/></svg></span>Clientes atendidos</div>
-            <div class="n"><span data-count="150">150</span>+</div>
-            <div class="s">com <span class="tbc">[TIME: CONFERIR]</span> pessoas</div>
+          <div class="chat demo-pane" data-pane="an" hidden>
+            <div class="msg me"><div class="prompt">Você é gestor de tráfego sênior. Estes são os dados dos últimos 7 dias da conta, por anúncio. Diga o que pausar, o que merece mais verba e 1 teste para esta semana.</div><span class="file"><svg><use href="#i-file"/></svg>conta-ultimos-7-dias.csv</span></div>
+            <div class="msg ai">
+              <div class="who"><i><svg><use href="#i-spark"/></svg></i>Resposta da IA</div>
+              <div class="typing"><i></i><i></i><i></i></div>
+              <div class="ai-line"><span class="k pause">Pausar</span><span class="tx"><b>Anúncio 03</b>: frequência 3,9 e custo subindo.</span></div>
+              <div class="ai-line"><span class="k scale">+ Verba</span><span class="tx"><b>Anúncio 07</b>: melhor custo, frequência baixa.</span></div>
+              <div class="ai-line"><span class="k test">Testar</span><span class="tx"><b>Teste:</b> gancho com prova social nos 3 primeiros segundos.</span></div>
+            </div>
           </div>
-          <div class="mc mc3">
-            <div class="t"><span class="mi c-green"><svg><use href="#i-cal"/></svg></span>Plano de 90 dias</div>
-            <div class="n" style="font-size:15.5px;letter-spacing:-.025em;white-space:normal;line-height:1.2">2 vitórias na 1ª semana</div>
-            <div class="bars" aria-hidden="true"><i style="height:30%"></i><i style="height:45%"></i><i style="height:60%"></i><i style="height:78%"></i><i style="height:100%"></i></div>
-          </div>
+          <div class="demo-foot">Copia, troca os dados do seu cliente, cola. <b>Pronto em minutos.</b></div>
         </div>
+        <div class="byline by-m"><img src="assets/yago-cut.webp" alt="" width="591" height="546"><span><b>Yago</b>, dono da Plus Mídia · 150+ clientes atendidos</span></div>
       </div>
     </div>
 
@@ -635,25 +677,73 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
   </div>
 </section>
 
-<!-- O QUE VOCÊ APRENDE -->
-<section id="aprende" style="padding-top:36px">
+<section id="hoje" style="padding-top:36px">
   <div class="wrap">
     <div class="sec-head center rv">
-      <span class="eyebrow">O que sai da sua mesa</span>
-      <h2 class="h2">Tudo que hoje trava a sua agência <span class="it">em você</span></h2>
+      <span class="eyebrow">A sua semana</span>
+      <h2 class="h2">Agência escala, sim. <span class="it">A sua só não tem processo.</span></h2>
+      <p>Como você opera hoje. E como fica com as rotinas rodando.</p>
     </div>
-    <div class="learn">
-      <div class="lc rv"><span class="ic c-blue"><svg><use href="#i-chart"/></svg></span><h3>Análise diária das contas</h3><p>Todas as contas, todo dia, sem virar a noite.</p></div>
-      <div class="lc rv"><span class="ic c-violet"><svg><use href="#i-users"/></svg></span><h3>Time treinado</h3><p>Todo mundo no mesmo padrão.</p></div>
-      <div class="lc rv"><span class="ic c-cyan"><svg><use href="#i-file"/></svg></span><h3>Delegar de verdade</h3><p>Passo a passo pronto. A tarefa não volta pra você.</p></div>
-      <div class="lc rv"><span class="ic c-pink"><svg><use href="#i-chat"/></svg></span><h3>Processo comercial</h3><p>Cliente novo com rotina, não com sorte.</p></div>
-      <div class="lc rv"><span class="ic c-amber"><svg><use href="#i-filter"/></svg></span><h3>Qualificação</h3><p>Sem call perdida com curioso.</p></div>
-      <div class="lc rv"><span class="ic c-green"><svg><use href="#i-repeat"/></svg></span><h3>Follow-up</h3><p>Nenhum lead esquecido no WhatsApp.</p></div>
+    <div class="cmp rv" role="table" aria-label="Hoje e com as rotinas">
+      <div class="cmp-h" role="row"><span role="columnheader">Hoje</span><span role="columnheader">Com as rotinas</span></div>
+      <div class="cmp-r" role="row"><span class="bad" role="cell"><i><svg><use href="#i-x"/></svg></i>23h, você ainda olhando conta e montando relatório.</span><span class="good" role="cell"><i><svg><use href="#i-check"/></svg></i>A análise de cada conta sai em minutos, no mesmo padrão, em horário comercial.</span></div>
+      <div class="cmp-r" role="row"><span class="bad" role="cell"><i><svg><use href="#i-x"/></svg></i>Tudo volta pra sua mesa.</span><span class="good" role="cell"><i><svg><use href="#i-check"/></svg></i>O time tem o passo a passo e resolve sem te chamar.</span></div>
+      <div class="cmp-r" role="row"><span class="bad" role="cell"><i><svg><use href="#i-x"/></svg></i>Cliente novo = mais uma contratação.</span><span class="good" role="cell"><i><svg><use href="#i-check"/></svg></i>Cada pessoa do time dá conta de mais clientes, sem cair a qualidade.</span></div>
+      <div class="cmp-r" role="row"><span class="bad" role="cell"><i><svg><use href="#i-x"/></svg></i>Cada um do time faz de um jeito.</span><span class="good" role="cell"><i><svg><use href="#i-check"/></svg></i>Um padrão de entrega que todo mundo segue.</span></div>
+      <div class="cmp-r" role="row"><span class="bad" role="cell"><i><svg><use href="#i-x"/></svg></i>Lead esquecido no WhatsApp.</span><span class="good" role="cell"><i><svg><use href="#i-check"/></svg></i>Resposta e follow-up com roteiro: todo lead tem próximo passo.</span></div>
     </div>
   </div>
 </section>
 
-<!-- PROBLEMA + ANTES x DEPOIS -->
+<section id="kit">
+  <div class="wrap">
+    <div class="sec-head center rv">
+      <span class="eyebrow">O que você leva</span>
+      <h2 class="h2">Kit de comandos e rotinas <span class="it">prontos pra copiar e colar</span></h2>
+      <p>Cada aula prática termina com o comando pronto. Você cola no ChatGPT ou no Claude, troca os dados do seu cliente e usa no mesmo dia.</p>
+    </div>
+    <div class="kit">
+      <div class="kit-col rv">
+        <div class="kit-top"><span class="ic sm c-pink"><svg><use href="#i-chat"/></svg></span><h3 class="h3">Comercial</h3><span class="qt">6 comandos</span></div>
+        <ul>
+          <li>Captação: lista e 1ª abordagem</li>
+          <li>Resposta ao 1º contato do lead</li>
+          <li>Qualificação: as perguntas antes da call</li>
+          <li>Preparação da call</li>
+          <li>Proposta a partir das respostas do lead</li>
+          <li>Follow-up em 3 mensagens</li>
+        </ul>
+      </div>
+      <div class="kit-col rv">
+        <div class="kit-top"><span class="ic sm c-blue"><svg><use href="#i-chart"/></svg></span><h3 class="h3">Operação</h3><span class="qt">6 comandos</span></div>
+        <ul>
+          <li>Análise diária das contas</li>
+          <li>Leitura de criativo</li>
+          <li>Plano de teste da semana</li>
+          <li>Criativo e copy com a marca do cliente</li>
+          <li>Checklist de onboarding de cliente novo</li>
+          <li>Relatório para o cliente em minutos</li>
+        </ul>
+      </div>
+      <div class="kit-col rv">
+        <div class="kit-top"><span class="ic sm c-green"><svg><use href="#i-users"/></svg></span><h3 class="h3">Time</h3><span class="qt">3 comandos</span></div>
+        <ul>
+          <li>Transformar uma tarefa sua em passo a passo para delegar</li>
+          <li>Padrão de entrega por conta, para treinar quem chega</li>
+          <li>Ritual semanal do dono: os indicadores que importam</li>
+        </ul>
+        <div class="kit-top kt2"><span class="ic sm c-amber"><svg><use href="#i-file"/></svg></span><h3 class="h3">Modelos</h3><span class="qt">2 planilhas</span></div>
+        <ul>
+          <li>Mapa de onde a sua agência perde horas</li>
+          <li>Plano de 90 dias para preencher</li>
+        </ul>
+      </div>
+    </div>
+    <p class="kit-sum rv"><b>15 comandos + 2 modelos</b>, junto com as aulas que mostram cada um rodando na Plus.</p>
+    <div class="btn-row center rv"><a class="btn" href="#preco" data-cta="kit">Quero o kit e as rotinas · R$&nbsp;47 <span class="arr"><svg><use href="#i-arrow"/></svg></span></a></div>
+  </div>
+</section>
+
 <section class="tint" id="problema">
   <div class="wrap">
     <div class="duo">
@@ -705,7 +795,6 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
   </div>
 </section>
 
-<!-- JÁ USO CHATGPT -->
 <section id="chatgpt">
   <div class="wrap duo">
     <div class="rv">
@@ -736,13 +825,12 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
   </div>
 </section>
 
-<!-- MÉTODO -->
 <section class="tint" id="metodo">
   <div class="wrap">
     <div class="sec-head center rv">
       <span class="eyebrow">O método</span>
       <h2 class="h2">Método <span class="it">150/20</span></h2>
-      <p>150 clientes, <span class="tbc">[TIME: CONFERIR]</span> pessoas, de R$ 25 mil para R$ 250 mil por mês. Agência escala quando o processo roda sem o dono. A IA é o que faz ele rodar:</p>
+      <p>150+ clientes, um time enxuto, de R$ 25 mil para R$ 250 mil por mês. Agência escala quando o processo roda sem o dono. A IA é o que faz ele rodar:</p>
     </div>
     <div class="steps">
       <span class="dotline" aria-hidden="true"></span>
@@ -800,11 +888,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
       </div>
     </div>
 
-    <div class="btn-row center rv"><a class="btn" href="#" data-cta="metodo">Escalar minha agência · R$&nbsp;47 <span class="arr"><svg><use href="#i-arrow"/></svg></span></a></div>
+    <div class="btn-row center rv"><a class="btn" href="#preco" data-cta="metodo">Quero o kit e as rotinas · R$&nbsp;47 <span class="arr"><svg><use href="#i-arrow"/></svg></span></a></div>
   </div>
 </section>
 
-<!-- PROVA -->
 <section id="prova">
   <div class="wrap">
     <div class="sec-head rv">
@@ -848,16 +935,15 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
       </article>
     </div>
     <p class="ill rv"><b>É isso que a operação da Plus entrega para os clientes dela, com a IA dentro da rotina do time.</b> Mensagens reais de clientes da Plus Mídia, nomes ocultados.</p>
-    <!-- FORA DA PÁGINA POR ORA (ver LEIA.md): [ESPAÇO: depoimentos de alunos, só se existirem e com autorização por escrito] -->
   </div>
 </section>
 
-<!-- CURSO: biblioteca de aulas -->
 <section class="tint" id="curso">
   <div class="wrap">
     <div class="sec-head center rv">
-      <span class="eyebrow">Direto na tela</span>
-      <h2 class="h2">O que você leva por <span class="it">R$ 47</span></h2>
+      <span class="eyebrow">As aulas · direto na tela</span>
+      <h2 class="h2">Cada comando, <span class="it">rodando na Plus</span></h2>
+      <p>Aulas curtas que mostram a agência funcionando: a conta de anúncio, a conversa com o lead, a rotina do time.</p>
     </div>
     <div class="lib rv">
       <div class="lib-top"><span class="dots"><i></i><i></i><i></i></span><span class="search"><svg><use href="#i-search"/></svg><span>Buscar aula: "processo comercial", "treinar o time"...</span></span></div>
@@ -869,21 +955,20 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
         </div>
       </div>
     </div>
-    <div class="lib-note rv"><span><b>~3h30</b> de aulas</span><span><b>6</b> módulos</span><span>Aulas curtas de <b>8 a 15 min</b> <span class="chk">Conferir duração</span></span></div>
-    <!-- FORA DA PÁGINA POR ORA (ver LEIA.md): Módulo 6 · Casos reais (só entra com hotseat gravado e autorizado) -->
+    <div class="lib-note rv"><span><b>~3h30</b> de aulas</span><span><b>6</b> módulos</span><span>Aulas curtas de <b>8 a 15 min</b></span></div>
   </div>
 </section>
 
-<!-- PARA QUEM -->
 <section id="para-quem">
   <div class="wrap">
     <div class="sec-head center rv">
       <span class="eyebrow">Para quem</span>
-      <h2 class="h2">É para agência. <span class="it">Não para lojista.</span></h2>
+      <h2 class="h2">Isso é <span class="it">pra você?</span></h2>
+      <p>É para agência. Não para lojista.</p>
     </div>
     <div class="fit">
       <div class="fit-col yes rv">
-        <div class="top"><span class="ic sm c-blue"><svg><use href="#i-target"/></svg></span><h3 class="h3">É para quem</h3></div>
+        <div class="top"><span class="ic sm c-blue"><svg><use href="#i-target"/></svg></span><h3 class="h3">É pra você se…</h3></div>
         <ul>
           <li><span class="x"><svg><use href="#i-check"/></svg></span>Tem agência de tráfego, social, design ou assessoria, com clientes fixos.</li>
           <li><span class="x"><svg><use href="#i-check"/></svg></span>Tem uns 30, 40 clientes e travou: crescer parece exigir mais gente.</li>
@@ -892,19 +977,18 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
         </ul>
       </div>
       <div class="fit-col no rv">
-        <div class="top"><span class="ic sm" style="background:#ECEEF2;color:var(--muted)"><svg><use href="#i-x"/></svg></span><h3 class="h3">Não é para quem</h3></div>
+        <div class="top"><span class="ic sm" style="background:#ECEEF2;color:var(--muted)"><svg><use href="#i-x"/></svg></span><h3 class="h3">Não é pra você se…</h3></div>
         <ul>
-          <li><span class="x"><svg><use href="#i-x"/></svg></span>Quer dinheiro fácil ou "renda passiva com IA". Aqui é trabalho.</li>
+          <li><span class="x"><svg><use href="#i-x"/></svg></span>Quer aprender ferramenta: automação, programação, agente. Aqui a ferramenta é a que você já tem; o curso é processo.</li>
           <li><span class="x"><svg><use href="#i-x"/></svg></span>É lojista procurando agência.</li>
-          <li><span class="x"><svg><use href="#i-x"/></svg></span>Quer mais um pacote de prompts e não vai aplicar nenhuma rotina.</li>
-          <li><span class="x"><svg><use href="#i-x"/></svg></span>Ainda não tem nenhum cliente: o curso é sobre escalar uma agência que já existe.</li>
+          <li><span class="x"><svg><use href="#i-x"/></svg></span>Ainda não tem cliente: o curso é para escalar uma agência que já existe.</li>
+          <li><span class="x"><svg><use href="#i-x"/></svg></span>Quer dinheiro fácil ou "renda passiva com IA". Aqui é trabalho.</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PREÇO -->
 <section class="price-sec" id="preco">
   <div class="wrap">
     <div class="sec-head center rv">
@@ -917,12 +1001,11 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
       <div class="amt"><span class="cur">R$</span><span class="v">47</span></div>
       <p class="once">Pagamento único</p>
       <ul>
-        <li><span class="x"><svg><use href="#i-check"/></svg></span>O comercial e a operação que rodam 150 clientes, na tela</li>
-        <li><span class="x"><svg><use href="#i-check"/></svg></span>As rotinas que seguram mais clientes sem contratar</li>
+        <li><span class="x"><svg><use href="#i-check"/></svg></span>Kit com 15 comandos prontos: comercial, operação e time</li>
+        <li><span class="x"><svg><use href="#i-check"/></svg></span>As aulas com o comercial e a operação de uma agência de 150+ clientes, na tela</li>
         <li><span class="x"><svg><use href="#i-check"/></svg></span>Mapa de horas + plano de 90 dias prontos pra preencher</li>
-        <li><span class="x"><svg><use href="#i-check"/></svg></span><span>Acesso imediato <span class="chk">Conferir</span></span></li>
       </ul>
-      <a class="btn block" href="#" data-cta="preco">Escalar minha agência · R$&nbsp;47 <span class="arr"><svg><use href="#i-arrow"/></svg></span></a>
+      <a class="btn block" href="#preco" data-cta="preco">Quero o kit e as rotinas · R$&nbsp;47 <span class="arr"><svg><use href="#i-arrow"/></svg></span></a>
       <div class="guar">
         <span class="ic"><svg><use href="#i-shield"/></svg></span>
         <div><b>Risco zero: o risco é meu</b><p>Entra, assiste e aplica. Achou que não agregou? Em 7 dias, pede e eu devolvo 100%. Sem pergunta, sem letra miúda.</p></div>
@@ -931,7 +1014,6 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
   </div>
 </section>
 
-<!-- FAQ -->
 <section class="faq" id="faq">
   <div class="wrap faq-grid">
     <div class="sec-head rv"><span class="eyebrow">Dúvidas</span><h2 class="h2">As desculpas que eu <span class="it">mais ouço</span></h2></div>
@@ -941,13 +1023,11 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
       <details><summary>Não vai agregar pra mim.<span class="pm">+</span></summary><div class="ans"><p>Se tudo volta pra sua mesa, vai. Aulas de 8 a 15 min e 2 rotinas rodando na 1ª semana. Não agregou? 7 dias, dinheiro de volta.</p></div></details>
       <details><summary>A Plus atende loja. Serve pra minha agência?<span class="pm">+</span></summary><div class="ans"><p>Serve para agência de tráfego, social media, design ou assessoria, de qualquer nicho. Só não é para lojista procurando agência: é para quem é a agência.</p></div></details>
       <details><summary>Já fiz mentoria e curso de guru.<span class="pm">+</span></summary><div class="ans"><p>Guru mostra print de carro. Mentoria dá motivação. Eu mostro a minha agência: conta de anúncio, conversa com lead, rotina do time. Achou que é guru? 7 dias pra pedir o dinheiro de volta.</p></div></details>
-      <details><summary>Quando eu recebo o acesso, e por quanto tempo?<span class="pm">+</span></summary><div class="ans"><p><span class="chk">Conferir: imediato ou "liberado em DD/MM"; acesso por X meses ou vitalício</span></p></div></details>
       <details><summary>Como funciona a garantia?<span class="pm">+</span></summary><div class="ans"><p>7 dias a partir da compra. Pediu, devolvo 100%. O risco é meu, não seu.</p></div></details>
     </div>
   </div>
 </section>
 
-<!-- CTA FINAL com área do aluno -->
 <section class="final">
   <div class="wrap">
     <div class="cta-card rv">
@@ -955,7 +1035,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
         <span class="ic c-blue"><svg><use href="#i-trophy"/></svg></span>
         <h2 class="h2">Agência escala. <span class="it">Com processo.</span></h2>
         <p>Venda mais e faça mais com o time que você tem. Com o que você já usa.</p>
-        <a class="btn" href="#" data-cta="final">Escalar minha agência · R$&nbsp;47 <span class="arr"><svg><use href="#i-arrow"/></svg></span></a>
+        <a class="btn" href="#preco" data-cta="final">Quero o kit e as rotinas · R$&nbsp;47 <span class="arr"><svg><use href="#i-arrow"/></svg></span></a>
         <div class="micro"><span><span class="okc">✓</span> 7 dias: risco meu</span><span>Pagamento único</span></div>
       </div>
       <div class="device" aria-hidden="true">
@@ -985,17 +1065,30 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
 </section>
 
 <footer>
-  <div class="wrap"><span>© 2026 Plus Mídia · Agência Sem Contratar</span></div>
+  <div class="wrap">
+    <span>© 2026 Plus Mídia Assessoria de Marketing e Propaganda LTDA · CNPJ 59.654.024/0001-07 · Florianópolis/SC</span>
+    <span><a href="/privacidade/">Política de Privacidade</a></span>
+  </div>
 </footer>
 
 <div class="buy" id="buy" aria-hidden="true">
   <div class="p"><b>R$ 47</b><span>Risco zero, 7 dias</span></div>
-  <a class="btn" href="#" data-cta="barra" tabindex="-1">Escalar minha agência <span class="arr"><svg><use href="#i-arrow"/></svg></span></a>
+  <a class="btn" href="#preco" data-cta="barra" tabindex="-1">Quero o kit <span class="arr"><svg><use href="#i-arrow"/></svg></span></a>
 </div>
 
 <dialog class="zoom" id="zoom"><img id="zoomImg" src="assets/babykids.webp" alt="Print da mensagem do cliente, nome ocultado"><form method="dialog"><button>Fechar</button></form></dialog>
 
 <script>
+/* CHECKOUT: colar aqui o link da Cakto quando o Yago liberar. Vazio = botões não levam a lugar nenhum. */
+var CHECKOUT_URL = '';
+(function(){
+  if (!CHECKOUT_URL) return;
+  document.querySelectorAll('a[data-cta]').forEach(function(a){
+    var u = new URL(CHECKOUT_URL);
+    new URLSearchParams(location.search).forEach(function(v,k){ if(!u.searchParams.has(k)) u.searchParams.set(k,v); });
+    a.href = u.toString();
+  });
+})();
 (function(){
   var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1049,7 +1142,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
       if (t.id==='chat') typeChat();
     });
   },{rootMargin:'0px 0px -10% 0px',threshold:.12}) : null;
-  ['.learn','.vs','.steps','.mocks','.results','.fit'].forEach(function(sel){
+  ['.vs','.steps','.mocks','.results','.fit','.kit'].forEach(function(sel){
     var g=document.querySelector(sel); if(!g) return;
     [].slice.call(g.children).filter(function(c){return c.classList.contains('rv')}).forEach(function(c,i){ c.style.transitionDelay=(i*90)+'ms'; });
   });
@@ -1057,12 +1150,30 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
   if (io && !RM) watch.forEach(function(el){ io.observe(el); });
   else { watch.forEach(function(el){ el.classList.add('in','go'); }); showChat(); }
 
-  function showChat(){ var ty=document.getElementById('typing'); if(ty) ty.style.display='none'; document.querySelectorAll('.ai-line').forEach(function(l){l.classList.add('on')}); }
+  function showChat(){ var ty=document.getElementById('typing'); if(ty) ty.style.display='none'; document.querySelectorAll('#chat .ai-line').forEach(function(l){l.classList.add('on')}); }
   function typeChat(){
-    var ty=document.getElementById('typing'), lines=document.querySelectorAll('.ai-line');
+    var ty=document.getElementById('typing'), lines=document.querySelectorAll('#chat .ai-line');
     setTimeout(function(){ if(ty) ty.style.display='none'; lines.forEach(function(l,i){ setTimeout(function(){ l.classList.add('on'); },i*650); }); },1100);
   }
 
+  /* v4: demo da 1ª dobra (abas + digitação) */
+  var demo=document.getElementById('demo');
+  if (demo){
+    var tabs=[].slice.call(demo.querySelectorAll('[data-tab]')), panes=[].slice.call(demo.querySelectorAll('[data-pane]')), timers=[];
+    function play(pane){
+      timers.forEach(clearTimeout); timers=[];
+      var ty=pane.querySelector('.typing'), ls=[].slice.call(pane.querySelectorAll('.ai-line'));
+      if (RM){ if(ty) ty.style.display='none'; ls.forEach(function(l){l.classList.add('on')}); return; }
+      if(ty) ty.style.display=''; ls.forEach(function(l){l.classList.remove('on')});
+      timers.push(setTimeout(function(){ if(ty) ty.style.display='none'; ls.forEach(function(l,i){ timers.push(setTimeout(function(){ l.classList.add('on'); },i*700)); }); },900));
+    }
+    function pick(k){
+      tabs.forEach(function(t){ t.setAttribute('aria-selected', t.dataset.tab===k?'true':'false'); });
+      panes.forEach(function(p){ p.hidden = p.dataset.pane!==k; if(!p.hidden) play(p); });
+    }
+    tabs.forEach(function(t){ t.addEventListener('click',function(){ pick(t.dataset.tab); }); });
+    pick('fu');
+  }
   /* comando: ver completo + copiar */
   var xb=document.getElementById('expandBtn'); if(xb) xb.addEventListener('click',function(){ document.getElementById('cmdText').classList.remove('clamp'); xb.remove(); });
   var b=document.getElementById('copyBtn'), t=document.getElementById('cmdText');
