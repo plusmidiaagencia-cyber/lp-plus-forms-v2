@@ -433,6 +433,16 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
 .duo>*,.hero-grid>*,.cta-card>*{min-width:0}
 
 /* v5 */
+.was{font-size:15px;color:var(--muted);margin-top:6px;text-align:center}
+.was s{color:var(--muted);text-decoration-thickness:2px}
+.bon{display:grid;gap:12px}
+.bon-c{position:relative;background:#fff;border:1.5px dashed var(--blue-100);border-radius:20px;padding:18px;box-shadow:var(--sh)}
+.bon-c .bn{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:#15803D;background:var(--p-green);border-radius:99px;padding:3px 10px;margin-bottom:8px}
+.bon-c h3{font-size:17px;margin-bottom:6px}
+.bon-c p{font-size:14.5px;line-height:1.5;color:var(--body)}
+@media (min-width:760px){.bon{grid-template-columns:1fr 1fr;gap:16px}.bon-c{padding:24px 22px}}
+
+
 .scn{list-style:none;display:grid;gap:10px;max-width:760px;margin:0 auto}
 .scn li{display:flex;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 16px;box-shadow:var(--sh)}
 .scn li p{font-size:16px;line-height:1.45;color:var(--body)}
@@ -642,7 +652,7 @@ html{scroll-behavior:smooth}
   <div class="wrap">
     <div class="hero-grid">
       <div class="hero-copy">
-        <span class="eyebrow">Para donos de agência com 30, 40 clientes</span>
+        <span class="eyebrow">Para donos de agência com 30 a 50 clientes</span>
         <h1 class="h1 h1-hero">Sua agência não precisa de mais gente. <span class="it">Precisa parar de depender de você.</span></h1>
         <p class="lead">Copie as rotinas de IA que a Plus Mídia usa para atender <b>150+ clientes</b>. Na primeira semana, o <b>follow-up dos leads</b> e a <b>análise das contas</b> já saem da sua mesa, com o ChatGPT que você já usa.</p>
         <div class="hero-cta">
@@ -855,6 +865,22 @@ html{scroll-behavior:smooth}
   </div>
 </section>
 
+<section id="bonus">
+  <div class="wrap">
+    <div class="sec-head center rv">
+      <span class="eyebrow">Bônus</span>
+      <h2 class="h2">E você ainda leva <span class="it">o comercial da Plus</span></h2>
+      <p>4 materiais que a Plus usa para vender. Prontos para adaptar à sua agência.</p>
+    </div>
+    <div class="bon">
+      <div class="bon-c rv"><span class="bn">Bônus 1</span><h3 class="h3">Mensagens de WhatsApp do comercial</h3><p>As mensagens prontas para o lead novo, para quem pediu preço e sumiu, para quem faltou na call e para o lead perdido.</p></div>
+      <div class="bon-c rv"><span class="bn">Bônus 2</span><h3 class="h3">Roteiro da call de vendas</h3><p>As perguntas e a ordem que a Plus usa na call, do primeiro "oi" ao fechamento.</p></div>
+      <div class="bon-c rv"><span class="bn">Bônus 3</span><h3 class="h3">Modelo de proposta comercial</h3><p>A estrutura da proposta que a Plus manda, para você trocar o logo e usar.</p></div>
+      <div class="bon-c rv"><span class="bn">Bônus 4</span><h3 class="h3">Roteiro de prospecção no Instagram</h3><p>Como a Plus aborda empresas pelo direct sem parecer vendedor chato.</p></div>
+    </div>
+  </div>
+</section>
+
 <section class="price-sec" id="preco">
   <div class="wrap">
     <div class="sec-head center rv">
@@ -862,14 +888,16 @@ html{scroll-behavior:smooth}
       <h2 class="h2">Uma contratação custa salário todo mês. <span class="it">Isto custa R$ 47, uma vez.</span></h2>
     </div>
     <div class="price rv">
-      <span class="pop">Acesso completo</span>
+      <span class="pop">Preço de lançamento</span>
       <div class="nm">Agência Sem Contratar<small>15 comandos + aulas · curso gravado</small></div>
+      <div class="was">de <s>R$ 97</s> por</div>
       <div class="amt"><span class="cur">R$</span><span class="v">47</span></div>
       <p class="once">Pagamento único</p>
       <ul>
         <li><span class="x"><svg><use href="#i-check"/></svg></span>15 comandos prontos: comercial, operação e time</li>
         <li><span class="x"><svg><use href="#i-check"/></svg></span>Aulas curtas com a operação de uma agência de 150+ clientes, na tela</li>
         <li><span class="x"><svg><use href="#i-check"/></svg></span>2 planilhas: mapa de horas e plano de 90 dias</li>
+        <li><span class="x"><svg><use href="#i-check"/></svg></span><span><b>+ 4 bônus</b> do comercial da Plus</span></li>
       </ul>
       <a class="btn block" href="#preco" data-cta="preco">Atender mais clientes · R$&nbsp;47 <span class="arr"><svg><use href="#i-arrow"/></svg></span></a>
       <div class="guar">
@@ -884,8 +912,10 @@ html{scroll-behavior:smooth}
   <div class="wrap faq-grid">
     <div class="sec-head rv"><span class="eyebrow">Perguntas</span><h2 class="h2">Antes de <span class="it">entrar</span></h2></div>
     <div class="rv">
-      <details><summary>Por que só R$ 47?<span class="pm">+</span></summary><div class="ans"><p>Porque é a porta de entrada. Quero que você veja a Plus por dentro e coloque a primeira rotina para rodar. Se fizer sentido, você vai querer ir além com a gente.</p></div></details>
+      <details><summary>Por que só R$ 47?<span class="pm">+</span></summary><div class="ans"><p>É o preço de lançamento. Depois o curso passa a custar R$ 97. Quem entra agora paga R$ 47 e leva os 4 bônus.</p></div></details>
       <details><summary>Já uso IA. Serve pra mim?<span class="pm">+</span></summary><div class="ans"><p>Serve se a IA hoje faz legenda. O curso mostra onde ela entra na rotina: no lead, na conta do cliente e no time.</p></div></details>
+      <details><summary>Em quanto tempo eu vejo diferença?<span class="pm">+</span></summary><div class="ans"><p>Na primeira semana. A ideia é começar por uma rotina só, a que mais te trava, e já usar no dia seguinte.</p></div></details>
+      <details><summary>E se eu ainda não tiver time?<span class="pm">+</span></summary><div class="ans"><p>Os comandos servem para você rodar sozinho e ganhar horas. O passo a passo para o time fica pronto para quando você contratar, ou para não precisar contratar tão cedo.</p></div></details>
       <details><summary>Preciso saber programar?<span class="pm">+</span></summary><div class="ans"><p>Não. É copiar, colar e trocar os dados do seu cliente.</p></div></details>
       <details><summary>Minha agência é pequena ou de outro nicho.<span class="pm">+</span></summary><div class="ans"><p>Serve para agência de tráfego, social media, design ou assessoria. O que muda é a rotina, não o nicho.</p></div></details>
       <details><summary>Já fiz mentoria e curso de guru.<span class="pm">+</span></summary><div class="ans"><p>Aqui é a operação de uma agência real, na tela. Não gostou? 7 dias pra pedir o dinheiro de volta.</p></div></details>
@@ -1014,7 +1044,7 @@ var CHECKOUT_URL = '';
       panes.forEach(function(p){ p.hidden = p.dataset.pane!==k; if(!p.hidden) play(p); });
     }
     tabs.forEach(function(t){ t.addEventListener('click',function(){ pick(t.dataset.tab); }); });
-    pick('fu');
+    pick('an');
   }
   /* comando: ver completo + copiar */
   var xb=document.getElementById('expandBtn'); if(xb) xb.addEventListener('click',function(){ document.getElementById('cmdText').classList.remove('clamp'); xb.remove(); });
